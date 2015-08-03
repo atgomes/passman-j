@@ -6,6 +6,7 @@
 package passman;
 
 import java.awt.CardLayout;
+import passman.db.SQLiteJDBC;
 
 /**
  *
@@ -249,6 +250,10 @@ public class PassManUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PassManUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        // Create/Open Database
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        sqlite.createConnection();
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
