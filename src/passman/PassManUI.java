@@ -50,7 +50,6 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         addEntryPane = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         newLabel = new javax.swing.JTextField();
@@ -81,6 +80,11 @@ public class PassManUI extends javax.swing.JFrame {
         });
 
         addEntryBtn.setText("Add");
+        addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEntryBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginPaneLayout = new javax.swing.GroupLayout(loginPane);
         loginPane.setLayout(loginPaneLayout);
@@ -125,52 +129,37 @@ public class PassManUI extends javax.swing.JFrame {
 
         jLabel6.setText("Detalhes");
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout globalViewPaneLayout = new javax.swing.GroupLayout(globalViewPane);
         globalViewPane.setLayout(globalViewPaneLayout);
         globalViewPaneLayout.setHorizontalGroup(
             globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(globalViewPaneLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(commentShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
-                    .addGroup(globalViewPaneLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(commentShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         globalViewPaneLayout.setVerticalGroup(
             globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(globalViewPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(45, 45, 45)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -284,6 +273,11 @@ public class PassManUI extends javax.swing.JFrame {
         jMenu1.add(addEntry);
 
         viewList.setText("View");
+        viewList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewListActionPerformed(evt);
+            }
+        });
         jMenu1.add(viewList);
 
         jMenuBar1.add(jMenu1);
@@ -301,7 +295,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -323,17 +317,6 @@ public class PassManUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jList1ComponentShown
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        List<Model> list = new ArrayList<>(sqlite.getItems());
-
-        DefaultListModel<Model> listModel = new DefaultListModel();
-        for(Model obj : list){
-            listModel.addElement(obj);
-        }
-        jList1.setModel(listModel);
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         labelShow.setText(((Model)jList1.getSelectedValue()).getLabel());
         usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
@@ -342,9 +325,37 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1ValueChanged
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        List<Model> list = new ArrayList<>(sqlite.getItems());
+
+        DefaultListModel<Model> listModel = new DefaultListModel();
+        for(Model obj : list){
+            listModel.addElement(obj);
+        }
+        jList1.setModel(listModel);
+        
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, "card4");
     }//GEN-LAST:event_viewListBtnActionPerformed
+
+    private void addEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryBtnActionPerformed
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "card3");
+    }//GEN-LAST:event_addEntryBtnActionPerformed
+
+    private void viewListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListActionPerformed
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        List<Model> list = new ArrayList<>(sqlite.getItems());
+
+        DefaultListModel<Model> listModel = new DefaultListModel();
+        for(Model obj : list){
+            listModel.addElement(obj);
+        }
+        jList1.setModel(listModel);
+        
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "card4");
+    }//GEN-LAST:event_viewListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -373,17 +384,7 @@ public class PassManUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        // Create/Open Database
-        /*SQLiteJDBC sqlite = new SQLiteJDBC();
-        List<Model> list = new ArrayList<>(sqlite.getItems());
-
-        DefaultListModel<Model> listModel = new DefaultListModel();
-        for(Model obj : list){
-            listModel.addElement(obj);
-        }
-        jList1.setModel(listModel);+/
-        
-        /* Create and display the form */
+         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -400,7 +401,6 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JTextField commentShow;
     private javax.swing.JPanel globalViewPane;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
