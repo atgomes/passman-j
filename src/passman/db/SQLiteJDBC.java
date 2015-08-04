@@ -116,4 +116,25 @@ public class SQLiteJDBC {
             System.exit(0);
         }
     }
+    
+    public void removeItem(Model model){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
+            // 
+            if(rs.next()){
+                try (Statement stmt = c.createStatement()) {
+                    String sql = "DELETE FROM passwords WHERE LABEL = \"" + model.getLabel() + "\";";
+                    
+                    stmt.executeUpdate(sql);
+                }
+                c.close();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
 }

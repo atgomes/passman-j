@@ -6,11 +6,14 @@
 package passman;
 
 import java.awt.CardLayout;
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JPanel;*/
 import passman.db.SQLiteJDBC;
 import passman.model.Model;
+//import passman.Utils;
 
 /**
  *
@@ -24,6 +27,8 @@ public class PassManUI extends javax.swing.JFrame {
     public PassManUI() {
         initComponents();
     }
+    
+    Utils utils = new Utils();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,11 +55,12 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        removeEntryBtn = new javax.swing.JButton();
         addEntryPane = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         newLabel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        addUserBtn = new javax.swing.JButton();
+        confirmEntryBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         newUsername = new javax.swing.JTextField();
@@ -129,37 +135,52 @@ public class PassManUI extends javax.swing.JFrame {
 
         jLabel6.setText("Detalhes");
 
+        removeEntryBtn.setText("Remove");
+        removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeEntryBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout globalViewPaneLayout = new javax.swing.GroupLayout(globalViewPane);
         globalViewPane.setLayout(globalViewPaneLayout);
         globalViewPaneLayout.setHorizontalGroup(
             globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(globalViewPaneLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(commentShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                    .addGroup(globalViewPaneLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(commentShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(globalViewPaneLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(removeEntryBtn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         globalViewPaneLayout.setVerticalGroup(
             globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(globalViewPaneLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(4, 4, 4)
+                .addComponent(removeEntryBtn)
+                .addGap(18, 18, 18)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
@@ -191,10 +212,10 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel4.setLabelFor(newUsername);
         jLabel4.setText("Username");
 
-        addUserBtn.setText("Create");
-        addUserBtn.addActionListener(new java.awt.event.ActionListener() {
+        confirmEntryBtn.setText("Create");
+        confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addUserBtnActionPerformed(evt);
+                confirmEntryBtnActionPerformed(evt);
             }
         });
 
@@ -233,7 +254,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addContainerGap(153, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addEntryPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addUserBtn)
+                .addComponent(confirmEntryBtn)
                 .addGap(21, 21, 21))
         );
         addEntryPaneLayout.setVerticalGroup(
@@ -256,7 +277,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(newComment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addUserBtn)
+                .addComponent(confirmEntryBtn)
                 .addContainerGap())
         );
 
@@ -306,36 +327,32 @@ public class PassManUI extends javax.swing.JFrame {
         card.show(mainPanel, "card3");
     }//GEN-LAST:event_addEntryActionPerformed
 
-    private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
+    private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
         Model model = new Model(newLabel.getText(), newUsername.getText(), (String)newPassword.getText(), newComment.getText());
         
         SQLiteJDBC sqlite = new SQLiteJDBC();
         sqlite.addItem(model);
-    }//GEN-LAST:event_addUserBtnActionPerformed
+        
+        utils.refreshView(jList1, mainPanel);
+    }//GEN-LAST:event_confirmEntryBtnActionPerformed
 
     private void jList1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList1ComponentShown
 
     }//GEN-LAST:event_jList1ComponentShown
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        labelShow.setText(((Model)jList1.getSelectedValue()).getLabel());
-        usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
-        passwordShow.setText(((Model)jList1.getSelectedValue()).getPassword());
-        commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
+        if(jList1.getSelectedIndex()>-1){        
+            labelShow.setText(((Model)jList1.getSelectedValue()).getLabel());
+            usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
+            passwordShow.setText(((Model)jList1.getSelectedValue()).getPassword());
+            commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
+        }
     }//GEN-LAST:event_jList1ValueChanged
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        List<Model> list = new ArrayList<>(sqlite.getItems());
-
-        DefaultListModel<Model> listModel = new DefaultListModel();
-        for(Model obj : list){
-            listModel.addElement(obj);
-        }
-        jList1.setModel(listModel);
         
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card4");
+        utils.refreshView(jList1, mainPanel);
+        
     }//GEN-LAST:event_viewListBtnActionPerformed
 
     private void addEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryBtnActionPerformed
@@ -344,18 +361,18 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addEntryBtnActionPerformed
 
     private void viewListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListActionPerformed
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        List<Model> list = new ArrayList<>(sqlite.getItems());
-
-        DefaultListModel<Model> listModel = new DefaultListModel();
-        for(Model obj : list){
-            listModel.addElement(obj);
-        }
-        jList1.setModel(listModel);
-        
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card4");
+        utils.refreshView(jList1, mainPanel);
     }//GEN-LAST:event_viewListActionPerformed
+
+    private void removeEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryBtnActionPerformed
+        Model model = (Model)jList1.getSelectedValue();
+        
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        sqlite.removeItem(model);
+        
+        utils.refreshView(jList1, mainPanel);
+        jList1.setSelectedIndex(0);
+    }//GEN-LAST:event_removeEntryBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -397,8 +414,8 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem addEntry;
     private javax.swing.JButton addEntryBtn;
     private javax.swing.JPanel addEntryPane;
-    private javax.swing.JButton addUserBtn;
     private javax.swing.JTextField commentShow;
+    private javax.swing.JButton confirmEntryBtn;
     private javax.swing.JPanel globalViewPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -422,6 +439,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JTextField newPassword;
     private javax.swing.JTextField newUsername;
     private javax.swing.JTextField passwordShow;
+    private javax.swing.JButton removeEntryBtn;
     private javax.swing.JTextField usernameShow;
     private javax.swing.JMenuItem viewList;
     private javax.swing.JButton viewListBtn;
