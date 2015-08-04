@@ -6,6 +6,9 @@
 package passman;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 /*import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -38,12 +41,13 @@ public class PassManUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jButton1 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         mainPanel = new javax.swing.JPanel();
         loginPane = new javax.swing.JPanel();
-        viewListBtn = new javax.swing.JButton();
         addEntryBtn = new javax.swing.JButton();
+        viewListBtn = new javax.swing.JButton();
         globalViewPane = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -52,66 +56,69 @@ public class PassManUI extends javax.swing.JFrame {
         passwordShow = new javax.swing.JTextField();
         commentShow = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         removeEntryBtn = new javax.swing.JButton();
-        addEntryPane = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        addEntryPane = new javax.swing.JPanel();
         newLabel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         confirmEntryBtn = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         newUsername = new javax.swing.JTextField();
         newPassword = new javax.swing.JTextField();
         newComment = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        languagePane = new javax.swing.JPanel();
+        portuguese = new javax.swing.JRadioButton();
+        english = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        homeBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         addEntry = new javax.swing.JMenuItem();
         viewList = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-
-        jButton1.setText("jButton1");
+        languageMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        viewListBtn.setText("View");
-        viewListBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewListBtnActionPerformed(evt);
-            }
-        });
+        loginPane.setBackground(new java.awt.Color(51, 163, 252));
+        loginPane.setLayout(new java.awt.GridBagLayout());
 
-        addEntryBtn.setText("Add");
+        addEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
+        addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
         addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEntryBtnActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        loginPane.add(addEntryBtn, gridBagConstraints);
 
-        javax.swing.GroupLayout loginPaneLayout = new javax.swing.GroupLayout(loginPane);
-        loginPane.setLayout(loginPaneLayout);
-        loginPaneLayout.setHorizontalGroup(
-            loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPaneLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(viewListBtn)
-                .addGap(91, 91, 91)
-                .addComponent(addEntryBtn)
-                .addContainerGap(135, Short.MAX_VALUE))
-        );
-        loginPaneLayout.setVerticalGroup(
-            loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(loginPaneLayout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(viewListBtn)
-                    .addComponent(addEntryBtn))
-                .addContainerGap(168, Short.MAX_VALUE))
-        );
+        viewListBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        viewListBtn.setText(bundle.getString("VIEW")); // NOI18N
+        viewListBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewListBtnActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        loginPane.add(viewListBtn, gridBagConstraints);
 
         mainPanel.add(loginPane, "card2");
 
@@ -127,20 +134,20 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setText("Username");
+        jLabel1.setText(bundle.getString("USERNAME")); // NOI18N
 
-        jLabel2.setText("Etiqueta");
+        jLabel5.setText(bundle.getString("PASSWORD")); // NOI18N
 
-        jLabel5.setText("Password");
-
-        jLabel6.setText("Detalhes");
-
-        removeEntryBtn.setText("Remove");
+        removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
         removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeEntryBtnActionPerformed(evt);
             }
         });
+
+        jLabel2.setText(bundle.getString("LABEL")); // NOI18N
+
+        jLabel3.setText(bundle.getString("COMMENTS")); // NOI18N
 
         javax.swing.GroupLayout globalViewPaneLayout = new javax.swing.GroupLayout(globalViewPane);
         globalViewPane.setLayout(globalViewPaneLayout);
@@ -165,7 +172,7 @@ public class PassManUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(commentShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
@@ -194,25 +201,22 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(commentShow, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(commentShow, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                     .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         mainPanel.add(globalViewPane, "card4");
 
-        jLabel3.setLabelFor(newLabel);
-        jLabel3.setText("Etiqueta");
-
         newLabel.setMinimumSize(new java.awt.Dimension(100, 25));
         newLabel.setPreferredSize(new java.awt.Dimension(100, 25));
 
         jLabel4.setLabelFor(newUsername);
-        jLabel4.setText("Username");
+        jLabel4.setText(bundle.getString("USERNAME")); // NOI18N
 
-        confirmEntryBtn.setText("Create");
+        confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
         confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmEntryBtnActionPerformed(evt);
@@ -220,10 +224,7 @@ public class PassManUI extends javax.swing.JFrame {
         });
 
         jLabel7.setLabelFor(newPassword);
-        jLabel7.setText("Password");
-
-        jLabel8.setLabelFor(newComment);
-        jLabel8.setText("Detalhes");
+        jLabel7.setText(bundle.getString("PASSWORD")); // NOI18N
 
         newUsername.setMinimumSize(new java.awt.Dimension(100, 25));
         newUsername.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -234,6 +235,10 @@ public class PassManUI extends javax.swing.JFrame {
         newComment.setMinimumSize(new java.awt.Dimension(100, 25));
         newComment.setPreferredSize(new java.awt.Dimension(100, 25));
 
+        jLabel9.setText(bundle.getString("LABEL")); // NOI18N
+
+        jLabel10.setText(bundle.getString("COMMENTS")); // NOI18N
+
         javax.swing.GroupLayout addEntryPaneLayout = new javax.swing.GroupLayout(addEntryPane);
         addEntryPane.setLayout(addEntryPaneLayout);
         addEntryPaneLayout.setHorizontalGroup(
@@ -241,10 +246,10 @@ public class PassManUI extends javax.swing.JFrame {
             .addGroup(addEntryPaneLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(newPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
@@ -262,8 +267,8 @@ public class PassManUI extends javax.swing.JFrame {
             .addGroup(addEntryPaneLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(newLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -272,20 +277,89 @@ public class PassManUI extends javax.swing.JFrame {
                 .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(newPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(newComment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(addEntryPaneLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(newComment, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(addEntryPaneLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel10)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(confirmEntryBtn)
                 .addContainerGap())
         );
 
         mainPanel.add(addEntryPane, "card3");
 
-        jMenu1.setText("File");
+        buttonGroup1.add(portuguese);
+        portuguese.setText(bundle.getString("PORTUGUESE")); // NOI18N
+        portuguese.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                portugueseActionPerformed(evt);
+            }
+        });
 
-        addEntry.setText("Add");
+        buttonGroup1.add(english);
+        english.setText(bundle.getString("ENGLISH")); // NOI18N
+        english.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                englishActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText(bundle.getString("BELOW YOU CAN CHOOSE YOUR PREFERRED LANGUAGE.")); // NOI18N
+        jLabel6.setMaximumSize(new java.awt.Dimension(200, 14));
+        jLabel6.setPreferredSize(new java.awt.Dimension(200, 14));
+
+        jLabel8.setText(bundle.getString("CHANGES WILL ONLY BE VISIBLE AFTER RESTARTING THE APPLICATION.")); // NOI18N
+
+        homeBtn.setText(bundle.getString("BACK")); // NOI18N
+        homeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout languagePaneLayout = new javax.swing.GroupLayout(languagePane);
+        languagePane.setLayout(languagePaneLayout);
+        languagePaneLayout.setHorizontalGroup(
+            languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(languagePaneLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(english)
+                    .addComponent(portuguese)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, languagePaneLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(homeBtn)
+                .addContainerGap())
+        );
+        languagePaneLayout.setVerticalGroup(
+            languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(languagePaneLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(portuguese)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(english)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addComponent(homeBtn)
+                .addContainerGap())
+        );
+
+        mainPanel.add(languagePane, "card5");
+
+        jMenu1.setText(bundle.getString("FILE")); // NOI18N
+        jMenu1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+
+        addEntry.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        addEntry.setText(bundle.getString("ADD")); // NOI18N
         addEntry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEntryActionPerformed(evt);
@@ -293,7 +367,8 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu1.add(addEntry);
 
-        viewList.setText("View");
+        viewList.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        viewList.setText(bundle.getString("VIEW")); // NOI18N
         viewList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewListActionPerformed(evt);
@@ -303,7 +378,18 @@ public class PassManUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText(bundle.getString("EDIT")); // NOI18N
+        jMenu2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+
+        languageMenu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        languageMenu.setText(bundle.getString("LANGUAGE")); // NOI18N
+        languageMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                languageMenuActionPerformed(evt);
+            }
+        });
+        jMenu2.add(languageMenu);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -312,7 +398,7 @@ public class PassManUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,6 +411,7 @@ public class PassManUI extends javax.swing.JFrame {
     private void addEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryActionPerformed
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, "card3");
+        //removeEntryBtn.setEnabled(false);
     }//GEN-LAST:event_addEntryActionPerformed
 
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
@@ -346,12 +433,20 @@ public class PassManUI extends javax.swing.JFrame {
             usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
             passwordShow.setText(((Model)jList1.getSelectedValue()).getPassword());
             commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
+            
+            // Enable remove button
+            removeEntryBtn.setEnabled(true);
+        }
+        else{
+            removeEntryBtn.setEnabled(false);
         }
     }//GEN-LAST:event_jList1ValueChanged
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
         
         utils.refreshView(jList1, mainPanel);
+        
+        removeEntryBtn.setEnabled(false);
         
     }//GEN-LAST:event_viewListBtnActionPerformed
 
@@ -374,6 +469,30 @@ public class PassManUI extends javax.swing.JFrame {
         jList1.setSelectedIndex(0);
     }//GEN-LAST:event_removeEntryBtnActionPerformed
 
+    private void languageMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageMenuActionPerformed
+        if(Utils.loadParams().get(1).equals("pt")){ //NOI18N
+            portuguese.setSelected(true);
+        }
+        else {
+            english.setSelected(true);
+        }
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "card5"); //NOI18N
+    }//GEN-LAST:event_languageMenuActionPerformed
+
+    private void portugueseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_portugueseActionPerformed
+        utils.saveParamChanges("pt", "PT"); //NOI18N
+    }//GEN-LAST:event_portugueseActionPerformed
+
+    private void englishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_englishActionPerformed
+        utils.saveParamChanges("en", "UK"); //NOI18N
+    }//GEN-LAST:event_englishActionPerformed
+
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, "card2"); //NOI18N
+    }//GEN-LAST:event_homeBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -385,7 +504,7 @@ public class PassManUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if (java.util.ResourceBundle.getBundle("passman/Bundle").getString("NIMBUS").equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -400,7 +519,10 @@ public class PassManUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PassManUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
+        Locale.setDefault(new Locale(Utils.loadParams().get(1),Utils.loadParams().get(0)));
         
+        System.out.println(Locale.getDefault());
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -414,11 +536,14 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem addEntry;
     private javax.swing.JButton addEntryBtn;
     private javax.swing.JPanel addEntryPane;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextField commentShow;
     private javax.swing.JButton confirmEntryBtn;
+    private javax.swing.JRadioButton english;
     private javax.swing.JPanel globalViewPane;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton homeBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -426,12 +551,15 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField labelShow;
+    private javax.swing.JMenuItem languageMenu;
+    private javax.swing.JPanel languagePane;
     private javax.swing.JPanel loginPane;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField newComment;
@@ -439,6 +567,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JTextField newPassword;
     private javax.swing.JTextField newUsername;
     private javax.swing.JTextField passwordShow;
+    private javax.swing.JRadioButton portuguese;
     private javax.swing.JButton removeEntryBtn;
     private javax.swing.JTextField usernameShow;
     private javax.swing.JMenuItem viewList;
