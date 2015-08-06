@@ -8,7 +8,9 @@ package passman.db;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import passman.model.Model;
+import passman.model.ErrorDialog;
 
 /**
  *
@@ -20,13 +22,13 @@ public class SQLiteJDBC {
     public void createConnection(){        
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db"); // creates connection to the DB
             
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // Create table
             if(!rs.next()){
                 try (Statement stmt = c.createStatement()) {
-                    String sql = "CREATE TABLE passwords2 " +
+                    String sql = "CREATE TABLE passwords " +
                             "(ID INTEGER PRIMARY KEY," +
                             "LABEL TEXT NOT NULL, " +
                             "USERNAME CHAR(50) NOT NULL, " +
@@ -38,7 +40,7 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
     }
@@ -67,7 +69,10 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            //System.exit(0);
+            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
         
@@ -112,7 +117,7 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
     }
@@ -133,7 +138,7 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
     }
