@@ -6,9 +6,11 @@
 package passman;
 
 import java.awt.CardLayout;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Base64;
+import javax.swing.JFrame;
 /*import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -19,6 +21,7 @@ import passman.model.Model;
 import passman.model.PassGenerator;
 import passman.db.Crypt;
 import passman.model.CryptModel;
+import passman.model.ErrorDialog;
 //import passman.Utils;
 
 /**
@@ -490,7 +493,10 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addEntryActionPerformed
 
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
-        Model model = new Model(newLabel.getText(), newUsername.getText(), (String)newPassword.getText(), newComment.getText());
+        byte[] input = newPassword.getText().getBytes(StandardCharsets.UTF_8);
+        CryptModel cm = Crypt.encrypt(new byte[0],  input);
+        
+        Model model = new Model(newLabel.getText(), newUsername.getText(), cm.encrypted, cm.keyBytes, newComment.getText());
         
         SQLiteJDBC sqlite = new SQLiteJDBC();
         sqlite.addItem(model);
@@ -506,7 +512,14 @@ public class PassManUI extends javax.swing.JFrame {
         if(jList1.getSelectedIndex()>-1){        
             labelShow.setText(((Model)jList1.getSelectedValue()).getLabel());
             usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
-            passwordShow.setText(((Model)jList1.getSelectedValue()).getPassword());
+            
+            // decrypt
+            //ArrayList<byte[]> list = Crypt.getSecurePassword("password");
+            //byte[] keyBytes = list.get(0);
+            
+            byte[] pass = Crypt.decrypt(((Model)jList1.getSelectedValue()).getSalt(), ((Model)jList1.getSelectedValue()).getPassword());
+            String orig = new String(pass, StandardCharsets.UTF_8);
+            passwordShow.setText(orig);
             commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
             
             // Enable remove button
@@ -619,18 +632,19 @@ public class PassManUI extends javax.swing.JFrame {
         // TEST ENCRYPT/DECRYPT
         try{
             byte[] keyBytes = list.get(0);
-            //System.out.println(keyBytes);
-            byte[] input = Base64.getDecoder().decode("Mensagem");
-            byte[] ivBytes = Crypt.generateIV(32);
+            //byte[] input = Base64.getDecoder().decode("Me");
+            byte[] input = "Me".getBytes(StandardCharsets.UTF_8);
             
-            CryptModel cm = Crypt.encrypt(keyBytes, ivBytes, input);
-            
+            CryptModel cm = Crypt.encrypt(keyBytes,  input);
             
             // decrypt
-            System.out.println(Crypt.decrypt(cm.keyBytes, cm.ivBytes, cm.encrypted, cm.enc_len));
+            System.out.println(new String(Crypt.decrypt(cm.keyBytes, cm.encrypted),StandardCharsets.UTF_8));
         } catch(Exception e){
-            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
         }
+        
+        Utils.verifyDB();
         
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

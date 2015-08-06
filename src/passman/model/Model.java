@@ -13,14 +13,16 @@ public class Model {
     
     private String label;
     private String username;
-    private String password;
+    private byte[] password;
+    private byte[] salt;
     private String comment;
     
     // Constructor
-    public Model(String lbl, String usr, String pass, String comm){
+    public Model(String lbl, String usr, byte[] pass, byte[] slt, String comm){
         label = lbl;
         username = usr;
         password = pass;
+        salt = slt;
         comment = comm;
     }
 
@@ -55,15 +57,29 @@ public class Model {
     /**
      * @return the password
      */
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
+    public void setPassword(byte[] password) {
         this.password = password;
+    }
+    
+    /**
+     * @return salt the salt
+     */
+    public byte[] getSalt() {
+        return salt;
+    }
+    
+    /**
+     * @param salt the salt to set
+     */
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     /**

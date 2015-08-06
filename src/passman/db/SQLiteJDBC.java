@@ -14,7 +14,7 @@ import passman.model.ErrorDialog;
 
 /**
  *
- * @author P057736
+ * @author Andre Gomes
  */
 public class SQLiteJDBC {
     private final List<Model> list = new ArrayList<>(); 
@@ -22,7 +22,7 @@ public class SQLiteJDBC {
     public void createConnection(){        
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db"); // creates connection to the DB
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db"); // creates connection to the DB
             
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // Create table
@@ -31,9 +31,10 @@ public class SQLiteJDBC {
                     String sql = "CREATE TABLE passwords " +
                             "(ID INTEGER PRIMARY KEY," +
                             "LABEL TEXT NOT NULL, " +
-                            "USERNAME CHAR(50) NOT NULL, " +
-                            "PASSWORD CHAR(50) NOT NULL, " +
-                            "COMMENT CHAR(250))";
+                            "USERNAME CHAR NOT NULL, " +
+                            "PASSWORD BLOB NOT NULL, " +
+                            "SALT BLOB NOT NULL, " +
+                            "COMMENT CHAR)";
                     
                     stmt.executeUpdate(sql);
                 }
@@ -48,19 +49,19 @@ public class SQLiteJDBC {
     public List<Model> getItems(){
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
             
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // 
             if(rs.next()){
                 Statement stmt = c.createStatement();
-                String sql = "SELECT LABEL, USERNAME, PASSWORD, COMMENT FROM passwords;";
+                String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM passwords;";
 
                 ResultSet entries = stmt.executeQuery(sql);
 
                 while(entries.next()){
                     Model model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
-                            entries.getString("PASSWORD"),entries.getString("COMMENT"));
+                            entries.getBytes("PASSWORD"),entries.getBytes("SALT"),entries.getString("COMMENT"));
                     
                     list.add(model);
                 }
@@ -68,10 +69,7 @@ public class SQLiteJDBC {
                 stmt.close();
                 c.close();
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            //System.exit(0);
-            
+        } catch (ClassNotFoundException | SQLException e) {            
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -82,18 +80,20 @@ public class SQLiteJDBC {
     public void addItem(Model model){
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
             
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // 
             if(rs.next()){
-                try (Statement stmt = c.createStatement()) {
-                    String sql = "INSERT INTO passwords (LABEL, USERNAME, PASSWORD, COMMENT) " + 
-                            "VALUES (\""+model.getLabel()+"\", \""+
-                            model.getUsername()+"\", \""+ model.getPassword() + "\", \""+ model.getComment()+"\")";
-                    
-                    stmt.executeUpdate(sql);
-                }
+                PreparedStatement stmt = null;
+                String sql = "INSERT INTO passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                         " VALUES (\""+model.getLabel()+"\", \""+model.getUsername()+"\", ?, ?, \""+model.getComment()+"\")"; 
+                stmt = c.prepareStatement(sql);
+                
+                stmt.setBytes(1, model.getPassword());
+                stmt.setBytes(2, model.getSalt());
+
+                stmt.executeUpdate();
                 c.close();
             }
             else{
@@ -125,7 +125,7 @@ public class SQLiteJDBC {
     public void removeItem(Model model){
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.db");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
             
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // 

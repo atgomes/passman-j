@@ -96,13 +96,11 @@ public class Crypt {
     }
     
     /**
-     * Encrypts byte array using an user submitted password hashed and salted 
-     * and AES encryption.
-     * @param keyBytes secure password used to encrypt input
+     * Encrypts byte array using AES encryption.
      * @param input byte array to encrypt
      * @return Crypt model object that contains the fields encoded and encrypted
      */
-    public static CryptModel encrypt(byte[] keyBytes, byte[] input){
+    public static CryptModel encrypt(byte[] input){
         byte[] encrypted = null;
         byte[] encoded = null;
         try{
@@ -122,11 +120,11 @@ public class Crypt {
     
     /**
      * Decrypts byte array using an encoded key and AES encryption.
-     * @param keyBytes encoded key created during encryption based on an user submitted password
+     * @param keyBytes encoded key created during encryption
      * @param encrypted encrypted byte array to decrypt
      * @return decrypted byte array as String
      */
-    public static String decrypt(byte[] keyBytes, byte[] encrypted){
+    public static byte[] decrypt(byte[] keyBytes, byte[] encrypted){
         byte[] decrypted = null;
         try{
             SecretKey key = new SecretKeySpec(keyBytes, "AES");
@@ -141,6 +139,7 @@ public class Crypt {
             System.exit(0);
         }
         
-        return Base64.getEncoder().encodeToString(decrypted);
+        //return Base64.getEncoder().encodeToString(decrypted);
+        return decrypted;
     }
 }

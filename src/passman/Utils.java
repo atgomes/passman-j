@@ -22,7 +22,7 @@ import passman.model.Model;
 
 /**
  *
- * @author P057736
+ * @author Andre Gomes
  */
 public class Utils {
     public void refreshView(JList jList1, JPanel mainPanel){
@@ -76,5 +76,13 @@ public class Utils {
         //return props.getProperty("Language","en");
         return list;
 
+    }
+    
+    public static void verifyDB(){
+        File f = new File("./passman.s3db");
+        if(!f.exists()){
+            SQLiteJDBC sqlite = new SQLiteJDBC();
+            sqlite.createConnection();
+        }
     }
 }

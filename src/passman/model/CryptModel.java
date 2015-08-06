@@ -10,16 +10,12 @@ package passman.model;
  * @author P057736
  */
 public class CryptModel {
-    public final byte[] keyBytes;
-    public final byte[] ivBytes;
-    public final byte[] encrypted;
-    public final int enc_len;
+    public final byte[] encodedKey;
+    public final byte[] encryptedPassword;
     
     
-    public CryptModel(byte[] kBs, byte[] ivBs, byte[] encBs, int eLen){
-        keyBytes = kBs;
-        ivBytes = ivBs;
-        encrypted = encBs;
-        enc_len = eLen;
+    public CryptModel(byte[] encKey, byte[] encBs){
+        encodedKey = encKey;
+        encryptedPassword = encBs;
     }
 }
