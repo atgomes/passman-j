@@ -8,6 +8,7 @@ package passman;
 import java.awt.CardLayout;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Base64;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import passman.model.PassGenerator;
 import passman.db.Crypt;
 import passman.model.CryptModel;
 import passman.model.ErrorDialog;
+import passman.model.User;
 //import passman.Utils;
 
 /**
@@ -493,11 +495,20 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addEntryActionPerformed
 
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
-        byte[] input = newPassword.getText().getBytes(StandardCharsets.UTF_8);
-        CryptModel cm = Crypt.encrypt(new byte[0],  input);
+        byte[] input = newPassword.getText().getBytes(StandardCharsets.UTF_8);        
         
-        Model model = new Model(newLabel.getText(), newUsername.getText(), cm.encrypted, cm.keyBytes, newComment.getText());
+        // Calculates new key and salt from password
+        ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
         
+        // Encrypts data
+        CryptModel cm = Crypt.encrypt(list.get(0),list.get(1),input);
+        
+        byte[] output = Crypt.decrypt(list.get(0), list.get(1), cm.encryptedPassword);
+        
+        // Creates data model
+        Model model = new Model(newLabel.getText(), newUsername.getText(), cm.encryptedPassword, cm.salt, newComment.getText());
+        
+        // Adds model to DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
         sqlite.addItem(model);
         
@@ -509,17 +520,33 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jList1ComponentShown
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        if(jList1.getSelectedIndex()>-1){        
-            labelShow.setText(((Model)jList1.getSelectedValue()).getLabel());
-            usernameShow.setText(((Model)jList1.getSelectedValue()).getUsername());
+        if(jList1.getSelectedIndex()>-1){
+            SQLiteJDBC sqlite = new SQLiteJDBC();
+            // get Item
+            Model mdl = sqlite.getItem(((Model)jList1.getSelectedValue()).getLabel());
+            
+            // get user            
+            User user = sqlite.getUser("admin");
+            ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
             
             // decrypt
-            //ArrayList<byte[]> list = Crypt.getSecurePassword("password");
-            //byte[] keyBytes = list.get(0);
+            byte[] pass = user.getSecurePassword(); // user secure password
+            System.out.println("USER SQL VS LOCAL USER:");
+            System.out.println(Arrays.equals(pass, list.get(0)));
+            byte[] salt = mdl.getSalt(); // entry salt
+            //byte[] salt = user.getSaltArray();
+            byte[] encrypted = mdl.getPassword(); // entry encrypted field
             
-            byte[] pass = Crypt.decrypt(((Model)jList1.getSelectedValue()).getSalt(), ((Model)jList1.getSelectedValue()).getPassword());
-            String orig = new String(pass, StandardCharsets.UTF_8);
-            passwordShow.setText(orig);
+            byte[] input = "123456".getBytes(StandardCharsets.UTF_8);
+            CryptModel cm = Crypt.encrypt(pass,salt,input);            
+            System.out.println(Arrays.equals(mdl.getPassword(), cm.encryptedPassword));
+            //System.out.println(((Model)jList1.getSelectedValue()).getPassword());
+            //System.out.println(input);
+            byte[] decrypted = Crypt.decrypt(pass, salt, encrypted);
+            if(decrypted != null){
+                String originalValue = new String(decrypted,StandardCharsets.UTF_8);
+                passwordShow.setText(originalValue);
+            }
             commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
             
             // Enable remove button
@@ -623,29 +650,41 @@ public class PassManUI extends javax.swing.JFrame {
         
         // TESTE HASH PASS
         
-        ArrayList<byte[]> list = Crypt.getSecurePassword("password");
-        System.out.println(Base64.getEncoder().encodeToString(list.get(0)));
-        System.out.println(Base64.getEncoder().encodeToString(list.get(1)));
+        ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
         
-        System.out.println(Crypt.verifyPasswordValidity("password", list.get(1), list.get(0)));
+        /*
+        //System.out.println(Crypt.verifyPasswordValidity("pass25word", list.get(1), list.get(0)));
         
         // TEST ENCRYPT/DECRYPT
         try{
             byte[] keyBytes = list.get(0);
+            byte[] salt = list.get(1);
             //byte[] input = Base64.getDecoder().decode("Me");
-            byte[] input = "Me".getBytes(StandardCharsets.UTF_8);
+            byte[] input = "Canecost3345".getBytes(StandardCharsets.UTF_8);
             
-            CryptModel cm = Crypt.encrypt(keyBytes,  input);
+            CryptModel cm = Crypt.encrypt(keyBytes, salt, input);
             
             // decrypt
-            System.out.println(new String(Crypt.decrypt(cm.keyBytes, cm.encrypted),StandardCharsets.UTF_8));
+            byte[] output = Crypt.decrypt(keyBytes, cm.salt, cm.encryptedPassword);
+            System.out.println(new String(output, StandardCharsets.UTF_8));
+            
+            //System.out.println(new String(Crypt.decrypt(cm.encodedKey, cm.encryptedPassword),StandardCharsets.UTF_8));
         } catch(Exception e){
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
-        }
+        }*/
+        
         
         Utils.verifyDB();
         
+        // add user
+        User user = new User("admin",list.get(0),list.get(1));
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        sqlite.addUser(user);
+        
+        //get user
+        User user2 = sqlite.getUser("admin");
+        System.out.println(Arrays.equals(user2.getSecurePassword(),list.get(0)));
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

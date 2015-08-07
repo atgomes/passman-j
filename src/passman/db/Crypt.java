@@ -5,17 +5,21 @@
  */
 package passman.db;
 
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.swing.JFrame;
@@ -40,7 +44,7 @@ public class Crypt {
         byte[] salt = new byte[length];
         RANDOM.nextBytes(salt);
         
-        return(Base64.getEncoder().encode(salt));
+        return(salt);
     }
     
     /**
@@ -52,7 +56,7 @@ public class Crypt {
         ArrayList<byte[]> list = new ArrayList<>();
         try{
             byte[] salt = generateSalt(16);
-            byte[] passBytes = Base64.getDecoder().decode(password); // Uses Base64 encoding to convert password to byte[]
+            byte[] passBytes = password.getBytes(StandardCharsets.UTF_8); // Uses Base64 encoding to convert password to byte[]
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salt);
@@ -75,24 +79,31 @@ public class Crypt {
      * @param password user submitted string password
      * @param salt salt used in the stored secure password
      * @param securePassword stored secure password
-     * @return true if the password is correct, false otherwise
+     * @return the secure password if original is correct. Null otherwise.
      */
-    public static boolean verifyPasswordValidity(String password, byte[] salt, byte[] securePassword){
+    public static byte[] verifyPasswordValidity(String password, byte[] salt, byte[] securePassword){
         String generatedPassword = null;
+        byte[] bytes = null;
         try{
-            // Uses Base64 encoding to convert String password to byte[]
-            byte[] bytePass = Base64.getDecoder().decode(password);
+            // Uses UTF-8 encoding to convert String password to byte[]
+            byte[] bytePass = password.getBytes(StandardCharsets.UTF_8);
             byte[] byteSalt = salt;
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(byteSalt);
-            byte[] bytes = md.digest(bytePass);
-            // Uses Base64 encoding to convert byte[] to String password
-            generatedPassword = Base64.getEncoder().encodeToString(bytes);
+            bytes = md.digest(bytePass);
+            // Uses UTF-8 encoding to convert byte[] to String password
+            generatedPassword = new String(bytes,StandardCharsets.UTF_8);
         } catch(NoSuchAlgorithmException e){
-            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
         }
-        return(generatedPassword.equals(Base64.getEncoder().encodeToString(securePassword)));
+        if(generatedPassword.equals(new String(securePassword,StandardCharsets.UTF_8))){
+            return bytes;
+        }
+        else{
+            return null;
+        }
     }
     
     /**
@@ -118,6 +129,31 @@ public class Crypt {
         return new CryptModel(encoded, encrypted);
     }
     
+    public static CryptModel encrypt(byte[] password, byte[] salt, byte[] input){
+        byte[] encrypted = null;
+        byte[] key = new byte[salt.length+password.length];
+        try{
+            for (int i = 0; i < key.length; ++i){
+                key[i] = i < salt.length ? salt[i] : password[i - salt.length];
+            }
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+            
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+            
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            
+            encrypted = cipher.doFinal(input);
+            
+        }catch (NoSuchAlgorithmException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException ex) {
+            //Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return new CryptModel(salt, encrypted);
+    }
+        
     /**
      * Decrypts byte array using an encoded key and AES encryption.
      * @param keyBytes encoded key created during encryption
@@ -140,6 +176,30 @@ public class Crypt {
         }
         
         //return Base64.getEncoder().encodeToString(decrypted);
+        return decrypted;
+    }
+    
+    public static byte[] decrypt(byte[] password, byte[] salt, byte[] encrypted){
+        byte[] decrypted = null;
+        byte[] key = new byte[salt.length+password.length];
+        try{
+            for (int i = 0; i < key.length; ++i){
+                key[i] = i < salt.length ? salt[i] : password[i - salt.length];
+            }
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+            
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+            
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            decrypted = cipher.doFinal(encrypted);
+            
+        } catch (NoSuchAlgorithmException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | BadPaddingException ex) {
+            Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return decrypted;
     }
 }
