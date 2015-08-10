@@ -249,7 +249,7 @@ public class SQLiteJDBC {
             // 
             if(rs.next()){
                 Statement stmt = c.createStatement();
-                String sql = "SELECT USERNAME, PASSHASH, SALT FROM users;";
+                String sql = "SELECT USERNAME, PASSHASH, SALT FROM users WHERE USERNAME=\""+username+"\";";
 
                 ResultSet entries = stmt.executeQuery(sql);
 
