@@ -70,8 +70,8 @@ public class SQLiteJDBC {
 
                 while(entries.next()){
                     Model model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
-                            entries.getString("PASSWORD").getBytes(StandardCharsets.UTF_8),
-                            entries.getString("SALT").getBytes(StandardCharsets.UTF_8),entries.getString("COMMENT"));
+                            entries.getBytes("PASSWORD"),
+                            entries.getBytes("SALT"),entries.getString("COMMENT"));
                     
                     list.add(model);
                 }

@@ -142,11 +142,15 @@ public class Crypt {
             
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
             
+            System.out.println("[ENCRYPT]Key size: " + key.length + " bytes");
+            System.out.println("[ENCRYPT]Salt size: " + salt.length + " bytes");
+            System.out.println("[ENCRYPT]Input size: " + input.length + " bytes");
+            
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             
             encrypted = cipher.doFinal(input);
-            
+            System.out.println("[ENCRYPT]Output size: " + encrypted.length + " bytes");
         }catch (NoSuchAlgorithmException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException ex) {
             //Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -189,12 +193,18 @@ public class Crypt {
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
-            
+            System.out.println("[DECRYPT]Key size: " + key.length + " bytes");
+            System.out.println("[DECRYPT]Salt size: " + salt.length + " bytes");
+            System.out.println("[DECRYPT]Encrypted size: " + encrypted.length + " bytes");
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
             
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            // TESTESTESTESTESTESTESTESTESTEST
+            //encrypted = Arrays.copyOf(encrypted,16);
             decrypted = cipher.doFinal(encrypted);
+            
+            System.out.println("[DECRYPT]Decrypted size: " + decrypted.length + " bytes");
             
         } catch (NoSuchAlgorithmException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | BadPaddingException ex) {
             Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);

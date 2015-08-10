@@ -72,6 +72,7 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         commentShow = new javax.swing.JTextArea();
+        toggleShowPassword = new javax.swing.JToggleButton();
         addEntryPane = new javax.swing.JPanel();
         newLabel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -97,9 +98,7 @@ public class PassManUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         languageMenu = new javax.swing.JMenuItem();
 
-        popupWindow.setMaximumSize(new java.awt.Dimension(300, 200));
         popupWindow.setMinimumSize(new java.awt.Dimension(300, 200));
-        popupWindow.setPreferredSize(new java.awt.Dimension(300, 200));
 
         okPopupWinBtn.setText("OK");
         okPopupWinBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +190,7 @@ public class PassManUI extends javax.swing.JFrame {
         usernameShow.setEditable(false);
 
         passwordShow.setEditable(false);
+        passwordShow.setText("************");
 
         jLabel1.setText(bundle.getString("USERNAME")); // NOI18N
 
@@ -215,6 +215,14 @@ public class PassManUI extends javax.swing.JFrame {
         commentShow.setWrapStyleWord(true);
         jScrollPane3.setViewportView(commentShow);
 
+        toggleShowPassword.setSelected(true);
+        toggleShowPassword.setText("jToggleButton1");
+        toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                togglePassVisibility(evt);
+            }
+        });
+
         javax.swing.GroupLayout globalViewPaneLayout = new javax.swing.GroupLayout(globalViewPane);
         globalViewPane.setLayout(globalViewPaneLayout);
         globalViewPaneLayout.setHorizontalGroup(
@@ -223,7 +231,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -234,13 +242,16 @@ public class PassManUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
+                                        .addComponent(passwordShow)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(toggleShowPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap())
                     .addGroup(globalViewPaneLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -264,12 +275,13 @@ public class PassManUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(toggleShowPassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         mainPanel.add(globalViewPane, "card4");
@@ -335,7 +347,7 @@ public class PassManUI extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(generateBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE))
                     .addGroup(addEntryPaneLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(confirmEntryBtn)))
@@ -411,7 +423,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(english)
                     .addComponent(portuguese)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, languagePaneLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homeBtn)
@@ -488,71 +500,92 @@ public class PassManUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * This is triggered when the user clicks the "Add" button.
+     * @param evt 
+     */
     private void addEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryActionPerformed
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, "card3");
         //removeEntryBtn.setEnabled(false);
     }//GEN-LAST:event_addEntryActionPerformed
 
+    /**
+     * This is triggered when the user clicks the "Create" button.
+     * @param evt 
+     */
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
-        byte[] input = newPassword.getText().getBytes(StandardCharsets.UTF_8);        
+        // get text from field
+        String plainTextPassword = newPassword.getText();
         
-        // Calculates new key and salt from password
-        ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
+        // get utf-8 bytes from string
+        byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
         
-        // Encrypts data
-        CryptModel cm = Crypt.encrypt(list.get(0),list.get(1),input);
-        
-        byte[] output = Crypt.decrypt(list.get(0), list.get(1), cm.encryptedPassword);
-        
-        // Creates data model
-        Model model = new Model(newLabel.getText(), newUsername.getText(), cm.encryptedPassword, cm.salt, newComment.getText());
-        
-        // Adds model to DB
+        // gets the current user
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.addItem(model);
+        User currentUser = sqlite.getUser("admin");
+        if(currentUser == null){
+            System.out.println("Coudn't get admin user from DB.");
+        }
         
-        utils.refreshView(jList1, mainPanel);
+        // use user password and salt to encrypt password bytes
+        CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), currentUser.getSaltArray(), passUTF8);
+        if(cpMdl.encryptedPassword == null){
+            System.out.println("Something went wrong while encrypting.");
+        }
+        
+        // save data to DB
+        String label = newLabel.getText();
+        String username = newUsername.getText();
+        String comment = newComment.getText();
+        Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
+        sqlite.addItem(newModel);
+        
+        System.out.println("[ENTRY]Encrypted password size: "+newModel.getPassword().length + " bytes");
     }//GEN-LAST:event_confirmEntryBtnActionPerformed
 
     private void jList1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList1ComponentShown
 
     }//GEN-LAST:event_jList1ComponentShown
 
+    /**
+     * This is triggered when the user changes his list selection
+     * @param evt 
+     */
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         if(jList1.getSelectedIndex()>-1){
-            SQLiteJDBC sqlite = new SQLiteJDBC();
-            // get Item
-            Model mdl = sqlite.getItem(((Model)jList1.getSelectedValue()).getLabel());
+            // convert jList1 item to a Model item
+            Model thisModel = (Model)jList1.getSelectedValue();
+            System.out.println("[MODEL]Encrypted password size: "+thisModel.getPassword().length + " bytes");
+            //System.out.println("[]Encrypted password size: "+thisModel.getPassword().length + " bytes");
+            // shows label, username and comments
+            labelShow.setText(thisModel.getLabel());
+            usernameShow.setText(thisModel.getUsername());
+            commentShow.setText(thisModel.getComment());
             
-            // get user            
-            User user = sqlite.getUser("admin");
-            ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
-            
-            // decrypt
-            byte[] pass = user.getSecurePassword(); // user secure password
-            System.out.println("USER SQL VS LOCAL USER:");
-            System.out.println(Arrays.equals(pass, list.get(0)));
-            byte[] salt = mdl.getSalt(); // entry salt
-            //byte[] salt = user.getSaltArray();
-            byte[] encrypted = mdl.getPassword(); // entry encrypted field
-            
-            byte[] input = "123456".getBytes(StandardCharsets.UTF_8);
-            CryptModel cm = Crypt.encrypt(pass,salt,input);            
-            System.out.println(Arrays.equals(mdl.getPassword(), cm.encryptedPassword));
-            //System.out.println(((Model)jList1.getSelectedValue()).getPassword());
-            //System.out.println(input);
-            byte[] decrypted = Crypt.decrypt(pass, salt, encrypted);
-            if(decrypted != null){
-                String originalValue = new String(decrypted,StandardCharsets.UTF_8);
-                passwordShow.setText(originalValue);
+            // only shows password if toggle is selected
+            if(toggleShowPassword.isSelected()){
+                // decrypts password using current user values
+                SQLiteJDBC sqlite = new SQLiteJDBC();
+                User currentUser = sqlite.getUser("admin");
+                if(currentUser == null){
+                    System.out.println("Coudn't get admin user from DB.");
+                }
+                
+                byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
+                        currentUser.getSaltArray(), thisModel.getPassword());
+                
+                // convert decrypted byte array to String using UTF-8 encoding
+                String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
+                System.out.println(plainTextPassword);
+                
+                passwordShow.setText(plainTextPassword);
             }
-            commentShow.setText(((Model)jList1.getSelectedValue()).getComment());
-            
             // Enable remove button
             removeEntryBtn.setEnabled(true);
         }
         else{
+            // Disable remove button
             removeEntryBtn.setEnabled(false);
         }
     }//GEN-LAST:event_jList1ValueChanged
@@ -618,6 +651,14 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_okPopupWinBtnActionPerformed
 
     /**
+     * This is triggered when the user toggles the password visibility
+     * @param evt 
+     */
+    private void togglePassVisibility(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglePassVisibility
+        
+    }//GEN-LAST:event_togglePassVisibility
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -674,6 +715,7 @@ public class PassManUI extends javax.swing.JFrame {
         CryptModel encObj = Crypt.encrypt(newUser.getSecurePassword(), newUser.getSaltArray(), input);
         
         // decrypt message
+        System.out.println("Encrypted size MAIN: " + encObj.encryptedPassword.length);
         byte[] output = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), encObj.encryptedPassword);
         
         // this output should be true
@@ -759,6 +801,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JDialog popupWindow;
     private javax.swing.JRadioButton portuguese;
     private javax.swing.JButton removeEntryBtn;
+    private javax.swing.JToggleButton toggleShowPassword;
     private javax.swing.JTextField usernameShow;
     private javax.swing.JMenuItem viewList;
     private javax.swing.JButton viewListBtn;
