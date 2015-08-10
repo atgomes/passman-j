@@ -647,44 +647,45 @@ public class PassManUI extends javax.swing.JFrame {
         // Set location (language) according to user preferences
         Locale.setDefault(new Locale(Utils.loadParams().get(1),Utils.loadParams().get(0)));
         
-        
-        // TESTE HASH PASS
-        
-        ArrayList<byte[]> list = Crypt.getSecurePassword("pass25word");
-        
-        /*
-        //System.out.println(Crypt.verifyPasswordValidity("pass25word", list.get(1), list.get(0)));
-        
-        // TEST ENCRYPT/DECRYPT
-        try{
-            byte[] keyBytes = list.get(0);
-            byte[] salt = list.get(1);
-            //byte[] input = Base64.getDecoder().decode("Me");
-            byte[] input = "Canecost3345".getBytes(StandardCharsets.UTF_8);
-            
-            CryptModel cm = Crypt.encrypt(keyBytes, salt, input);
-            
-            // decrypt
-            byte[] output = Crypt.decrypt(keyBytes, cm.salt, cm.encryptedPassword);
-            System.out.println(new String(output, StandardCharsets.UTF_8));
-            
-            //System.out.println(new String(Crypt.decrypt(cm.encodedKey, cm.encryptedPassword),StandardCharsets.UTF_8));
-        } catch(Exception e){
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }*/
-        
-        
+        // Creates DB if it doesn't exist
         Utils.verifyDB();
         
-        // add user
-        User user = new User("admin",list.get(0),list.get(1));
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.addUser(user);
+        // Creates hash pass and user
+        //ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33");
+        //User user = new User("admin", list.get(0), list.get(1));
         
-        //get user
-        User user2 = sqlite.getUser("admin");
-        System.out.println(Arrays.equals(user2.getSecurePassword(),list.get(0)));
+        // the two outputs should be true
+        //System.out.println(Arrays.equals(list.get(0), user.getSecurePassword()));
+        //System.out.println(Arrays.equals(list.get(1), user.getSaltArray()));
+        
+        // adds user to DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        //sqlite.addUser(user);
+        
+        // gets user from DB
+        User newUser = sqlite.getUser("admin");
+        
+        // these two outputs should be true
+        //System.out.println(Arrays.equals(newUser.getSecurePassword(), newUser.getSecurePassword()));
+        //System.out.println(Arrays.equals(newUser.getSaltArray(), newUser.getSaltArray()));
+        
+        // encrypt message
+        byte[] input = "Mensagem para encriptar".getBytes(StandardCharsets.UTF_8);
+        CryptModel encObj = Crypt.encrypt(newUser.getSecurePassword(), newUser.getSaltArray(), input);
+        
+        // decrypt message
+        byte[] output = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), encObj.encryptedPassword);
+        
+        // this output should be true
+        System.out.println(Arrays.equals(input, output));
+        
+        // Convert output to string again
+        String outputStr = new String(output,StandardCharsets.UTF_8);
+        System.out.println(outputStr);
+        
+        // this output should also be true
+        System.out.println("Mensagem para encriptar".equals(outputStr));
+        
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

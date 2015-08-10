@@ -56,7 +56,7 @@ public class Crypt {
         ArrayList<byte[]> list = new ArrayList<>();
         try{
             byte[] salt = generateSalt(16);
-            byte[] passBytes = password.getBytes(StandardCharsets.UTF_8); // Uses Base64 encoding to convert password to byte[]
+            byte[] passBytes = password.getBytes(StandardCharsets.UTF_8); // Uses UTF-8 encoding to convert password to byte[]
 
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(salt);
@@ -93,12 +93,12 @@ public class Crypt {
             md.update(byteSalt);
             bytes = md.digest(bytePass);
             // Uses UTF-8 encoding to convert byte[] to String password
-            generatedPassword = new String(bytes,StandardCharsets.UTF_8);
+            //generatedPassword = new String(bytes,StandardCharsets.UTF_8);
         } catch(NoSuchAlgorithmException e){
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
-        if(generatedPassword.equals(new String(securePassword,StandardCharsets.UTF_8))){
+        if(Arrays.equals(bytes, securePassword)){
             return bytes;
         }
         else{

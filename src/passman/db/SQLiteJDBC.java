@@ -70,7 +70,8 @@ public class SQLiteJDBC {
 
                 while(entries.next()){
                     Model model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
-                            entries.getBytes("PASSWORD"),entries.getBytes("SALT"),entries.getString("COMMENT"));
+                            entries.getString("PASSWORD").getBytes(StandardCharsets.UTF_8),
+                            entries.getString("SALT").getBytes(StandardCharsets.UTF_8),entries.getString("COMMENT"));
                     
                     list.add(model);
                 }
@@ -193,16 +194,18 @@ public class SQLiteJDBC {
             ResultSet rs = c.getMetaData().getTables(null, null, "users", null);
             // 
             if(rs.next()){
-                PreparedStatement stmt = null;
-                String sql = "INSERT INTO users (USERNAME, PASSHASH, SALT)"+
-                         " VALUES (\""+user.getUsername()+"\", ?, ?)";
-                stmt = c.prepareStatement(sql);
-                
-                stmt.setBytes(1, user.getSecurePassword());
-                stmt.setBytes(2, user.getSaltArray());
+                if(this.getUser(user.getUsername()) == null){
+                    PreparedStatement stmt = null;
+                    String sql = "INSERT INTO users (USERNAME, PASSHASH, SALT)"+
+                             " VALUES (\""+user.getUsername()+"\", ?, ?)";
+                    stmt = c.prepareStatement(sql);
 
-                stmt.executeUpdate();
-                c.close();
+                    stmt.setBytes(1, user.getSecurePassword());
+                    stmt.setBytes(2, user.getSaltArray());
+
+                    stmt.executeUpdate();
+                    c.close();
+                }
             }
             else{
                 try (Statement stmt = c.createStatement()) {
