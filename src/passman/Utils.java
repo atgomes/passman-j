@@ -115,4 +115,22 @@ public class Utils {
         
         System.out.println("[ENTRY]Encrypted password size: "+newModel.getPassword().length + " bytes");
     }
+    
+    public static String getFromDBToUI(byte[] encryptedMessage){
+        // decrypts password using current user values
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        User currentUser = sqlite.getUser("admin");
+        if(currentUser == null){
+            System.out.println("Coudn't get admin user from DB.");
+        }
+
+        byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
+                currentUser.getSaltArray(), encryptedMessage);
+
+        // convert decrypted byte array to String using UTF-8 encoding
+        String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
+        System.out.println(plainTextPassword);
+        
+        return(plainTextPassword);
+    }
 }

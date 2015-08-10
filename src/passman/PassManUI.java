@@ -545,19 +545,7 @@ public class PassManUI extends javax.swing.JFrame {
             
             // only shows password if toggle is selected
             if(toggleShowPassword.isSelected()){
-                // decrypts password using current user values
-                SQLiteJDBC sqlite = new SQLiteJDBC();
-                User currentUser = sqlite.getUser("admin");
-                if(currentUser == null){
-                    System.out.println("Coudn't get admin user from DB.");
-                }
-                
-                byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
-                        currentUser.getSaltArray(), thisModel.getPassword());
-                
-                // convert decrypted byte array to String using UTF-8 encoding
-                String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
-                System.out.println(plainTextPassword);
+                String plainTextPassword = Utils.getFromDBToUI(thisModel.getPassword());
                 
                 passwordShow.setText(plainTextPassword);
             }
@@ -667,6 +655,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         // Set location (language) according to user preferences
         Locale.setDefault(new Locale(Utils.loadParams().get(1),Utils.loadParams().get(0)));
+        
         
         // Creates DB if it doesn't exist
         Utils.verifyDB();
