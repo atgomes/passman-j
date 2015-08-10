@@ -108,8 +108,9 @@ public class SQLiteJDBC {
                 }
                 
                 stmt.close();
-                c.close();
+                
             }
+            c.close();
         } catch (ClassNotFoundException | SQLException e) {            
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
@@ -126,15 +127,18 @@ public class SQLiteJDBC {
             ResultSet rs = c.getMetaData().getTables(null, null, "passwords", null);
             // 
             if(rs.next()){
-                PreparedStatement stmt = null;
-                String sql = "INSERT INTO passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
-                         " VALUES (\""+model.getLabel()+"\", \""+model.getUsername()+"\", ?, ?, \""+model.getComment()+"\")"; 
-                stmt = c.prepareStatement(sql);
-                
-                stmt.setBytes(1, model.getPassword());
-                stmt.setBytes(2, model.getSalt());
+                if(this.getItem(model.getLabel()) == null){
+                    PreparedStatement stmt = null;
+                    String sql = "INSERT INTO passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                             " VALUES (\""+model.getLabel()+"\", \""+model.getUsername()+"\", ?, ?, \""+model.getComment()+"\")"; 
+                    stmt = c.prepareStatement(sql);
 
-                stmt.executeUpdate();
+                    stmt.setBytes(1, model.getPassword());
+                    stmt.setBytes(2, model.getSalt());
+
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
                 c.close();
             }
             else{
@@ -204,7 +208,7 @@ public class SQLiteJDBC {
                     stmt.setBytes(2, user.getSaltArray());
 
                     stmt.executeUpdate();
-                    c.close();
+                    stmt.close();
                 }
             }
             else{
@@ -226,8 +230,9 @@ public class SQLiteJDBC {
                 stmt.setBytes(2, user.getSaltArray());
 
                 stmt.executeUpdate();
-                c.close();
+                stmt.close();
             }
+            c.close();
         } catch (ClassNotFoundException | SQLException e) {
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
@@ -253,8 +258,9 @@ public class SQLiteJDBC {
                 }
                 
                 stmt.close();
-                c.close();
+                
             }
+            c.close();
         } catch (ClassNotFoundException | SQLException e) {            
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);

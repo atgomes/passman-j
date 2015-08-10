@@ -651,8 +651,8 @@ public class PassManUI extends javax.swing.JFrame {
         Utils.verifyDB();
         
         // Creates hash pass and user
-        //ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33");
-        //User user = new User("admin", list.get(0), list.get(1));
+        ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33");
+        User user = new User("admin", list.get(0), list.get(1));
         
         // the two outputs should be true
         //System.out.println(Arrays.equals(list.get(0), user.getSecurePassword()));
@@ -660,7 +660,7 @@ public class PassManUI extends javax.swing.JFrame {
         
         // adds user to DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        //sqlite.addUser(user);
+        sqlite.addUser(user);
         
         // gets user from DB
         User newUser = sqlite.getUser("admin");
@@ -685,6 +685,27 @@ public class PassManUI extends javax.swing.JFrame {
         
         // this output should also be true
         System.out.println("Mensagem para encriptar".equals(outputStr));
+        
+        // save encrypted message to DB
+        Model entry = new Model("teste","user",encObj.encryptedPassword,newUser.getSaltArray(),null);
+        sqlite.addItem(entry);
+        
+        // get message from DB
+        Model retrievedEntry = sqlite.getItem("teste");
+        
+        // this output should be true
+        System.out.println(Arrays.equals(encObj.encryptedPassword, retrievedEntry.getPassword()));
+        
+        // decrypt received message
+        byte[] outputFromDB = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), retrievedEntry.getPassword());
+        
+        // Convert to String
+        String outputStrFromDB = new String(outputFromDB,StandardCharsets.UTF_8);
+        
+        System.out.println(outputStrFromDB);
+        
+        // this output should still be true
+        System.out.println("Mensagem para encriptar".equals(outputStrFromDB));
         
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
