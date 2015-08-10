@@ -11,14 +11,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import passman.db.Crypt;
 import passman.db.SQLiteJDBC;
+import passman.model.CryptModel;
 import passman.model.Model;
+import passman.model.User;
 
 /**
  *
@@ -84,5 +88,31 @@ public class Utils {
             SQLiteJDBC sqlite = new SQLiteJDBC();
             sqlite.createConnection();
         }
+    }
+    
+    public static void addToDBFromUI(String label, String username, String plainTextPassword, String comment){
+        // get utf-8 bytes from string
+        byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
+        
+        // gets the current user
+        // TODO: change from fixed user to real current user
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        User currentUser;
+        currentUser = sqlite.getUser("admin");
+        if(currentUser == null){
+            System.out.println("Coudn't get admin user from DB.");
+        }
+        
+        // use user password and salt to encrypt password bytes
+        CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), currentUser.getSaltArray(), passUTF8);
+        if(cpMdl.encryptedPassword == null){
+            System.out.println("Something went wrong while encrypting.");
+        }
+        
+        // save data to DB
+        Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
+        sqlite.addItem(newModel);
+        
+        System.out.println("[ENTRY]Encrypted password size: "+newModel.getPassword().length + " bytes");
     }
 }

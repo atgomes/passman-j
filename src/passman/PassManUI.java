@@ -515,33 +515,13 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
-        // get text from field
-        String plainTextPassword = newPassword.getText();
-        
-        // get utf-8 bytes from string
-        byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
-        
-        // gets the current user
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        User currentUser = sqlite.getUser("admin");
-        if(currentUser == null){
-            System.out.println("Coudn't get admin user from DB.");
-        }
-        
-        // use user password and salt to encrypt password bytes
-        CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), currentUser.getSaltArray(), passUTF8);
-        if(cpMdl.encryptedPassword == null){
-            System.out.println("Something went wrong while encrypting.");
-        }
-        
-        // save data to DB
+        // Get values from text fields
         String label = newLabel.getText();
         String username = newUsername.getText();
+        String plainTextPassword = newPassword.getText();
         String comment = newComment.getText();
-        Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
-        sqlite.addItem(newModel);
-        
-        System.out.println("[ENTRY]Encrypted password size: "+newModel.getPassword().length + " bytes");
+        // Calls method that encrypts the password using the current user values and saves entry to DB
+        Utils.addToDBFromUI(label, username, plainTextPassword, comment);
     }//GEN-LAST:event_confirmEntryBtnActionPerformed
 
     private void jList1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList1ComponentShown
