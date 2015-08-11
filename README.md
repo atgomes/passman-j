@@ -1,12 +1,13 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This README contains information on how to get PassManJ up and running.
 
-### What is this repository for? ###
+### Summary ###
+PassManJ is an application to manage your accounts. It allows you to save and retrieve passwords securely using only one master password.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### Version ###
+This software is currently on version 1.0
+
 
 ### How do I get set up? ###
 

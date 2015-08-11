@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import passman.db.Crypt;
 import passman.db.SQLiteJDBC;
 import passman.model.CryptModel;
+import passman.model.ErrorDialog;
 import passman.model.Model;
 import passman.model.User;
 
@@ -29,6 +31,8 @@ import passman.model.User;
  * @author Andre Gomes
  */
 public class Utils {
+    private static String CURRENT_USER = "";
+            
     public void refreshView(JList jList1, JPanel mainPanel){
         SQLiteJDBC sqlite = new SQLiteJDBC();
         List<Model> list = new ArrayList<>(sqlite.getItems());
@@ -42,14 +46,19 @@ public class Utils {
     
     public void saveParamChanges(String language, String country){
         try{
-            Properties props = new Properties();
+            // Load current parameters
+            Properties props = loadProps();
+            // Set desired parameters
             props.setProperty("Country", country);
             props.setProperty("Language", language);
+            
+            // Save properties to file
             File f = new File("passman.properties");
             OutputStream out = new FileOutputStream(f);
             props.store(out,"Language properties");
         } catch (Exception e){
-            e.printStackTrace();
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
         }
     }
     
@@ -62,21 +71,67 @@ public class Utils {
             File f = new File("passman.properties");
             is = new FileInputStream( f );
         }
-        catch ( Exception e ) { is = null; }
+        catch ( Exception e ) {
+            is = null;
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
 
         try {
             // Try loading properties from the file (if found)
             props.load( is );
         }
-        catch ( Exception e ) { }
+        catch ( Exception e ){
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
         
         ArrayList<String> list = new ArrayList<>();
         list.add(props.getProperty("Country","UK"));
         list.add(props.getProperty("Language","en"));
         
-        //return props.getProperty("Language","en");
         return list;
 
+    }
+    
+    public static Properties loadProps(){
+        Properties props = new Properties();
+        InputStream is = null;
+
+        // First try loading from the current directory
+        try {
+            File f = new File("passman.properties");
+            is = new FileInputStream( f );
+        }
+        catch ( Exception e ) {
+            is = null;
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+
+        try {
+            // Try loading properties from the file (if found)
+            props.load( is );
+        }
+        catch ( Exception e ) {
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+        
+        //return props.getProperty("Language","en");
+        return props;
+    }
+    
+    public static String getTitleFromProps(){
+        Properties props = loadProps();
+        
+        String title1 = props.getProperty("Application.title");
+        String title2 = props.getProperty("Application.version");
+        String title3 = props.getProperty("Application.buildnumber");
+        
+        String finalTitle = title1.replace("${Application.version}", title2.replace("${Application.buildnumber}", title3));
+        
+        return finalTitle;
     }
     
     public static void verifyDB(){
@@ -134,5 +189,13 @@ public class Utils {
     public static void goToScreen(JPanel mainPanel, String location){
         CardLayout card = (CardLayout)mainPanel.getLayout();
         card.show(mainPanel, location);
+    }
+    
+    public static void setCurrentUser(String username){
+        CURRENT_USER = username;
+    }
+    
+    public static String getCurrentUser(){
+        return(CURRENT_USER);
     }
 }

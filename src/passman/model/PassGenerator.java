@@ -44,7 +44,7 @@ public class PassGenerator {
     /**
      * Generates random plain text password. This function can change the type 
      * of password generated according to the parameters received.
-     * @param passwordLength determines the password length. If value provided is < 0 then length is random
+     * @param passwordLength determines the password length. If value provided is lower than 0 then length is random
      * @param needsSymbol determines if the password should have symbols
      * @param safeSymbols determines which symbols can be used. Safe symbols are limited to "-" and "_"
      * @param needsDigit determines if the password should have numbers

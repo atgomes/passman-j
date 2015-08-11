@@ -63,6 +63,7 @@ public class PassManUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
         addEntryBtn = new javax.swing.JButton();
         viewListBtn = new javax.swing.JButton();
@@ -179,43 +180,54 @@ public class PassManUI extends javax.swing.JFrame {
 
         jLabel12.setText(bundle.getString("PASSWORD")); // NOI18N
 
+        jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel16.setText(bundle.getString("PLEASELOGIN")); // NOI18N
+
         javax.swing.GroupLayout loginPaneLayout = new javax.swing.GroupLayout(loginPane);
         loginPane.setLayout(loginPaneLayout);
         loginPaneLayout.setHorizontalGroup(
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPaneLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginPaneLayout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(attemptLogin))
-                    .addGroup(loginPaneLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11)
                             .addComponent(jButton2)
-                            .addComponent(jLabel12))
-                        .addGap(30, 30, 30)
-                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 177, Short.MAX_VALUE))
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(loginPaneLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(attemptLogin))
+                            .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(loginPaneLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel16)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         loginPaneLayout.setVerticalGroup(
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addGap(50, 50, 50)
-                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addComponent(attemptLogin)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12))
+                    .addGroup(loginPaneLayout.createSequentialGroup()
+                        .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(attemptLogin)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(loginPane, "LOGIN");
@@ -314,7 +326,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, globalViewPaneLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -364,7 +376,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         mainPanel.add(globalViewPane, "GLOBAL");
@@ -430,7 +442,7 @@ public class PassManUI extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(generateBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE))
                     .addGroup(addEntryPaneLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(confirmEntryBtn)))
@@ -459,7 +471,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addGroup(addEntryPaneLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(confirmEntryBtn)
                 .addContainerGap())
         );
@@ -506,7 +518,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(english)
                     .addComponent(portuguese)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, languagePaneLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homeBtn)
@@ -523,7 +535,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addComponent(portuguese)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(english)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addComponent(homeBtn)
                 .addContainerGap())
         );
@@ -557,7 +569,7 @@ public class PassManUI extends javax.swing.JFrame {
         createUserPaneLayout.setHorizontalGroup(
             createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createUserPaneLayout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -590,7 +602,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createUserBtn)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mainPanel.add(createUserPane, "CREATEUSER");
@@ -646,6 +658,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -785,7 +798,7 @@ public class PassManUI extends javax.swing.JFrame {
 
             passwordShow.setText(plainTextPassword);
         } else{
-            passwordShow.setText("*********");
+            passwordShow.setText("*********"); //NOI18N
         }
     }//GEN-LAST:event_togglePassVisibility
 
@@ -794,9 +807,7 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void attemptLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attemptLoginActionPerformed
-        // Creates hash pass and user                
-        //ArrayList<byte[]> list = Crypt.getSecurePassword(new String(loginPassword.getPassword()));
-        //User attemptUser = new User(loginUsername.getText(), list.get(0), list.get(1));
+        // Creates hash pass and user
         
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
@@ -807,8 +818,10 @@ public class PassManUI extends javax.swing.JFrame {
             byte[] result = Crypt.verifyPasswordValidity(new String(loginPassword.getPassword()), salt, secPassword);
             
             if(result != null){
-                //CardLayout card = (CardLayout)mainPanel.getLayout();
-                //card.show(mainPanel, "MAIN");
+                // Sets the current user
+                Utils.setCurrentUser(compareUser.getUsername());
+                
+                // Goes to main screen
                 Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
             }
         }
@@ -846,7 +859,7 @@ public class PassManUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_createUserBtnActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
@@ -876,74 +889,17 @@ public class PassManUI extends javax.swing.JFrame {
 
         // Set location (language) according to user preferences
         Locale.setDefault(new Locale(Utils.loadParams().get(1),Utils.loadParams().get(0)));
-        
-        
+
         // Creates DB if it doesn't exist
         Utils.verifyDB();
-        
-        // Creates hash pass and user
-        ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33"); //NOI18N
-        User user = new User("admin", list.get(0), list.get(1)); //NOI18N
-        
-        // the two outputs should be true
-        //System.out.println(Arrays.equals(list.get(0), user.getSecurePassword()));
-        //System.out.println(Arrays.equals(list.get(1), user.getSaltArray()));
-        
-        // adds user to DB
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.addUser(user);
-        
-        // gets user from DB
-        User newUser = sqlite.getUser("admin"); //NOI18N
-        
-        // these two outputs should be true
-        //System.out.println(Arrays.equals(newUser.getSecurePassword(), newUser.getSecurePassword()));
-        //System.out.println(Arrays.equals(newUser.getSaltArray(), newUser.getSaltArray()));
-        
-        // encrypt message
-        byte[] input = "Mensagem para encriptar".getBytes(StandardCharsets.UTF_8); //NOI18N
-        CryptModel encObj = Crypt.encrypt(newUser.getSecurePassword(), newUser.getSaltArray(), input);
-        
-        // decrypt message
-        System.out.println("Encrypted size MAIN: " + encObj.encryptedPassword.length); //NOI18N
-        byte[] output = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), encObj.encryptedPassword);
-        
-        // this output should be true
-        System.out.println(Arrays.equals(input, output));
-        
-        // Convert output to string again
-        String outputStr = new String(output,StandardCharsets.UTF_8);
-        System.out.println(outputStr);
-        
-        // this output should also be true
-        System.out.println("Mensagem para encriptar".equals(outputStr)); //NOI18N
-        
-        // save encrypted message to DB
-        Model entry = new Model("teste","user",encObj.encryptedPassword,newUser.getSaltArray(),null); //NOI18N
-        sqlite.addItem(entry);
-        
-        // get message from DB
-        Model retrievedEntry = sqlite.getItem("teste"); //NOI18N
-        
-        // this output should be true
-        System.out.println(Arrays.equals(encObj.encryptedPassword, retrievedEntry.getPassword()));
-        
-        // decrypt received message
-        byte[] outputFromDB = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), retrievedEntry.getPassword());
-        
-        // Convert to String
-        String outputStrFromDB = new String(outputFromDB,StandardCharsets.UTF_8);
-        
-        System.out.println(outputStrFromDB);
-        
-        // this output should still be true
-        System.out.println("Mensagem para encriptar".equals(outputStrFromDB)); //NOI18N
         
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new PassManUI().setVisible(true);
+                PassManUI myFrame = new PassManUI();
+                myFrame.setTitle(Utils.getTitleFromProps());
+                myFrame.setVisible(true);
             }
         });
     }
@@ -970,6 +926,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
