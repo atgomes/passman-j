@@ -38,9 +38,6 @@ public class Utils {
             listModel.addElement(obj);
         }
         jList1.setModel(listModel);
-        
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card4");
     }
     
     public void saveParamChanges(String language, String country){
@@ -132,5 +129,10 @@ public class Utils {
         System.out.println(plainTextPassword);
         
         return(plainTextPassword);
+    }
+    
+    public static void goToScreen(JPanel mainPanel, String location){
+        CardLayout card = (CardLayout)mainPanel.getLayout();
+        card.show(mainPanel, location);
     }
 }

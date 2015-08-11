@@ -61,6 +61,8 @@ public class PassManUI extends javax.swing.JFrame {
         loginUsername = new javax.swing.JTextField();
         attemptLogin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         mainPane = new javax.swing.JPanel();
         addEntryBtn = new javax.swing.JButton();
         viewListBtn = new javax.swing.JButton();
@@ -101,6 +103,9 @@ public class PassManUI extends javax.swing.JFrame {
         newUserPasswordField = new javax.swing.JPasswordField();
         newUserPasswordField2 = new javax.swing.JPasswordField();
         createUserBtn = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         addEntry = new javax.swing.JMenuItem();
@@ -155,54 +160,62 @@ public class PassManUI extends javax.swing.JFrame {
         loginUsername.setMinimumSize(new java.awt.Dimension(110, 20));
         loginUsername.setPreferredSize(new java.awt.Dimension(110, 20));
 
-        attemptLogin.setText("jButton1");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
+        attemptLogin.setText(bundle.getString("LOGIN")); // NOI18N
         attemptLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 attemptLoginActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText(bundle.getString("CREATEACC")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jLabel11.setText(bundle.getString("USERNAME")); // NOI18N
+
+        jLabel12.setText(bundle.getString("PASSWORD")); // NOI18N
+
         javax.swing.GroupLayout loginPaneLayout = new javax.swing.GroupLayout(loginPane);
         loginPane.setLayout(loginPaneLayout);
         loginPaneLayout.setHorizontalGroup(
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPaneLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginPaneLayout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
-                        .addGap(0, 157, Short.MAX_VALUE)
-                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
-                                    .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(157, 157, 157))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
-                                    .addComponent(attemptLogin)
-                                    .addGap(176, 176, 176)))))))
+                        .addGap(173, 173, 173)
+                        .addComponent(attemptLogin))
+                    .addGroup(loginPaneLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel11)
+                            .addComponent(jButton2)
+                            .addComponent(jLabel12))
+                        .addGap(30, 30, 30)
+                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 177, Short.MAX_VALUE))
         );
         loginPaneLayout.setVerticalGroup(
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(18, 18, 18)
                 .addComponent(attemptLogin)
-                .addGap(105, 105, 105))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         mainPanel.add(loginPane, "LOGIN");
@@ -211,7 +224,6 @@ public class PassManUI extends javax.swing.JFrame {
         mainPane.setLayout(new java.awt.GridBagLayout());
 
         addEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
         addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
         addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +252,8 @@ public class PassManUI extends javax.swing.JFrame {
         mainPane.add(viewListBtn, gridBagConstraints);
 
         mainPanel.add(mainPane, "MAIN");
+
+        globalViewPane.setToolTipText(bundle.getString("SHOW")); // NOI18N
 
         jList1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -284,7 +298,8 @@ public class PassManUI extends javax.swing.JFrame {
         jScrollPane3.setViewportView(commentShow);
 
         toggleShowPassword.setSelected(true);
-        toggleShowPassword.setText("jToggleButton1");
+        toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
+        toggleShowPassword.setToolTipText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 togglePassVisibility(evt);
@@ -524,37 +539,55 @@ public class PassManUI extends javax.swing.JFrame {
         newUserPasswordField2.setMinimumSize(new java.awt.Dimension(110, 20));
         newUserPasswordField2.setPreferredSize(new java.awt.Dimension(110, 20));
 
-        createUserBtn.setText("jButton3");
+        createUserBtn.setText(bundle.getString("CONFIRMACC")); // NOI18N
         createUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createUserBtnActionPerformed(evt);
             }
         });
 
+        jLabel13.setText(bundle.getString("USERNAME")); // NOI18N
+
+        jLabel14.setText(bundle.getString("PASSWORD")); // NOI18N
+
+        jLabel15.setText(bundle.getString("REPEATPASS")); // NOI18N
+
         javax.swing.GroupLayout createUserPaneLayout = new javax.swing.GroupLayout(createUserPane);
         createUserPane.setLayout(createUserPaneLayout);
         createUserPaneLayout.setHorizontalGroup(
             createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, createUserPaneLayout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(newUserPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(createUserPaneLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(createUserBtn))
                     .addComponent(newUserPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newUserField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(185, 185, 185))
+            .addGroup(createUserPaneLayout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addComponent(createUserBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         createUserPaneLayout.setVerticalGroup(
             createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(createUserPaneLayout.createSequentialGroup()
                 .addGap(90, 90, 90)
-                .addComponent(newUserField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newUserField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newUserPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newUserPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(newUserPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newUserPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(createUserBtn)
                 .addContainerGap(127, Short.MAX_VALUE))
@@ -620,8 +653,7 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void addEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryActionPerformed
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card3");
+        Utils.goToScreen(mainPanel, "ADD"); //NOI18N
         //removeEntryBtn.setEnabled(false);
     }//GEN-LAST:event_addEntryActionPerformed
 
@@ -637,6 +669,15 @@ public class PassManUI extends javax.swing.JFrame {
         String comment = newComment.getText();
         // Calls method that encrypts the password using the current user values and saves entry to DB
         Utils.addToDBFromUI(label, username, plainTextPassword, comment);
+        
+        // clears fields
+        newLabel.setText(""); //NOI18N
+        newUsername.setText(""); //NOI18N
+        newPassword.setText(""); //NOI18N
+        newComment.setText(""); //NOI18N
+        
+        // moves to main screen
+        Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
     }//GEN-LAST:event_confirmEntryBtnActionPerformed
 
     private void jList1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jList1ComponentShown
@@ -651,7 +692,7 @@ public class PassManUI extends javax.swing.JFrame {
         if(jList1.getSelectedIndex()>-1){
             // convert jList1 item to a Model item
             Model thisModel = (Model)jList1.getSelectedValue();
-            System.out.println("[MODEL]Encrypted password size: "+thisModel.getPassword().length + " bytes");
+            System.out.println("[MODEL]Encrypted password size: "+thisModel.getPassword().length + " bytes"); //NOI18N
             //System.out.println("[]Encrypted password size: "+thisModel.getPassword().length + " bytes");
             // shows label, username and comments
             labelShow.setText(thisModel.getLabel());
@@ -676,18 +717,19 @@ public class PassManUI extends javax.swing.JFrame {
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
         
         utils.refreshView(jList1, mainPanel);
+        Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
         
         removeEntryBtn.setEnabled(false);
         
     }//GEN-LAST:event_viewListBtnActionPerformed
 
     private void addEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryBtnActionPerformed
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card3");
+        Utils.goToScreen(mainPanel, "ADD"); //NOI18N
     }//GEN-LAST:event_addEntryBtnActionPerformed
 
     private void viewListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListActionPerformed
         utils.refreshView(jList1, mainPanel);
+        Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
     }//GEN-LAST:event_viewListActionPerformed
 
     private void removeEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryBtnActionPerformed
@@ -697,6 +739,7 @@ public class PassManUI extends javax.swing.JFrame {
         sqlite.removeItem(model);
         
         utils.refreshView(jList1, mainPanel);
+        //Utils.goToScreen(mainPanel, "GLOBAL");
         jList1.setSelectedIndex(0);
     }//GEN-LAST:event_removeEntryBtnActionPerformed
 
@@ -707,8 +750,7 @@ public class PassManUI extends javax.swing.JFrame {
         else {
             english.setSelected(true);
         }
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card5"); //NOI18N
+        Utils.goToScreen(mainPanel, "LANGUAGE"); //NOI18N
     }//GEN-LAST:event_languageMenuActionPerformed
 
     private void portugueseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_portugueseActionPerformed
@@ -720,8 +762,7 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_englishActionPerformed
 
     private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "card2"); //NOI18N
+        Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
@@ -738,7 +779,14 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void togglePassVisibility(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_togglePassVisibility
-        
+        if(toggleShowPassword.isSelected()){
+            Model thisModel = (Model)jList1.getSelectedValue();
+            String plainTextPassword = Utils.getFromDBToUI(thisModel.getPassword());
+
+            passwordShow.setText(plainTextPassword);
+        } else{
+            passwordShow.setText("*********");
+        }
     }//GEN-LAST:event_togglePassVisibility
 
     /**
@@ -759,8 +807,9 @@ public class PassManUI extends javax.swing.JFrame {
             byte[] result = Crypt.verifyPasswordValidity(new String(loginPassword.getPassword()), salt, secPassword);
             
             if(result != null){
-                CardLayout card = (CardLayout)mainPanel.getLayout();
-                card.show(mainPanel, "MAIN");
+                //CardLayout card = (CardLayout)mainPanel.getLayout();
+                //card.show(mainPanel, "MAIN");
+                Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
             }
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
@@ -770,8 +819,7 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, "CREATEUSER");
+        Utils.goToScreen(mainPanel, "CREATEUSER"); //NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -791,11 +839,10 @@ public class PassManUI extends javax.swing.JFrame {
                 sqlite.addUser(user);
                 
                 // Clears fields
-                newUserPasswordField.setText("");
-                newUserPasswordField2.setText("");
+                newUserPasswordField.setText(""); //NOI18N
+                newUserPasswordField2.setText(""); //NOI18N
                 
-                CardLayout card = (CardLayout)mainPanel.getLayout();
-                card.show(mainPanel, "LOGIN");
+                Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
             }
         }
     }//GEN-LAST:event_createUserBtnActionPerformed
@@ -835,8 +882,8 @@ public class PassManUI extends javax.swing.JFrame {
         Utils.verifyDB();
         
         // Creates hash pass and user
-        ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33");
-        User user = new User("admin", list.get(0), list.get(1));
+        ArrayList<byte[]> list = Crypt.getSecurePassword("Tfr5Jbv33"); //NOI18N
+        User user = new User("admin", list.get(0), list.get(1)); //NOI18N
         
         // the two outputs should be true
         //System.out.println(Arrays.equals(list.get(0), user.getSecurePassword()));
@@ -847,18 +894,18 @@ public class PassManUI extends javax.swing.JFrame {
         sqlite.addUser(user);
         
         // gets user from DB
-        User newUser = sqlite.getUser("admin");
+        User newUser = sqlite.getUser("admin"); //NOI18N
         
         // these two outputs should be true
         //System.out.println(Arrays.equals(newUser.getSecurePassword(), newUser.getSecurePassword()));
         //System.out.println(Arrays.equals(newUser.getSaltArray(), newUser.getSaltArray()));
         
         // encrypt message
-        byte[] input = "Mensagem para encriptar".getBytes(StandardCharsets.UTF_8);
+        byte[] input = "Mensagem para encriptar".getBytes(StandardCharsets.UTF_8); //NOI18N
         CryptModel encObj = Crypt.encrypt(newUser.getSecurePassword(), newUser.getSaltArray(), input);
         
         // decrypt message
-        System.out.println("Encrypted size MAIN: " + encObj.encryptedPassword.length);
+        System.out.println("Encrypted size MAIN: " + encObj.encryptedPassword.length); //NOI18N
         byte[] output = Crypt.decrypt(newUser.getSecurePassword(), newUser.getSaltArray(), encObj.encryptedPassword);
         
         // this output should be true
@@ -869,14 +916,14 @@ public class PassManUI extends javax.swing.JFrame {
         System.out.println(outputStr);
         
         // this output should also be true
-        System.out.println("Mensagem para encriptar".equals(outputStr));
+        System.out.println("Mensagem para encriptar".equals(outputStr)); //NOI18N
         
         // save encrypted message to DB
-        Model entry = new Model("teste","user",encObj.encryptedPassword,newUser.getSaltArray(),null);
+        Model entry = new Model("teste","user",encObj.encryptedPassword,newUser.getSaltArray(),null); //NOI18N
         sqlite.addItem(entry);
         
         // get message from DB
-        Model retrievedEntry = sqlite.getItem("teste");
+        Model retrievedEntry = sqlite.getItem("teste"); //NOI18N
         
         // this output should be true
         System.out.println(Arrays.equals(encObj.encryptedPassword, retrievedEntry.getPassword()));
@@ -890,7 +937,7 @@ public class PassManUI extends javax.swing.JFrame {
         System.out.println(outputStrFromDB);
         
         // this output should still be true
-        System.out.println("Mensagem para encriptar".equals(outputStrFromDB));
+        System.out.println("Mensagem para encriptar".equals(outputStrFromDB)); //NOI18N
         
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -918,6 +965,11 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
