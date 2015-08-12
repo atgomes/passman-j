@@ -353,6 +353,29 @@ public class SQLiteJDBC {
         }
     }
     
+    public void removeItem2(Model model){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_entries", null);
+            // 
+            if(rs.next()){
+                try (Statement stmt = c.createStatement()) {
+                    //String sql = "DELETE FROM pmj_passwords WHERE LABEL = \"" + model.getLabel() + "\";";
+                    String sql = "DELETE FROM pmj_entries WHERE PASSWORD_ID IN ("+
+                            "SELECT ID FROM pmj_passwords WHERE LABEL=\""+model.getLabel()+"\");";
+                    
+                    stmt.executeUpdate(sql);
+                }
+                c.close();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+    }
+    
     public void addUser(User user){
         try{
             Class.forName("org.sqlite.JDBC");

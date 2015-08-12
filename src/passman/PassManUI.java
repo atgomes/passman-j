@@ -746,7 +746,7 @@ public class PassManUI extends javax.swing.JFrame {
         Model model = (Model)jList1.getSelectedValue();
         
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.removeItem(model);
+        sqlite.removeItem2(model);
         
         utils.refreshView(jList1, mainPanel);
         //Utils.goToScreen(mainPanel, "GLOBAL");
