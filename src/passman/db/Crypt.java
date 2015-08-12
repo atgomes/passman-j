@@ -17,7 +17,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.KeyGenerator;
@@ -131,6 +130,7 @@ public class Crypt {
     
     public static CryptModel encrypt(byte[] password, byte[] salt, byte[] input){
         byte[] encrypted = null;
+        salt = generateSalt(16);
         byte[] key = new byte[salt.length+password.length];
         try{
             for (int i = 0; i < key.length; ++i){

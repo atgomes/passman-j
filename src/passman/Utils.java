@@ -165,7 +165,7 @@ public class Utils {
         sqlite.addItem2(newModel);
     }
     
-    public static String getFromDBToUI(byte[] encryptedMessage){
+    public static String getFromDBToUI(byte[] encryptedMessage, byte[] salt){
         // decrypts password using current user values
         SQLiteJDBC sqlite = new SQLiteJDBC();
         User currentUser = sqlite.getUser(CURRENT_USER);
@@ -174,7 +174,7 @@ public class Utils {
         }
 
         byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
-                currentUser.getSaltArray(), encryptedMessage);
+                salt, encryptedMessage);
 
         // convert decrypted byte array to String using UTF-8 encoding
         String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
@@ -184,14 +184,14 @@ public class Utils {
     }
     
     public static void goToScreen(JPanel mainPanel, String location){
-        if(!location.equals("CREATEUSER") && !location.equals("LOGIN")){
+        if(location.equals("CREATEUSER") || location.equals("LOGIN") || location.equals("LANGUAGE")){
+            CardLayout card = (CardLayout)mainPanel.getLayout();
+            card.show(mainPanel, location);
+        } else{
             if(CURRENT_USER != ""){
                 CardLayout card = (CardLayout)mainPanel.getLayout();
                 card.show(mainPanel, location);
             }
-        } else{
-            CardLayout card = (CardLayout)mainPanel.getLayout();
-            card.show(mainPanel, location);
         }
     }
     

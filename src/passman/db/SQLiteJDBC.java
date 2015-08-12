@@ -5,7 +5,6 @@
  */
 package passman.db;
 
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -106,7 +105,6 @@ public class SQLiteJDBC {
             // 
             if(rs.next()){
                 Statement stmt = c.createStatement();
-                //String sql = "SELECT PASSWORD_ID FROM pmj_passwords WHERE USER_ID=\""+ this.getUserID(Utils.getCurrentUser()) +"\";";
                 String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM pmj_passwords"+
                         " WHERE ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE USER_ID=\""+ 
                         this.getUserID(Utils.getCurrentUser()) +"\");";
@@ -170,6 +168,41 @@ public class SQLiteJDBC {
         return model;
     }
     
+    public Model getItem2(String label){
+        Model model = null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_entries", null);
+            // 
+            if(rs.next()){
+                Statement stmt = c.createStatement();
+                String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM pmj_passwords WHERE "+
+                        "ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE USER_ID "+
+                        "IN (SELECT ID FROM pmj_users WHERE USERNAME=\""+Utils.getCurrentUser()+"\"))"+
+                        " AND LABEL=\""+label+"\"";
+
+                ResultSet entries = stmt.executeQuery(sql);
+
+                if(entries.next()){
+                    model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
+                            entries.getBytes("PASSWORD"),entries.getBytes("SALT"),entries.getString("COMMENT"));
+                    
+                }
+                
+                stmt.close();
+                
+            }
+            c.close();
+        } catch (ClassNotFoundException | SQLException e) {            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+        
+        return model;
+    }
+    
     public int getItemID(String label){
         int itemID = -1;
         try{
@@ -181,6 +214,10 @@ public class SQLiteJDBC {
             if(rs.next()){
                 Statement stmt = c.createStatement();
                 String sql = "SELECT ID FROM pmj_passwords WHERE LABEL=\""+label+"\";";
+                /*String sql = "SELECT ID FROM pmj_passwords WHERE "+
+                        "ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE USER_ID "+
+                        "IN (SELECT ID FROM pmj_users WHERE USERNAME=\""+Utils.getCurrentUser()+"\"))"+
+                        " AND LABEL=\""+label+"\"";*/
 
                 ResultSet entries = stmt.executeQuery(sql);
 
@@ -263,7 +300,7 @@ public class SQLiteJDBC {
                 ++count;
             }
             if(count>=3){
-                if(this.getItem(model.getLabel()) == null){
+                //if(this.getItem(model.getLabel()) == null){
                     // Updates passwords table
                     PreparedStatement stmt = null;
                     String sql = "INSERT INTO pmj_passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
@@ -282,10 +319,11 @@ public class SQLiteJDBC {
                     stmt.executeUpdate();
                     
                     // Get last entry ID
+                    int itemID = stmt.getGeneratedKeys().getInt(1);
+                    // Get current date
                     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date now = new Date();
-                    String strDate = sdfDate.format(now);
-                    int itemID = this.getItemID(model.getLabel());
+                    String strDate = sdfDate.format(now);                 
                     
                     // Get current user ID
                     int userID = this.getUserID(Utils.getCurrentUser());
@@ -301,7 +339,7 @@ public class SQLiteJDBC {
                     stmt.executeUpdate();
                     
                     stmt.close();
-                }
+                //}
                 c.close();
             }
             else{

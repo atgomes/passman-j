@@ -40,6 +40,7 @@ public class ErrorDialog extends JDialog implements ActionListener{
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
+        setLocationRelativeTo(null); 
         setVisible(true);
     }
     
