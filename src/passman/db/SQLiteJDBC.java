@@ -7,9 +7,12 @@ package passman.db;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import javax.swing.JFrame;
+import passman.Utils;
 import passman.model.Model;
 import passman.model.ErrorDialog;
 import passman.model.User;
@@ -30,22 +33,29 @@ public class SQLiteJDBC {
             // Create table
             if(!rs.next()){
                 try (Statement stmt = c.createStatement()) {
-                    String sql = "CREATE TABLE passwords " +
-                            "(ID INTEGER PRIMARY KEY," +
+                    String sql = "CREATE TABLE pmj_passwords " +
+                            "(ID INTEGER PRIMARY KEY, " +
                             "LABEL TEXT NOT NULL, " +
                             "USERNAME CHAR NOT NULL, " +
                             "PASSWORD BLOB NOT NULL, " +
                             "SALT BLOB NOT NULL, " +
                             "COMMENT CHAR)";
                     
-                    String sql2 = "CREATE TABLE users " +
-                            "(ID INTEGER PRIMARY KEY," +
+                    String sql2 = "CREATE TABLE pmj_users " +
+                            "(ID INTEGER PRIMARY KEY, " +
                             "USERNAME CHAR NOT NULL, " +
                             "PASSHASH BLOB NOT NULL, " +
                             "SALT BLOB NOT NULL)";
                     
+                    String sql3 = "CREATE TABLE pmj_entries " +
+                            "(ID INTEGER PRIMARY KEY, " +
+                            "USER_ID INTEGER NOT NULL, " +
+                            "PASSWORD_ID INTEGER NOT NULL, " +
+                            "ENTRY_DATE TEXT NOT NULL)";
+                    
                     stmt.executeUpdate(sql);
                     stmt.executeUpdate(sql2);
+                    stmt.executeUpdate(sql3);
                 }
                 c.close();
             }
@@ -119,6 +129,36 @@ public class SQLiteJDBC {
         return model;
     }
     
+    public int getItemID(String label){
+        int itemID = -1;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_passwords", null);
+            // 
+            if(rs.next()){
+                Statement stmt = c.createStatement();
+                String sql = "SELECT ID FROM pmj_passwords WHERE LABEL=\""+label+"\";";
+
+                ResultSet entries = stmt.executeQuery(sql);
+
+                if(entries.next()){
+                    itemID = entries.getInt("ID");                    
+                }
+                
+                stmt.close();
+                
+            }
+            c.close();
+        } catch (ClassNotFoundException | SQLException e) {            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+        
+        return itemID;
+    }
+    
     public void addItem(Model model){
         try{
             Class.forName("org.sqlite.JDBC");
@@ -137,6 +177,88 @@ public class SQLiteJDBC {
                     stmt.setBytes(2, model.getSalt());
 
                     stmt.executeUpdate();
+                    stmt.close();
+                }
+                c.close();
+            }
+            else{
+                try (Statement stmt = c.createStatement()) {
+                    String sql = "CREATE TABLE passwords " +
+                            "(ID INTEGER PRIMARY KEY," +
+                            "LABEL TEXT NOT NULL, " +
+                            "USERNAME CHAR(50) NOT NULL, " +
+                            "PASSWORD CHAR(50) NOT NULL, " +
+                            "COMMENT CHAR(250))";
+                    
+                    stmt.executeUpdate(sql);
+                }
+                PreparedStatement stmt = null;
+                String sql = "INSERT INTO passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                         " VALUES (\""+model.getLabel()+"\", \""+model.getUsername()+"\", ?, ?, \""+model.getComment()+"\")"; 
+                stmt = c.prepareStatement(sql);
+                
+                stmt.setBytes(1, model.getPassword());
+                stmt.setBytes(2, model.getSalt());
+
+                stmt.executeUpdate();
+                c.close();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    public void addItem2(Model model){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_%", null);
+            
+           // Checks number os results
+            int count = 0;
+            while(rs.next()){
+                ++count;
+            }
+            if(count>=3){
+                if(this.getItem(model.getLabel()) == null){
+                    // Updates passwords table
+                    PreparedStatement stmt = null;
+                    String sql = "INSERT INTO pmj_passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                             " VALUES (\""+model.getLabel()+"\", "+
+                                      "\""+model.getUsername()+"\", "+
+                                        "?, "+
+                                        "?, "+
+                                      "\""+model.getComment()+"\");";
+                    
+                    
+                    stmt = c.prepareStatement(sql);
+
+                    stmt.setBytes(1, model.getPassword());
+                    stmt.setBytes(2, model.getSalt());
+
+                    stmt.executeUpdate();
+                    
+                    // Get last entry ID
+                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
+                    Date now = new Date();
+                    String strDate = sdfDate.format(now);
+                    int itemID = this.getItemID(model.getLabel());
+                    
+                    // Get current user ID
+                    int userID = this.getUserID(Utils.getCurrentUser());
+                    
+                    // Update entries table
+                    sql = "INSERT INTO pmj_entries (USER_ID, PASSWORD_ID, ENTRY_DATE)"+
+                            "VALUES (" + userID +
+                                    ", " + itemID +
+                                    ", \"" + strDate + "\");";
+                    
+                    stmt = c.prepareStatement(sql);
+                    
+                    stmt.executeUpdate();
+                    
                     stmt.close();
                 }
                 c.close();
@@ -195,12 +317,12 @@ public class SQLiteJDBC {
             Class.forName("org.sqlite.JDBC");
             Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
             
-            ResultSet rs = c.getMetaData().getTables(null, null, "users", null);
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_users", null);
             // 
             if(rs.next()){
                 if(this.getUser(user.getUsername()) == null){
                     PreparedStatement stmt = null;
-                    String sql = "INSERT INTO users (USERNAME, PASSHASH, SALT)"+
+                    String sql = "INSERT INTO pmj_users (USERNAME, PASSHASH, SALT)"+
                              " VALUES (\""+user.getUsername()+"\", ?, ?)";
                     stmt = c.prepareStatement(sql);
 
@@ -245,11 +367,11 @@ public class SQLiteJDBC {
             Class.forName("org.sqlite.JDBC");
             Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
             
-            ResultSet rs = c.getMetaData().getTables(null, null, "users", null);
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_users", null);
             // 
             if(rs.next()){
                 Statement stmt = c.createStatement();
-                String sql = "SELECT USERNAME, PASSHASH, SALT FROM users WHERE USERNAME=\""+username+"\";";
+                String sql = "SELECT USERNAME, PASSHASH, SALT FROM pmj_users WHERE USERNAME=\""+username+"\";";
 
                 ResultSet entries = stmt.executeQuery(sql);
 
@@ -267,5 +389,35 @@ public class SQLiteJDBC {
         }
         
         return user;
+    }
+    
+    public int getUserID(String username){
+        int userID = -1;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_users", null);
+            // 
+            if(rs.next()){
+                Statement stmt = c.createStatement();
+                String sql = "SELECT ID FROM pmj_users WHERE USERNAME=\""+username+"\";";
+
+                ResultSet entries = stmt.executeQuery(sql);
+
+                if(entries.next()){
+                    userID = entries.getInt("ID");
+                }
+                
+                stmt.close();
+                
+            }
+            c.close();
+        } catch (ClassNotFoundException | SQLException e) {            
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+        
+        return userID;
     }
 }

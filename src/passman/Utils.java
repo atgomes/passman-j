@@ -147,12 +147,10 @@ public class Utils {
         byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
         
         // gets the current user
-        // TODO: change from fixed user to real current user
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        User currentUser;
-        currentUser = sqlite.getUser("admin");
+        User currentUser = sqlite.getUser(CURRENT_USER);
         if(currentUser == null){
-            System.out.println("Coudn't get admin user from DB.");
+            System.out.println("Coudn't get " + CURRENT_USER + " user from DB.");
         }
         
         // use user password and salt to encrypt password bytes
@@ -163,17 +161,16 @@ public class Utils {
         
         // save data to DB
         Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
-        sqlite.addItem(newModel);
-        
-        System.out.println("[ENTRY]Encrypted password size: "+newModel.getPassword().length + " bytes");
+        //sqlite.addItem(newModel);
+        sqlite.addItem2(newModel);
     }
     
     public static String getFromDBToUI(byte[] encryptedMessage){
         // decrypts password using current user values
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        User currentUser = sqlite.getUser("admin");
+        User currentUser = sqlite.getUser(CURRENT_USER);
         if(currentUser == null){
-            System.out.println("Coudn't get admin user from DB.");
+            System.out.println("Coudn't get "+ CURRENT_USER +" user from DB.");
         }
 
         byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
@@ -187,8 +184,13 @@ public class Utils {
     }
     
     public static void goToScreen(JPanel mainPanel, String location){
-        CardLayout card = (CardLayout)mainPanel.getLayout();
-        card.show(mainPanel, location);
+        if(CURRENT_USER != ""){
+            CardLayout card = (CardLayout)mainPanel.getLayout();
+            card.show(mainPanel, location);
+        }
+        else{
+            
+        }
     }
     
     public static void setCurrentUser(String username){

@@ -116,7 +116,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         popupWindow.setMinimumSize(new java.awt.Dimension(300, 200));
 
-        okPopupWinBtn.setText("OK");
+        okPopupWinBtn.setText("null");
         okPopupWinBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okPopupWinBtnActionPerformed(evt);
@@ -195,7 +195,6 @@ public class PassManUI extends javax.swing.JFrame {
                             .addComponent(jButton2)
                             .addComponent(jLabel12)
                             .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(loginPaneLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
@@ -284,7 +283,7 @@ public class PassManUI extends javax.swing.JFrame {
         usernameShow.setEditable(false);
 
         passwordShow.setEditable(false);
-        passwordShow.setText("************");
+        passwordShow.setText("null");
 
         jLabel1.setText(bundle.getString("USERNAME")); // NOI18N
 
@@ -309,7 +308,6 @@ public class PassManUI extends javax.swing.JFrame {
         commentShow.setWrapStyleWord(true);
         jScrollPane3.setViewportView(commentShow);
 
-        toggleShowPassword.setSelected(true);
         toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.setToolTipText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -705,8 +703,7 @@ public class PassManUI extends javax.swing.JFrame {
         if(jList1.getSelectedIndex()>-1){
             // convert jList1 item to a Model item
             Model thisModel = (Model)jList1.getSelectedValue();
-            System.out.println("[MODEL]Encrypted password size: "+thisModel.getPassword().length + " bytes"); //NOI18N
-            //System.out.println("[]Encrypted password size: "+thisModel.getPassword().length + " bytes");
+            
             // shows label, username and comments
             labelShow.setText(thisModel.getLabel());
             usernameShow.setText(thisModel.getUsername());
@@ -855,6 +852,7 @@ public class PassManUI extends javax.swing.JFrame {
                 newUserPasswordField.setText(""); //NOI18N
                 newUserPasswordField2.setText(""); //NOI18N
                 
+                // Goes to login screen
                 Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
             }
         }
@@ -892,6 +890,20 @@ public class PassManUI extends javax.swing.JFrame {
 
         // Creates DB if it doesn't exist
         Utils.verifyDB();
+        
+        // Creates hash pass and user                
+        ArrayList<byte[]> list = Crypt.getSecurePassword("password");
+        User user = new User("ADMIN", list.get(0), list.get(1));
+        
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        sqlite.addUser(user);
+        
+        Utils.setCurrentUser("ADMIN");
+        
+        // Creates entry
+        Utils.addToDBFromUI("test_label", "test_user", "somepassword", "test_comment");
+        
+        
         
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
