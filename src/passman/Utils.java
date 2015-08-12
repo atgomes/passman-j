@@ -35,7 +35,7 @@ public class Utils {
             
     public void refreshView(JList jList1, JPanel mainPanel){
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        List<Model> list = new ArrayList<>(sqlite.getItems());
+        List<Model> list = new ArrayList<>(sqlite.getItems2());
 
         DefaultListModel<Model> listModel = new DefaultListModel();
         for(Model obj : list){
@@ -184,12 +184,14 @@ public class Utils {
     }
     
     public static void goToScreen(JPanel mainPanel, String location){
-        if(CURRENT_USER != ""){
+        if(!location.equals("CREATEUSER") && !location.equals("LOGIN")){
+            if(CURRENT_USER != ""){
+                CardLayout card = (CardLayout)mainPanel.getLayout();
+                card.show(mainPanel, location);
+            }
+        } else{
             CardLayout card = (CardLayout)mainPanel.getLayout();
             card.show(mainPanel, location);
-        }
-        else{
-            
         }
     }
     

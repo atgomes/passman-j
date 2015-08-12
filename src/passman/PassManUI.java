@@ -60,7 +60,7 @@ public class PassManUI extends javax.swing.JFrame {
         loginPassword = new javax.swing.JPasswordField();
         loginUsername = new javax.swing.JTextField();
         attemptLogin = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        createAccBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -169,10 +169,10 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText(bundle.getString("CREATEACC")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        createAccBtn.setText(bundle.getString("CREATEACC")); // NOI18N
+        createAccBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                createAccBtnActionPerformed(evt);
             }
         });
 
@@ -192,7 +192,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(loginPaneLayout.createSequentialGroup()
                         .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
+                            .addComponent(createAccBtn)
                             .addComponent(jLabel12)
                             .addComponent(jLabel11))
                         .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +211,7 @@ public class PassManUI extends javax.swing.JFrame {
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(createAccBtn)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -828,9 +828,9 @@ public class PassManUI extends javax.swing.JFrame {
      * This is triggered when the user wants to create an account
      * @param evt 
      */
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void createAccBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createAccBtnActionPerformed
         Utils.goToScreen(mainPanel, "CREATEUSER"); //NOI18N
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_createAccBtnActionPerformed
 
     /**
      * This is triggered when the user confirms the creation of an account
@@ -891,20 +891,6 @@ public class PassManUI extends javax.swing.JFrame {
         // Creates DB if it doesn't exist
         Utils.verifyDB();
         
-        // Creates hash pass and user                
-        ArrayList<byte[]> list = Crypt.getSecurePassword("password");
-        User user = new User("ADMIN", list.get(0), list.get(1));
-        
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.addUser(user);
-        
-        Utils.setCurrentUser("ADMIN");
-        
-        // Creates entry
-        Utils.addToDBFromUI("test_label", "test_user", "somepassword", "test_comment");
-        
-        
-        
          /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
@@ -924,13 +910,13 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextArea commentShow;
     private javax.swing.JButton confirmEntryBtn;
+    private javax.swing.JButton createAccBtn;
     private javax.swing.JButton createUserBtn;
     private javax.swing.JPanel createUserPane;
     private javax.swing.JRadioButton english;
     private javax.swing.JButton generateBtn;
     private javax.swing.JPanel globalViewPane;
     private javax.swing.JButton homeBtn;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
