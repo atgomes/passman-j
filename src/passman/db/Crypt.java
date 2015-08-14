@@ -151,7 +151,7 @@ public class Crypt {
             
             encrypted = cipher.doFinal(input);
             // Log action
-            Logger.getLogger("").log(Level.INFO, "{0} bytes encryption successful.",encrypted.length);
+            //Logger.getLogger("").log(Level.INFO, "{0} bytes encryption successful.",encrypted.length);
         }catch (NoSuchAlgorithmException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException ex) {
             // Log exception
             Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",ex.getClass().getName());
@@ -204,7 +204,7 @@ public class Crypt {
             decrypted = cipher.doFinal(encrypted);
             
             // Log action
-            Logger.getLogger("").log(Level.INFO, "{0} bytes decryption successful.",encrypted.length);
+            //Logger.getLogger("").log(Level.INFO, "{0} bytes decryption successful.",encrypted.length);
             
         } catch (NoSuchAlgorithmException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | BadPaddingException ex) {
             // Log action

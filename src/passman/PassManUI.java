@@ -922,6 +922,15 @@ public class PassManUI extends javax.swing.JFrame {
                         comp.setEnabled(true);
                     }
                 }
+                
+                // Disables create account menu option
+                createAccMenuItem.setEnabled(false);
+                
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "User {0} successfully logged in.",Utils.getCurrentUser());
+            } else{
+                // Log event
+                Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername());
             }
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
