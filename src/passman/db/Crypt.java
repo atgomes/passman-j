@@ -64,6 +64,8 @@ public class Crypt {
             list.add(bytes);
             list.add(salt);
         }catch(NoSuchAlgorithmException e){
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -94,6 +96,8 @@ public class Crypt {
             // Uses UTF-8 encoding to convert byte[] to String password
             //generatedPassword = new String(bytes,StandardCharsets.UTF_8);
         } catch(NoSuchAlgorithmException e){
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -142,17 +146,17 @@ public class Crypt {
             
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
             
-            System.out.println("[ENCRYPT]Key size: " + key.length + " bytes");
-            System.out.println("[ENCRYPT]Salt size: " + salt.length + " bytes");
-            System.out.println("[ENCRYPT]Input size: " + input.length + " bytes");
-            
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             
             encrypted = cipher.doFinal(input);
-            System.out.println("[ENCRYPT]Output size: " + encrypted.length + " bytes");
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "{0} bytes encryption successful.",encrypted.length);
         }catch (NoSuchAlgorithmException | BadPaddingException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException ex) {
-            //Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",ex.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), ex.getClass().getName(), ex.getMessage());
+            System.exit(0);
         }
         
         return new CryptModel(salt, encrypted);
@@ -193,21 +197,20 @@ public class Crypt {
             MessageDigest sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
-            System.out.println("[DECRYPT]Key size: " + key.length + " bytes");
-            System.out.println("[DECRYPT]Salt size: " + salt.length + " bytes");
-            System.out.println("[DECRYPT]Encrypted size: " + encrypted.length + " bytes");
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
             
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-            // TESTESTESTESTESTESTESTESTESTEST
-            //encrypted = Arrays.copyOf(encrypted,16);
             decrypted = cipher.doFinal(encrypted);
             
-            System.out.println("[DECRYPT]Decrypted size: " + decrypted.length + " bytes");
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "{0} bytes decryption successful.",encrypted.length);
             
         } catch (NoSuchAlgorithmException | IllegalBlockSizeException | InvalidKeyException | NoSuchPaddingException | BadPaddingException ex) {
-            Logger.getLogger(Crypt.class.getName()).log(Level.SEVERE, null, ex);
+            // Log action
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",ex.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), ex.getClass().getName(), ex.getMessage());
+            System.exit(0);
         }
         
         return decrypted;

@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import passman.Utils;
 import passman.model.Model;
@@ -22,6 +24,7 @@ import passman.model.User;
  */
 public class SQLiteJDBC {
     private final List<Model> list = new ArrayList<>(); 
+    private final String databaseName = "passman.s3db";
     
     public void createConnection(){        
         try{
@@ -57,14 +60,19 @@ public class SQLiteJDBC {
                     stmt.executeUpdate(sql3);
                 }
                 c.close();
+                
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "New database file created with the following name: {0}", databaseName);
             }
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
     }
     
-    public List<Model> getItems(){
+    /*public List<Model> getItems(){
         try{
             Class.forName("org.sqlite.JDBC");
             Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
@@ -94,7 +102,7 @@ public class SQLiteJDBC {
         }
         
         return list;
-    }
+    }*/
     
     public List<Model> getItems2(){
         try{
@@ -112,23 +120,19 @@ public class SQLiteJDBC {
 
                 ResultSet entries = stmt.executeQuery(sql);
                 
-                //List<Integer> idList = new ArrayList<>();
                 while(entries.next()){
-                    //idList.add(entries.getInt("PASSWORD_ID"));
                     Model model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
                             entries.getBytes("PASSWORD"),
                             entries.getBytes("SALT"),entries.getString("COMMENT"));
                     
                     list.add(model);
-                }
-                /*for(Integer i : idList){
-                    sql = 
-                }*/
-                
+                }                
                 stmt.close();
                 c.close();
             }
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -195,7 +199,9 @@ public class SQLiteJDBC {
                 
             }
             c.close();
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) { 
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -229,7 +235,9 @@ public class SQLiteJDBC {
                 
             }
             c.close();
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) {  
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -300,47 +308,47 @@ public class SQLiteJDBC {
                 ++count;
             }
             if(count>=3){
-                //if(this.getItem(model.getLabel()) == null){
-                    // Updates passwords table
-                    PreparedStatement stmt = null;
-                    String sql = "INSERT INTO pmj_passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
-                             " VALUES (\""+model.getLabel()+"\", "+
-                                      "\""+model.getUsername()+"\", "+
-                                        "?, "+
-                                        "?, "+
-                                      "\""+model.getComment()+"\");";
-                    
-                    
-                    stmt = c.prepareStatement(sql);
+                // Updates passwords table
+                PreparedStatement stmt = null;
+                String sql = "INSERT INTO pmj_passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                         " VALUES (\""+model.getLabel()+"\", "+
+                                  "\""+model.getUsername()+"\", "+
+                                    "?, "+
+                                    "?, "+
+                                  "\""+model.getComment()+"\");";
 
-                    stmt.setBytes(1, model.getPassword());
-                    stmt.setBytes(2, model.getSalt());
 
-                    stmt.executeUpdate();
-                    
-                    // Get last entry ID
-                    int itemID = stmt.getGeneratedKeys().getInt(1);
-                    // Get current date
-                    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date now = new Date();
-                    String strDate = sdfDate.format(now);                 
-                    
-                    // Get current user ID
-                    int userID = this.getUserID(Utils.getCurrentUser());
-                    
-                    // Update entries table
-                    sql = "INSERT INTO pmj_entries (USER_ID, PASSWORD_ID, ENTRY_DATE)"+
-                            "VALUES (" + userID +
-                                    ", " + itemID +
-                                    ", \"" + strDate + "\");";
-                    
-                    stmt = c.prepareStatement(sql);
-                    
-                    stmt.executeUpdate();
-                    
-                    stmt.close();
-                //}
+                stmt = c.prepareStatement(sql);
+
+                stmt.setBytes(1, model.getPassword());
+                stmt.setBytes(2, model.getSalt());
+
+                stmt.executeUpdate();
+
+                // Get last entry ID
+                int itemID = stmt.getGeneratedKeys().getInt(1);
+                // Get current date
+                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date now = new Date();
+                String strDate = sdfDate.format(now);                 
+
+                // Get current user ID
+                int userID = this.getUserID(Utils.getCurrentUser());
+
+                // Update entries table
+                sql = "INSERT INTO pmj_entries (USER_ID, PASSWORD_ID, ENTRY_DATE)"+
+                        "VALUES (" + userID +
+                                ", " + itemID +
+                                ", \"" + strDate + "\");";
+
+                stmt = c.prepareStatement(sql);
+
+                stmt.executeUpdate();
+
+                stmt.close();
                 c.close();
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "Entry with label {0} added to database.", model.getLabel());
             }
             else{
                 try (Statement stmt = c.createStatement()) {
@@ -365,6 +373,8 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -400,15 +410,18 @@ public class SQLiteJDBC {
             // 
             if(rs.next()){
                 try (Statement stmt = c.createStatement()) {
-                    //String sql = "DELETE FROM pmj_passwords WHERE LABEL = \"" + model.getLabel() + "\";";
                     String sql = "DELETE FROM pmj_entries WHERE PASSWORD_ID IN ("+
                             "SELECT ID FROM pmj_passwords WHERE LABEL=\""+model.getLabel()+"\");";
                     
                     stmt.executeUpdate(sql);
                 }
                 c.close();
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "Entry with label {0} removed from database.", model.getLabel());
             }
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -455,9 +468,14 @@ public class SQLiteJDBC {
 
                 stmt.executeUpdate();
                 stmt.close();
+                
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "User {0} added to database.", user.getUsername());
             }
             c.close();
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -485,7 +503,9 @@ public class SQLiteJDBC {
                 
             }
             c.close();
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) { 
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -510,12 +530,19 @@ public class SQLiteJDBC {
                 if(entries.next()){
                     userID = entries.getInt("ID");
                 }
-                
-                stmt.close();
-                
+                else{
+                    // Log event
+                    Logger.getLogger("").log(Level.SEVERE, "Failed to retrieve USER ID from database");
+                }
+                stmt.close();           
+            } else{
+                // Log action
+                Logger.getLogger("").log(Level.SEVERE, "Failed to find table pmj_users.");
             }
             c.close();
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) {     
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
