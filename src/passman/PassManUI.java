@@ -16,6 +16,14 @@ import passman.db.Crypt;
 import passman.model.User;
 import java.awt.datatransfer.*;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import passman.model.ErrorDialog;
 //import passman.Utils;
 
 /**
@@ -994,6 +1002,17 @@ public class PassManUI extends javax.swing.JFrame {
                 PassManUI myFrame = new PassManUI();
                 myFrame.setTitle(Utils.getTitleFromProps());
                 myFrame.setVisible(true);
+                
+                // Logger config
+                try{
+                    SimpleDateFormat format = new SimpleDateFormat("MM-dd");
+                    String logName = "PassManJ_logger%u_"+format.format(new Date())+".log";
+                    Handler handler = new FileHandler(logName, 10000, 1, true);
+                    Logger.getLogger("").addHandler(handler);
+                } catch(IOException | SecurityException e){
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+                    System.exit(0);
+                }
             }
         });
     }

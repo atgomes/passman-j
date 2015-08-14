@@ -8,11 +8,15 @@ package passman;
 import java.awt.CardLayout;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.swing.DefaultListModel;
@@ -56,6 +60,7 @@ public class Utils {
             File f = new File("passman.properties");
             OutputStream out = new FileOutputStream(f);
             props.store(out,"Language properties");
+            out.close();
         } catch (Exception e){
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
@@ -63,28 +68,17 @@ public class Utils {
     }
     
     public static ArrayList<String> loadParams(){
-        Properties props = new Properties();
+        Properties props = openOrCreatePropertiesFile();
         InputStream is = null;
 
         // First try loading from the current directory
-        try {
-            File f = new File("passman.properties");
-            is = new FileInputStream( f );
-        }
-        catch ( Exception e ) {
-            is = null;
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+        if(props.size()<=0){
+            String title = "Properties operation error";
+            String message = "It was not possible to create a properties file, please try again later. "+
+                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues";
+            ErrorDialog errorDlg = new ErrorDialog(new JFrame(), title, message);
             System.exit(0);
-        }
-
-        try {
-            // Try loading properties from the file (if found)
-            props.load( is );
-        }
-        catch ( Exception e ){
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }
+        }   
         
         ArrayList<String> list = new ArrayList<>();
         list.add(props.getProperty("Country","UK"));
@@ -95,35 +89,59 @@ public class Utils {
     }
     
     public static Properties loadProps(){
-        Properties props = new Properties();
+        /*Properties props = new Properties();
         InputStream is = null;
-
-        // First try loading from the current directory
         try {
-            File f = new File("passman.properties");
-            is = new FileInputStream( f );
-        }
-        catch ( Exception e ) {
-            is = null;
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }
-
-        try {
+            is = openOrCreatePropertiesFile();
             // Try loading properties from the file (if found)
             props.load( is );
+            
+            is.close();
         }
         catch ( Exception e ) {
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
         
-        //return props.getProperty("Language","en");
-        return props;
+        return props;*/
+        return new Properties();
+    }
+    
+    public static Properties openOrCreatePropertiesFile(){
+        InputStream is = null;
+        Properties props = new Properties();
+        try {
+            File f = new File("passman.properties");
+            if(!f.createNewFile()){
+                is = new FileInputStream( f );
+                props.load(is);
+            } else{
+                OutputStream out = new FileOutputStream(f);
+                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+                Date now = new Date();
+                String strDate = sdfDate.format(now);
+                
+                props.setProperty("Application.buildnumber", strDate);
+                props.setProperty("Application.version", "1.0.0.${Application.buildnumber}");
+                props.setProperty("Application.title", "PassManJ ${Application.version}");
+                props.setProperty("Language", "pt");
+                props.setProperty("Country", "PT");     
+                
+                props.store(out, "File created at runtime!");
+                out.close();
+            }
+        }
+        catch ( IOException e ) {
+            is = null;
+            ErrorDialog errorDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+        
+        return(props);
     }
     
     public static String getTitleFromProps(){
-        Properties props = loadProps();
+        Properties props = openOrCreatePropertiesFile();
         
         String title1 = props.getProperty("Application.title");
         String title2 = props.getProperty("Application.version");
