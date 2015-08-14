@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -51,7 +53,7 @@ public class Utils {
     public void saveParamChanges(String language, String country){
         try{
             // Load current parameters
-            Properties props = loadProps();
+            Properties props = openOrCreatePropertiesFile();
             // Set desired parameters
             props.setProperty("Country", country);
             props.setProperty("Language", language);
@@ -61,7 +63,13 @@ public class Utils {
             OutputStream out = new FileOutputStream(f);
             props.store(out,"Language properties");
             out.close();
+            
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "Language properties saved. Language: {0}",language);
+            
         } catch (Exception e){
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -73,6 +81,8 @@ public class Utils {
 
         // First try loading from the current directory
         if(props.size()<=0){
+            // Log event
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error");
             String title = "Properties operation error";
             String message = "It was not possible to create a properties file, please try again later. "+
                     "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues";
@@ -84,27 +94,11 @@ public class Utils {
         list.add(props.getProperty("Country","UK"));
         list.add(props.getProperty("Language","en"));
         
+        // Log action
+        Logger.getLogger("").log(Level.INFO, "Language properties loaded.");
+        
         return list;
 
-    }
-    
-    public static Properties loadProps(){
-        /*Properties props = new Properties();
-        InputStream is = null;
-        try {
-            is = openOrCreatePropertiesFile();
-            // Try loading properties from the file (if found)
-            props.load( is );
-            
-            is.close();
-        }
-        catch ( Exception e ) {
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }
-        
-        return props;*/
-        return new Properties();
     }
     
     public static Properties openOrCreatePropertiesFile(){
@@ -168,19 +162,21 @@ public class Utils {
         SQLiteJDBC sqlite = new SQLiteJDBC();
         User currentUser = sqlite.getUser(CURRENT_USER);
         if(currentUser == null){
-            System.out.println("Coudn't get " + CURRENT_USER + " user from DB.");
+            // Log event
+            Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
+        } else{
+            // Use user password to encrypt password bytes
+            CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
+            if(cpMdl.encryptedPassword == null){
+                // Log event
+                Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
+            } else{
+                // save data to DB
+                Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
+                //sqlite.addItem(newModel);
+                sqlite.addItem2(newModel);
+            }
         }
-        
-        // use user password and salt to encrypt password bytes
-        CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), currentUser.getSaltArray(), passUTF8);
-        if(cpMdl.encryptedPassword == null){
-            System.out.println("Something went wrong while encrypting.");
-        }
-        
-        // save data to DB
-        Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
-        //sqlite.addItem(newModel);
-        sqlite.addItem2(newModel);
     }
     
     public static String getFromDBToUI(byte[] encryptedMessage, byte[] salt){
@@ -188,17 +184,19 @@ public class Utils {
         SQLiteJDBC sqlite = new SQLiteJDBC();
         User currentUser = sqlite.getUser(CURRENT_USER);
         if(currentUser == null){
-            System.out.println("Coudn't get "+ CURRENT_USER +" user from DB.");
-        }
-
-        byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
+            // Log event
+            Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
+            return(null);
+        } else{
+            byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
                 salt, encryptedMessage);
 
-        // convert decrypted byte array to String using UTF-8 encoding
-        String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
-        System.out.println(plainTextPassword);
-        
-        return(plainTextPassword);
+            // convert decrypted byte array to String using UTF-8 encoding
+            String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
+            System.out.println(plainTextPassword);
+            
+            return(plainTextPassword);
+        }
     }
     
     public static void goToScreen(JPanel mainPanel, String location){
