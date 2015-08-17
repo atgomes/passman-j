@@ -78,8 +78,11 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         mainPane = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
         addEntryBtn = new javax.swing.JButton();
         viewListBtn = new javax.swing.JButton();
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
+        jPanel12 = new javax.swing.JPanel();
         globalViewPane = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -112,17 +115,23 @@ public class PassManUI extends javax.swing.JFrame {
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         addEntryPane = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         newLabel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        confirmEntryBtn = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         newUsername = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         newPassword = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        generateBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         newComment = new javax.swing.JTextArea();
+        confirmEntryBtn = new javax.swing.JButton();
+        jPanel22 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        generateBtn = new javax.swing.JButton();
+        jPanel19 = new javax.swing.JPanel();
         languagePane = new javax.swing.JPanel();
         portuguese = new javax.swing.JRadioButton();
         english = new javax.swing.JRadioButton();
@@ -289,7 +298,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 89, Short.MAX_VALUE)
+            .addGap(0, 88, Short.MAX_VALUE)
         );
 
         jPanel9.add(jPanel14);
@@ -302,7 +311,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 89, Short.MAX_VALUE)
+            .addGap(0, 88, Short.MAX_VALUE)
         );
 
         jPanel9.add(jPanel15);
@@ -327,6 +336,9 @@ public class PassManUI extends javax.swing.JFrame {
         mainPanel.add(loginPane, "LOGIN");
 
         mainPane.setBackground(new java.awt.Color(51, 163, 252));
+        mainPane.setLayout(new java.awt.BorderLayout());
+
+        jPanel10.setLayout(new java.awt.GridLayout(0, 1));
 
         addEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
@@ -335,6 +347,7 @@ public class PassManUI extends javax.swing.JFrame {
                 addEntryBtnActionPerformed(evt);
             }
         });
+        jPanel10.add(addEntryBtn);
 
         viewListBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         viewListBtn.setText(bundle.getString("VIEW")); // NOI18N
@@ -343,27 +356,23 @@ public class PassManUI extends javax.swing.JFrame {
                 viewListBtnActionPerformed(evt);
             }
         });
+        jPanel10.add(viewListBtn);
+        jPanel10.add(filler8);
 
-        javax.swing.GroupLayout mainPaneLayout = new javax.swing.GroupLayout(mainPane);
-        mainPane.setLayout(mainPaneLayout);
-        mainPaneLayout.setHorizontalGroup(
-            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPaneLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(addEntryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(viewListBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        mainPane.add(jPanel10, java.awt.BorderLayout.WEST);
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        mainPaneLayout.setVerticalGroup(
-            mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPaneLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(addEntryBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(viewListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
         );
+
+        mainPane.add(jPanel12, java.awt.BorderLayout.CENTER);
 
         mainPanel.add(mainPane, "MAIN");
 
@@ -532,39 +541,77 @@ public class PassManUI extends javax.swing.JFrame {
         addEntryPane.setMaximumSize(new java.awt.Dimension(450, 300));
         addEntryPane.setMinimumSize(new java.awt.Dimension(450, 300));
         addEntryPane.setPreferredSize(new java.awt.Dimension(450, 300));
+        addEntryPane.setLayout(new javax.swing.BoxLayout(addEntryPane, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel17.setPreferredSize(new java.awt.Dimension(100, 204));
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        addEntryPane.add(jPanel17);
+
+        jPanel18.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel18.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanel18.setLayout(new javax.swing.BoxLayout(jPanel18, javax.swing.BoxLayout.X_AXIS));
+
+        jPanel20.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel9.setLabelFor(newLabel);
+        jLabel9.setText(bundle.getString("LABEL")); // NOI18N
+        jLabel9.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel9.setMaximumSize(new java.awt.Dimension(98746, 89451));
+        jLabel9.setMinimumSize(new java.awt.Dimension(0, 0));
+        jLabel9.setPreferredSize(new java.awt.Dimension(40, 45));
+        jPanel20.add(jLabel9);
 
         newLabel.setMinimumSize(new java.awt.Dimension(100, 25));
         newLabel.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel20.add(newLabel);
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setLabelFor(newUsername);
         jLabel4.setText(bundle.getString("USERNAME")); // NOI18N
-
-        confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
-        confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmEntryBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setLabelFor(newPassword);
-        jLabel7.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel4.setMaximumSize(new java.awt.Dimension(98746, 89451));
+        jLabel4.setMinimumSize(new java.awt.Dimension(0, 0));
+        jLabel4.setPreferredSize(new java.awt.Dimension(40, 45));
+        jPanel20.add(jLabel4);
 
         newUsername.setMinimumSize(new java.awt.Dimension(100, 25));
         newUsername.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel20.add(newUsername);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel7.setLabelFor(newPassword);
+        jLabel7.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel7.setMaximumSize(new java.awt.Dimension(98746, 89451));
+        jLabel7.setMinimumSize(new java.awt.Dimension(0, 0));
+        jLabel7.setPreferredSize(new java.awt.Dimension(40, 45));
+        jPanel20.add(jLabel7);
 
         newPassword.setMinimumSize(new java.awt.Dimension(100, 25));
         newPassword.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel20.add(newPassword);
 
-        jLabel9.setText(bundle.getString("LABEL")); // NOI18N
-
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setLabelFor(newComment);
         jLabel10.setText(bundle.getString("COMMENTS")); // NOI18N
-
-        generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
-        generateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateBtnActionPerformed(evt);
-            }
-        });
+        jLabel10.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel10.setMaximumSize(new java.awt.Dimension(98746, 89451));
+        jLabel10.setMinimumSize(new java.awt.Dimension(0, 0));
+        jLabel10.setPreferredSize(new java.awt.Dimension(40, 45));
+        jPanel20.add(jLabel10);
 
         newComment.setColumns(20);
         newComment.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -573,55 +620,83 @@ public class PassManUI extends javax.swing.JFrame {
         newComment.setWrapStyleWord(true);
         jScrollPane2.setViewportView(newComment);
 
-        javax.swing.GroupLayout addEntryPaneLayout = new javax.swing.GroupLayout(addEntryPane);
-        addEntryPane.setLayout(addEntryPaneLayout);
-        addEntryPaneLayout.setHorizontalGroup(
-            addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addEntryPaneLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(newPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                    .addComponent(newLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(confirmEntryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(generateBtn)
-                .addContainerGap(168, Short.MAX_VALUE))
+        jPanel20.add(jScrollPane2);
+
+        confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
+        confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmEntryBtnActionPerformed(evt);
+            }
+        });
+        jPanel20.add(confirmEntryBtn);
+
+        jPanel22.setMinimumSize(new java.awt.Dimension(0, 200));
+        jPanel22.setPreferredSize(new java.awt.Dimension(0, 200));
+
+        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
+        jPanel22.setLayout(jPanel22Layout);
+        jPanel22Layout.setHorizontalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 229, Short.MAX_VALUE)
         );
-        addEntryPaneLayout.setVerticalGroup(
-            addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addEntryPaneLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(newUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(newPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(generateBtn))
-                .addGroup(addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(addEntryPaneLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel10))
-                    .addGroup(addEntryPaneLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(confirmEntryBtn)
-                .addContainerGap(166, Short.MAX_VALUE))
+        jPanel22Layout.setVerticalGroup(
+            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
+
+        jPanel20.add(jPanel22);
+
+        jPanel18.add(jPanel20);
+
+        addEntryPane.add(jPanel18);
+
+        jPanel21.setMaximumSize(new java.awt.Dimension(100, 6456456));
+        jPanel21.setMinimumSize(new java.awt.Dimension(100, 204));
+        jPanel21.setPreferredSize(new java.awt.Dimension(70, 0));
+
+        generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
+        generateBtn.setMaximumSize(new java.awt.Dimension(70, 20));
+        generateBtn.setMinimumSize(new java.awt.Dimension(0, 0));
+        generateBtn.setPreferredSize(new java.awt.Dimension(70, 20));
+        generateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
+        jPanel21.setLayout(jPanel21Layout);
+        jPanel21Layout.setHorizontalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(generateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel21Layout.setVerticalGroup(
+            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel21Layout.createSequentialGroup()
+                .addGap(101, 101, 101)
+                .addComponent(generateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(283, Short.MAX_VALUE))
+        );
+
+        addEntryPane.add(jPanel21);
+
+        jPanel19.setPreferredSize(new java.awt.Dimension(100, 204));
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        addEntryPane.add(jPanel19);
 
         mainPanel.add(addEntryPane, "ADD");
 
@@ -1235,6 +1310,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
     private javax.swing.JButton generateBtn;
     private javax.swing.JPanel globalViewPane;
     private javax.swing.JButton homeBtn;
@@ -1259,12 +1335,20 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
