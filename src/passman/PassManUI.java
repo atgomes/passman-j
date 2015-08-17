@@ -29,6 +29,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import passman.model.ErrorDialog;
 //import passman.Utils;
@@ -74,21 +75,36 @@ public class PassManUI extends javax.swing.JFrame {
         addEntryBtn = new javax.swing.JButton();
         viewListBtn = new javax.swing.JButton();
         globalViewPane = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
+        jPanel2 = new javax.swing.JPanel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel3 = new javax.swing.JPanel();
         removeEntryBtn = new javax.swing.JButton();
         toggleShowPassword = new javax.swing.JToggleButton();
+        addNewEntryBtn = new javax.swing.JButton();
+        copyToClip = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         labelShow = new javax.swing.JTextField();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel6 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         usernameShow = new javax.swing.JTextField();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         passwordShow = new javax.swing.JTextField();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         commentShow = new javax.swing.JTextArea();
-        addNewEntryBtn = new javax.swing.JButton();
-        copyToClip = new javax.swing.JButton();
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         addEntryPane = new javax.swing.JPanel();
         newLabel = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -107,6 +123,7 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         homeBtn = new javax.swing.JButton();
+        languageOK = new javax.swing.JButton();
         createUserPane = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         newUserField = new javax.swing.JTextField();
@@ -115,11 +132,13 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         newUserPasswordField2 = new javax.swing.JPasswordField();
         createUserBtn = new javax.swing.JButton();
+        cancelCreateAcc = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         createAccMenuItem = new javax.swing.JMenuItem();
         addEntry = new javax.swing.JMenuItem();
         viewList = new javax.swing.JMenuItem();
+        logoutMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         languageMenu = new javax.swing.JMenuItem();
 
@@ -132,7 +151,7 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
 
-        message.setText("jLabel11");
+        message.setText("null");
 
         javax.swing.GroupLayout popupWindowLayout = new javax.swing.GroupLayout(popupWindow.getContentPane());
         popupWindow.getContentPane().setLayout(popupWindowLayout);
@@ -160,9 +179,9 @@ public class PassManUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        setMaximumSize(new java.awt.Dimension(450, 300));
-        setMinimumSize(new java.awt.Dimension(450, 300));
-        setPreferredSize(new java.awt.Dimension(450, 300));
+        setMaximumSize(new java.awt.Dimension(111111, 111111));
+        setMinimumSize(new java.awt.Dimension(450, 375));
+        setPreferredSize(new java.awt.Dimension(500, 425));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -218,19 +237,18 @@ public class PassManUI extends javax.swing.JFrame {
         loginPaneLayout.setHorizontalGroup(
             loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginPaneLayout.createSequentialGroup()
-                .addContainerGap(138, Short.MAX_VALUE)
-                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(attemptLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(loginPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addComponent(loginUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(242, Short.MAX_VALUE))
-            .addGroup(loginPaneLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel16)
+                .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(loginPaneLayout.createSequentialGroup()
+                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(loginPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(attemptLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(loginPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                            .addComponent(loginUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel16))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         loginPaneLayout.setVerticalGroup(
@@ -249,7 +267,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(attemptLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         mainPanel.add(loginPane, "LOGIN");
@@ -281,7 +299,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addGroup(mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(addEntryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewListBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addContainerGap(558, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPaneLayout.setVerticalGroup(
             mainPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,6 +318,15 @@ public class PassManUI extends javax.swing.JFrame {
         globalViewPane.setMaximumSize(new java.awt.Dimension(450, 300));
         globalViewPane.setMinimumSize(new java.awt.Dimension(450, 300));
         globalViewPane.setPreferredSize(new java.awt.Dimension(450, 300));
+        globalViewPane.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(50, 0));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(0, 0));
 
         jList1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -311,6 +338,20 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel1.add(filler3, java.awt.BorderLayout.SOUTH);
+
+        globalViewPane.add(jPanel1, java.awt.BorderLayout.WEST);
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(400, 2147483647));
+        jPanel2.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel2.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(filler1, java.awt.BorderLayout.WEST);
+
+        jPanel3.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel3.setLayout(new java.awt.GridLayout());
+
         removeEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
         removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +359,7 @@ public class PassManUI extends javax.swing.JFrame {
                 removeEntryBtnActionPerformed(evt);
             }
         });
+        jPanel3.add(removeEntryBtn);
 
         toggleShowPassword.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
@@ -327,25 +369,90 @@ public class PassManUI extends javax.swing.JFrame {
                 togglePassVisibility(evt);
             }
         });
+        jPanel3.add(toggleShowPassword);
+
+        addNewEntryBtn.setText(bundle.getString("ADD")); // NOI18N
+        addNewEntryBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewEntryBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(addNewEntryBtn);
+
+        copyToClip.setText(bundle.getString("COPY")); // NOI18N
+        copyToClip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyToClipActionPerformed(evt);
+            }
+        });
+        jPanel3.add(copyToClip);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.NORTH);
+
+        jPanel4.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel5.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setText(bundle.getString("LABEL")); // NOI18N
+        jLabel2.setMaximumSize(new java.awt.Dimension(200, 40));
+        jLabel2.setMinimumSize(new java.awt.Dimension(50, 20));
+        jLabel2.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel5.add(jLabel2, java.awt.BorderLayout.WEST);
 
         labelShow.setEditable(false);
         labelShow.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        labelShow.setMaximumSize(new java.awt.Dimension(2147483647, 40));
+        jPanel5.add(labelShow, java.awt.BorderLayout.CENTER);
+        jPanel5.add(filler4, java.awt.BorderLayout.EAST);
+
+        jPanel4.add(jPanel5);
+
+        jPanel6.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel6.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setText(bundle.getString("USERNAME")); // NOI18N
+        jLabel1.setMaximumSize(new java.awt.Dimension(200, 40));
+        jLabel1.setMinimumSize(new java.awt.Dimension(50, 20));
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel6.add(jLabel1, java.awt.BorderLayout.WEST);
 
         usernameShow.setEditable(false);
         usernameShow.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        usernameShow.setMaximumSize(new java.awt.Dimension(2147483647, 40));
+        jPanel6.add(usernameShow, java.awt.BorderLayout.CENTER);
+        jPanel6.add(filler5, java.awt.BorderLayout.EAST);
+
+        jPanel4.add(jPanel6);
+
+        jPanel7.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         jLabel5.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel5.setMaximumSize(new java.awt.Dimension(200, 40));
+        jLabel5.setMinimumSize(new java.awt.Dimension(50, 20));
+        jLabel5.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel7.add(jLabel5, java.awt.BorderLayout.WEST);
 
         passwordShow.setEditable(false);
         passwordShow.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         passwordShow.setText("null");
+        passwordShow.setMaximumSize(new java.awt.Dimension(2147483647, 40));
         passwordShow.setPreferredSize(new java.awt.Dimension(6, 20));
+        jPanel7.add(passwordShow, java.awt.BorderLayout.CENTER);
+        jPanel7.add(filler6, java.awt.BorderLayout.EAST);
+
+        jPanel4.add(jPanel7);
+
+        jPanel8.setMinimumSize(new java.awt.Dimension(0, 0));
+        jPanel8.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setText(bundle.getString("COMMENTS")); // NOI18N
+        jLabel3.setMaximumSize(new java.awt.Dimension(200, 40));
+        jLabel3.setMinimumSize(new java.awt.Dimension(50, 20));
+        jLabel3.setPreferredSize(new java.awt.Dimension(100, 25));
+        jPanel8.add(jLabel3, java.awt.BorderLayout.WEST);
 
         commentShow.setEditable(false);
         commentShow.setColumns(20);
@@ -355,81 +462,15 @@ public class PassManUI extends javax.swing.JFrame {
         commentShow.setWrapStyleWord(true);
         jScrollPane3.setViewportView(commentShow);
 
-        addNewEntryBtn.setText(bundle.getString("ADD")); // NOI18N
-        addNewEntryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewEntryBtnActionPerformed(evt);
-            }
-        });
+        jPanel8.add(jScrollPane3, java.awt.BorderLayout.CENTER);
+        jPanel8.add(filler7, java.awt.BorderLayout.EAST);
 
-        copyToClip.setText(bundle.getString("COPY")); // NOI18N
-        copyToClip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                copyToClipActionPerformed(evt);
-            }
-        });
+        jPanel4.add(jPanel8);
+        jPanel4.add(filler2);
 
-        javax.swing.GroupLayout globalViewPaneLayout = new javax.swing.GroupLayout(globalViewPane);
-        globalViewPane.setLayout(globalViewPaneLayout);
-        globalViewPaneLayout.setHorizontalGroup(
-            globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(globalViewPaneLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(106, Short.MAX_VALUE))
-                    .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addComponent(removeEntryBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(toggleShowPassword)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addNewEntryBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(copyToClip)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        globalViewPaneLayout.setVerticalGroup(
-            globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(globalViewPaneLayout.createSequentialGroup()
-                .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(globalViewPaneLayout.createSequentialGroup()
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(removeEntryBtn)
-                            .addComponent(toggleShowPassword)
-                            .addComponent(addNewEntryBtn)
-                            .addComponent(copyToClip))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(labelShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(usernameShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(passwordShow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(globalViewPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
+        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        globalViewPane.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         mainPanel.add(globalViewPane, "GLOBAL");
 
@@ -498,7 +539,7 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(confirmEntryBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(generateBtn)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(668, Short.MAX_VALUE))
         );
         addEntryPaneLayout.setVerticalGroup(
             addEntryPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,7 +566,7 @@ public class PassManUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmEntryBtn)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         mainPanel.add(addEntryPane, "ADD");
@@ -566,22 +607,30 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
 
+        languageOK.setText(bundle.getString("OK")); // NOI18N
+        languageOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                languageOKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout languagePaneLayout = new javax.swing.GroupLayout(languagePane);
         languagePane.setLayout(languagePaneLayout);
         languagePaneLayout.setHorizontalGroup(
             languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(languagePaneLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(english)
-                    .addComponent(portuguese)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, languagePaneLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(homeBtn)
                 .addContainerGap())
+            .addGroup(languagePaneLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(languageOK)
+                    .addComponent(jLabel8)
+                    .addComponent(english)
+                    .addComponent(portuguese)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(657, Short.MAX_VALUE))
         );
         languagePaneLayout.setVerticalGroup(
             languagePaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,7 +643,9 @@ public class PassManUI extends javax.swing.JFrame {
                 .addComponent(portuguese)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(english)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(languageOK)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addComponent(homeBtn)
                 .addContainerGap())
         );
@@ -629,6 +680,15 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
 
+        cancelCreateAcc.setFont(new java.awt.Font("Arial", 0, 8)); // NOI18N
+        cancelCreateAcc.setText(bundle.getString("CANCEL")); // NOI18N
+        cancelCreateAcc.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        cancelCreateAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelCreateAccActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout createUserPaneLayout = new javax.swing.GroupLayout(createUserPane);
         createUserPane.setLayout(createUserPaneLayout);
         createUserPaneLayout.setHorizontalGroup(
@@ -640,12 +700,15 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(jLabel14))
                 .addGap(18, 18, 18)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(createUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addComponent(newUserField, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addComponent(newUserPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newUserPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(372, Short.MAX_VALUE))
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(createUserPaneLayout.createSequentialGroup()
+                        .addComponent(cancelCreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(createUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(newUserField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(newUserPasswordField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newUserPasswordField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(669, Short.MAX_VALUE))
         );
         createUserPaneLayout.setVerticalGroup(
             createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -654,7 +717,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newUserField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(newUserPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
@@ -663,7 +726,9 @@ public class PassManUI extends javax.swing.JFrame {
                     .addComponent(newUserPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(createUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(createUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(cancelCreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(101, 101, 101))
         );
 
@@ -701,6 +766,16 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu1.add(viewList);
 
+        logoutMenuItem.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        logoutMenuItem.setText(bundle.getString("LOGOUT")); // NOI18N
+        logoutMenuItem.setEnabled(false);
+        logoutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(logoutMenuItem);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText(bundle.getString("EDIT")); // NOI18N
@@ -723,11 +798,11 @@ public class PassManUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
         );
 
         bindingGroup.bind();
@@ -788,7 +863,7 @@ public class PassManUI extends javax.swing.JFrame {
                 
                 passwordShow.setText(plainTextPassword);
             } else{
-                passwordShow.setText("*********");
+                passwordShow.setText("*********"); //NOI18N
             }
             // Enable remove button
             removeEntryBtn.setEnabled(true);
@@ -915,6 +990,10 @@ public class PassManUI extends javax.swing.JFrame {
                 // Goes to main screen
                 Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
                 
+                // Clears login fields
+                loginUsername.setText(""); //NOI18N
+                loginPassword.setText(""); //NOI18N
+                
                 // Enables Menu options
                 Component[] menuComps = jMenu1.getMenuComponents();
                 for(Component comp : menuComps){
@@ -927,10 +1006,10 @@ public class PassManUI extends javax.swing.JFrame {
                 createAccMenuItem.setEnabled(false);
                 
                 // Log action
-                Logger.getLogger("").log(Level.INFO, "User {0} successfully logged in.",Utils.getCurrentUser());
+                Logger.getLogger("").log(Level.INFO, "User {0} successfully logged in.",Utils.getCurrentUser()); //NOI18N
             } else{
                 // Log event
-                Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername());
+                Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername()); //NOI18N
             }
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
@@ -956,10 +1035,10 @@ public class PassManUI extends javax.swing.JFrame {
         utils.refreshView(jList1, mainPanel);
 
         // Clears text fields
-        labelShow.setText("");
-        usernameShow.setText("");
-        passwordShow.setText("");
-        commentShow.setText("");
+        labelShow.setText(""); //NOI18N
+        usernameShow.setText(""); //NOI18N
+        passwordShow.setText(""); //NOI18N
+        commentShow.setText(""); //NOI18N
 
         // Deselects items in list
         jList1.setSelectedIndex(-1);
@@ -976,6 +1055,51 @@ public class PassManUI extends javax.swing.JFrame {
         Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
         clpbrd.setContents(stringSelection, null);
     }//GEN-LAST:event_copyToClipActionPerformed
+
+    private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
+        
+        // Log action
+        Logger.getLogger("").log(Level.INFO, "User {0} logged out.",Utils.getCurrentUser()); //NOI18N
+        
+        // Clears current user
+        Utils.setCurrentUser(null);
+        
+        // Clears list items
+        DefaultListModel<Model> listModel = new DefaultListModel();
+        jList1.setModel(listModel);
+        
+        // Goes to login page
+        Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+        
+        // Disables Menu options
+        Component[] menuComps = jMenu1.getMenuComponents();
+        for(Component comp : menuComps){
+            if(comp.isEnabled()){
+                comp.setEnabled(false);
+            }
+        }
+
+        // Enables create account menu option
+        createAccMenuItem.setEnabled(true);
+    }//GEN-LAST:event_logoutMenuItemActionPerformed
+
+    private void cancelCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelCreateAccActionPerformed
+        // Clears "create acc" fields
+        newUserField.setText(""); //NOI18N
+        newUserPasswordField.setText(""); //NOI18N
+        newUserPasswordField2.setText(""); //NOI18N
+        
+        Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+    }//GEN-LAST:event_cancelCreateAccActionPerformed
+
+    private void languageOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageOKActionPerformed
+        if(Utils.getCurrentUser() == "" || Utils.getCurrentUser()==null){
+            Utils.goToScreen(mainPanel, "LOGIN");
+        } else{
+            utils.refreshView(jList1, mainPanel);
+            Utils.goToScreen(mainPanel, "GLOBAL");
+        }        
+    }//GEN-LAST:event_languageOKActionPerformed
     
     
     /**
@@ -1007,11 +1131,11 @@ public class PassManUI extends javax.swing.JFrame {
 
         // Logger config
         try{
-            SimpleDateFormat format = new SimpleDateFormat("MM-dd");
-            String logName = "PassManJ_logger%u_"+format.format(new Date())+".log";
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd"); //NOI18N
+            String logName = "PassManJ_logger%u_"+format.format(new Date())+".log"; //NOI18N
             Handler handler = new FileHandler(logName, 10000, 1, true);
             handler.setFormatter(new SimpleFormatter());
-            Logger.getLogger("").addHandler(handler);
+            Logger.getLogger("").addHandler(handler); //NOI18N
         } catch(IOException | SecurityException e){
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
@@ -1042,6 +1166,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JButton addNewEntryBtn;
     private javax.swing.JButton attemptLogin;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cancelCreateAcc;
     private javax.swing.JTextArea commentShow;
     private javax.swing.JButton confirmEntryBtn;
     private javax.swing.JButton copyToClip;
@@ -1049,6 +1174,13 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JButton createUserBtn;
     private javax.swing.JPanel createUserPane;
     private javax.swing.JRadioButton english;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
     private javax.swing.JButton generateBtn;
     private javax.swing.JPanel globalViewPane;
     private javax.swing.JButton homeBtn;
@@ -1072,15 +1204,25 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField labelShow;
     private javax.swing.JMenuItem languageMenu;
+    private javax.swing.JButton languageOK;
     private javax.swing.JPanel languagePane;
     private javax.swing.JPanel loginPane;
     private javax.swing.JPasswordField loginPassword;
     private javax.swing.JTextField loginUsername;
+    private javax.swing.JMenuItem logoutMenuItem;
     private javax.swing.JPanel mainPane;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel message;
