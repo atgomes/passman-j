@@ -118,19 +118,24 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         newLabel = new javax.swing.JTextField();
+        jPanel26 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         newUsername = new javax.swing.JTextField();
+        jPanel22 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        generateBtn = new javax.swing.JButton();
         newPassword = new javax.swing.JTextField();
+        jPanel27 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         newComment = new javax.swing.JTextArea();
         confirmEntryBtn = new javax.swing.JButton();
-        jPanel22 = new javax.swing.JPanel();
+        jPanel23 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
-        generateBtn = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
         languagePane = new javax.swing.JPanel();
         portuguese = new javax.swing.JRadioButton();
@@ -196,7 +201,6 @@ public class PassManUI extends javax.swing.JFrame {
         setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         setMaximumSize(new java.awt.Dimension(111111, 111111));
         setMinimumSize(new java.awt.Dimension(450, 375));
-        setPreferredSize(new java.awt.Dimension(500, 425));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -413,7 +417,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel2.add(filler1, java.awt.BorderLayout.WEST);
 
         jPanel3.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         removeEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
@@ -562,21 +566,28 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel18.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel18.setLayout(new javax.swing.BoxLayout(jPanel18, javax.swing.BoxLayout.X_AXIS));
 
+        jPanel20.setAlignmentX(0.5F);
         jPanel20.setPreferredSize(new java.awt.Dimension(0, 0));
         jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel25.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel9.setLabelFor(newLabel);
         jLabel9.setText(bundle.getString("LABEL")); // NOI18N
         jLabel9.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel9.setMaximumSize(new java.awt.Dimension(98746, 89451));
+        jLabel9.setMaximumSize(new java.awt.Dimension(40, 45));
         jLabel9.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel9.setPreferredSize(new java.awt.Dimension(40, 45));
-        jPanel20.add(jLabel9);
+        jPanel25.add(jLabel9, java.awt.BorderLayout.CENTER);
+
+        jPanel20.add(jPanel25);
 
         newLabel.setMinimumSize(new java.awt.Dimension(100, 25));
         newLabel.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newLabel);
+
+        jPanel26.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setLabelFor(newUsername);
@@ -585,11 +596,18 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel4.setMaximumSize(new java.awt.Dimension(98746, 89451));
         jLabel4.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel4.setPreferredSize(new java.awt.Dimension(40, 45));
-        jPanel20.add(jLabel4);
+        jPanel26.add(jLabel4, java.awt.BorderLayout.CENTER);
+
+        jPanel20.add(jPanel26);
 
         newUsername.setMinimumSize(new java.awt.Dimension(100, 25));
         newUsername.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newUsername);
+
+        jPanel22.setMaximumSize(new java.awt.Dimension(98816, 40));
+        jPanel22.setMinimumSize(new java.awt.Dimension(0, 20));
+        jPanel22.setPreferredSize(new java.awt.Dimension(0, 20));
+        jPanel22.setLayout(new javax.swing.BoxLayout(jPanel22, javax.swing.BoxLayout.X_AXIS));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setLabelFor(newPassword);
@@ -598,11 +616,27 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel7.setMaximumSize(new java.awt.Dimension(98746, 89451));
         jLabel7.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel7.setPreferredSize(new java.awt.Dimension(40, 45));
-        jPanel20.add(jLabel7);
+        jPanel22.add(jLabel7);
+
+        generateBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
+        generateBtn.setMaximumSize(new java.awt.Dimension(100, 40));
+        generateBtn.setMinimumSize(new java.awt.Dimension(60, 20));
+        generateBtn.setPreferredSize(new java.awt.Dimension(70, 20));
+        generateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generateBtnActionPerformed(evt);
+            }
+        });
+        jPanel22.add(generateBtn);
+
+        jPanel20.add(jPanel22);
 
         newPassword.setMinimumSize(new java.awt.Dimension(100, 25));
         newPassword.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newPassword);
+
+        jPanel27.setLayout(new java.awt.BorderLayout());
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel10.setLabelFor(newComment);
@@ -611,7 +645,9 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel10.setMaximumSize(new java.awt.Dimension(98746, 89451));
         jLabel10.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel10.setPreferredSize(new java.awt.Dimension(40, 45));
-        jPanel20.add(jLabel10);
+        jPanel27.add(jLabel10, java.awt.BorderLayout.CENTER);
+
+        jPanel20.add(jPanel27);
 
         newComment.setColumns(20);
         newComment.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -630,21 +666,33 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel20.add(confirmEntryBtn);
 
-        jPanel22.setMinimumSize(new java.awt.Dimension(0, 200));
-        jPanel22.setPreferredSize(new java.awt.Dimension(0, 200));
+        jPanel23.setPreferredSize(new java.awt.Dimension(229, 200));
 
-        javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
-        jPanel22.setLayout(jPanel22Layout);
-        jPanel22Layout.setHorizontalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 229, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel22Layout.setVerticalGroup(
-            jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 139, Short.MAX_VALUE)
         );
 
-        jPanel20.add(jPanel22);
+        jPanel20.add(jPanel23);
+
+        javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
+        jPanel24.setLayout(jPanel24Layout);
+        jPanel24Layout.setHorizontalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel24Layout.setVerticalGroup(
+            jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel20.add(jPanel24);
 
         jPanel18.add(jPanel20);
 
@@ -654,31 +702,15 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel21.setMinimumSize(new java.awt.Dimension(100, 204));
         jPanel21.setPreferredSize(new java.awt.Dimension(70, 0));
 
-        generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
-        generateBtn.setMaximumSize(new java.awt.Dimension(70, 20));
-        generateBtn.setMinimumSize(new java.awt.Dimension(0, 0));
-        generateBtn.setPreferredSize(new java.awt.Dimension(70, 20));
-        generateBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(generateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 100, Short.MAX_VALUE)
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(generateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(283, Short.MAX_VALUE))
+            .addGap(0, 404, Short.MAX_VALUE)
         );
 
         addEntryPane.add(jPanel21);
@@ -1349,6 +1381,11 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
