@@ -145,14 +145,22 @@ public class PassManUI extends javax.swing.JFrame {
         homeBtn = new javax.swing.JButton();
         languageOK = new javax.swing.JButton();
         createUserPane = new javax.swing.JPanel();
+        jPanel28 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
+        jPanel33 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         newUserField = new javax.swing.JTextField();
+        jPanel32 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         newUserPasswordField = new javax.swing.JPasswordField();
+        jPanel35 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         newUserPasswordField2 = new javax.swing.JPasswordField();
+        jPanel31 = new javax.swing.JPanel();
         createUserBtn = new javax.swing.JButton();
         cancelCreateAcc = new javax.swing.JButton();
+        jPanel34 = new javax.swing.JPanel();
+        jPanel30 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         createAccMenuItem = new javax.swing.JMenuItem();
@@ -814,24 +822,72 @@ public class PassManUI extends javax.swing.JFrame {
         mainPanel.add(languagePane, "LANGUAGE");
 
         createUserPane.setBackground(new java.awt.Color(51, 163, 252));
+        createUserPane.setLayout(new javax.swing.BoxLayout(createUserPane, javax.swing.BoxLayout.X_AXIS));
+
+        jPanel28.setPreferredSize(new java.awt.Dimension(125, 404));
+
+        javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
+        jPanel28.setLayout(jPanel28Layout);
+        jPanel28Layout.setHorizontalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel28Layout.setVerticalGroup(
+            jPanel28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
+        );
+
+        createUserPane.add(jPanel28);
+
+        jPanel29.setLayout(new javax.swing.BoxLayout(jPanel29, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel33.setLayout(new java.awt.BorderLayout());
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setText(bundle.getString("USERNAME")); // NOI18N
+        jLabel13.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel33.add(jLabel13, java.awt.BorderLayout.CENTER);
+
+        jPanel29.add(jPanel33);
 
         newUserField.setMinimumSize(new java.awt.Dimension(110, 20));
         newUserField.setPreferredSize(new java.awt.Dimension(110, 20));
+        jPanel29.add(newUserField);
+
+        jPanel32.setPreferredSize(new java.awt.Dimension(0, 20));
+        jPanel32.setLayout(new java.awt.BorderLayout());
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel14.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel14.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel14.setMaximumSize(new java.awt.Dimension(61, 40));
+        jLabel14.setMinimumSize(new java.awt.Dimension(0, 0));
+        jLabel14.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel32.add(jLabel14, java.awt.BorderLayout.CENTER);
+
+        jPanel29.add(jPanel32);
 
         newUserPasswordField.setMinimumSize(new java.awt.Dimension(110, 20));
         newUserPasswordField.setPreferredSize(new java.awt.Dimension(110, 20));
+        jPanel29.add(newUserPasswordField);
+
+        jPanel35.setLayout(new java.awt.BorderLayout());
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel15.setText(bundle.getString("REPEATPASS")); // NOI18N
+        jLabel15.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel35.add(jLabel15, java.awt.BorderLayout.CENTER);
+
+        jPanel29.add(jPanel35);
 
         newUserPasswordField2.setMinimumSize(new java.awt.Dimension(110, 20));
         newUserPasswordField2.setPreferredSize(new java.awt.Dimension(110, 20));
+        jPanel29.add(newUserPasswordField2);
+
+        jPanel31.setLayout(new java.awt.BorderLayout());
 
         createUserBtn.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         createUserBtn.setText(bundle.getString("CONFIRMACC")); // NOI18N
@@ -840,6 +896,7 @@ public class PassManUI extends javax.swing.JFrame {
                 createUserBtnActionPerformed(evt);
             }
         });
+        jPanel31.add(createUserBtn, java.awt.BorderLayout.CENTER);
 
         cancelCreateAcc.setFont(new java.awt.Font("Arial", 0, 8)); // NOI18N
         cancelCreateAcc.setText(bundle.getString("CANCEL")); // NOI18N
@@ -849,49 +906,41 @@ public class PassManUI extends javax.swing.JFrame {
                 cancelCreateAccActionPerformed(evt);
             }
         });
+        jPanel31.add(cancelCreateAcc, java.awt.BorderLayout.EAST);
 
-        javax.swing.GroupLayout createUserPaneLayout = new javax.swing.GroupLayout(createUserPane);
-        createUserPane.setLayout(createUserPaneLayout);
-        createUserPaneLayout.setHorizontalGroup(
-            createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(createUserPaneLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
-                .addGap(18, 18, 18)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(createUserPaneLayout.createSequentialGroup()
-                        .addComponent(cancelCreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(newUserField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addComponent(newUserPasswordField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(newUserPasswordField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(169, Short.MAX_VALUE))
+        jPanel29.add(jPanel31);
+
+        jPanel34.setPreferredSize(new java.awt.Dimension(0, 200));
+
+        javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
+        jPanel34.setLayout(jPanel34Layout);
+        jPanel34Layout.setHorizontalGroup(
+            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
-        createUserPaneLayout.setVerticalGroup(
-            createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(createUserPaneLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newUserField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newUserPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(13, 13, 13)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(newUserPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(createUserPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(createUserBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(cancelCreateAcc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(101, 101, 101))
+        jPanel34Layout.setVerticalGroup(
+            jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
+
+        jPanel29.add(jPanel34);
+
+        createUserPane.add(jPanel29);
+
+        jPanel30.setPreferredSize(new java.awt.Dimension(125, 404));
+
+        javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
+        jPanel30.setLayout(jPanel30Layout);
+        jPanel30Layout.setHorizontalGroup(
+            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel30Layout.setVerticalGroup(
+            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
+        );
+
+        createUserPane.add(jPanel30);
 
         mainPanel.add(createUserPane, "CREATEUSER");
 
@@ -1386,7 +1435,15 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
+    private javax.swing.JPanel jPanel34;
+    private javax.swing.JPanel jPanel35;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
