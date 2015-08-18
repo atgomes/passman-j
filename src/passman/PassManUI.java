@@ -68,11 +68,15 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
+        jPanel38 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
+        jPanel36 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         loginUsername = new javax.swing.JTextField();
+        jPanel37 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         loginPassword = new javax.swing.JPasswordField();
+        jPanel21 = new javax.swing.JPanel();
         attemptLogin = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -135,7 +139,6 @@ public class PassManUI extends javax.swing.JFrame {
         confirmEntryBtn = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
-        jPanel21 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         languagePane = new javax.swing.JPanel();
         portuguese = new javax.swing.JRadioButton();
@@ -231,6 +234,7 @@ public class PassManUI extends javax.swing.JFrame {
         loginPane.setPreferredSize(new java.awt.Dimension(450, 375));
         loginPane.setLayout(new javax.swing.BoxLayout(loginPane, javax.swing.BoxLayout.X_AXIS));
 
+        jPanel11.setBackground(new java.awt.Color(51, 163, 252));
         jPanel11.setPreferredSize(new java.awt.Dimension(125, 404));
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -246,12 +250,20 @@ public class PassManUI extends javax.swing.JFrame {
 
         loginPane.add(jPanel11);
 
+        jPanel9.setBackground(new java.awt.Color(51, 163, 252));
         jPanel9.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel16.setBackground(new java.awt.Color(51, 163, 252));
         jPanel16.setMaximumSize(new java.awt.Dimension(249, 134));
         jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel38.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel38.setMaximumSize(new java.awt.Dimension(32767, 50));
+        jPanel38.setMinimumSize(new java.awt.Dimension(0, 20));
+        jPanel38.setPreferredSize(new java.awt.Dimension(0, 30));
+        jPanel38.setLayout(new java.awt.BorderLayout());
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -261,7 +273,15 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel16.setMaximumSize(new java.awt.Dimension(123123, 1123127));
         jLabel16.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel16.setPreferredSize(new java.awt.Dimension(40, 45));
-        jPanel16.add(jLabel16);
+        jPanel38.add(jLabel16, java.awt.BorderLayout.CENTER);
+
+        jPanel16.add(jPanel38);
+
+        jPanel36.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel36.setMaximumSize(new java.awt.Dimension(32767, 50));
+        jPanel36.setMinimumSize(new java.awt.Dimension(0, 20));
+        jPanel36.setPreferredSize(new java.awt.Dimension(0, 30));
+        jPanel36.setLayout(new java.awt.BorderLayout());
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -271,11 +291,19 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel11.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jLabel11.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel11.setPreferredSize(new java.awt.Dimension(0, 40));
-        jPanel16.add(jLabel11);
+        jPanel36.add(jLabel11, java.awt.BorderLayout.CENTER);
+
+        jPanel16.add(jPanel36);
 
         loginUsername.setMinimumSize(new java.awt.Dimension(0, 0));
         loginUsername.setPreferredSize(new java.awt.Dimension(0, 40));
         jPanel16.add(loginUsername);
+
+        jPanel37.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel37.setMaximumSize(new java.awt.Dimension(32767, 50));
+        jPanel37.setMinimumSize(new java.awt.Dimension(0, 20));
+        jPanel37.setPreferredSize(new java.awt.Dimension(0, 30));
+        jPanel37.setLayout(new java.awt.BorderLayout());
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -285,22 +313,42 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel12.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jLabel12.setMinimumSize(new java.awt.Dimension(0, 0));
         jLabel12.setPreferredSize(new java.awt.Dimension(0, 40));
-        jPanel16.add(jLabel12);
+        jPanel37.add(jLabel12, java.awt.BorderLayout.CENTER);
+
+        jPanel16.add(jPanel37);
 
         loginPassword.setMinimumSize(new java.awt.Dimension(0, 0));
         loginPassword.setPreferredSize(new java.awt.Dimension(0, 40));
+        loginPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginPasswordActionPerformed(evt);
+            }
+        });
         jPanel16.add(loginPassword);
 
+        jPanel21.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel21.setLayout(new java.awt.BorderLayout());
+
+        attemptLogin.setBackground(new java.awt.Color(172, 198, 219));
         attemptLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         attemptLogin.setText(bundle.getString("LOGIN")); // NOI18N
+        attemptLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        attemptLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        attemptLogin.setMaximumSize(new java.awt.Dimension(70, 40));
+        attemptLogin.setMinimumSize(new java.awt.Dimension(40, 20));
+        attemptLogin.setPreferredSize(new java.awt.Dimension(50, 20));
         attemptLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 attemptLoginActionPerformed(evt);
             }
         });
-        jPanel16.add(attemptLogin);
+        jPanel21.add(attemptLogin, java.awt.BorderLayout.CENTER);
+
+        jPanel16.add(jPanel21);
 
         jPanel9.add(jPanel16);
+
+        jPanel14.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -310,10 +358,12 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 88, Short.MAX_VALUE)
+            .addGap(0, 107, Short.MAX_VALUE)
         );
 
         jPanel9.add(jPanel14);
+
+        jPanel15.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -323,13 +373,14 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 88, Short.MAX_VALUE)
+            .addGap(0, 107, Short.MAX_VALUE)
         );
 
         jPanel9.add(jPanel15);
 
         loginPane.add(jPanel9);
 
+        jPanel13.setBackground(new java.awt.Color(51, 163, 252));
         jPanel13.setPreferredSize(new java.awt.Dimension(125, 404));
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -350,10 +401,14 @@ public class PassManUI extends javax.swing.JFrame {
         mainPane.setBackground(new java.awt.Color(51, 163, 252));
         mainPane.setLayout(new java.awt.BorderLayout());
 
+        jPanel10.setBackground(new java.awt.Color(51, 163, 252));
         jPanel10.setLayout(new java.awt.GridLayout(0, 1));
 
-        addEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        addEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
+        addEntryBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
+        addEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        addEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEntryBtnActionPerformed(evt);
@@ -361,8 +416,11 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel10.add(addEntryBtn);
 
-        viewListBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        viewListBtn.setBackground(new java.awt.Color(172, 198, 219));
+        viewListBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         viewListBtn.setText(bundle.getString("VIEW")); // NOI18N
+        viewListBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        viewListBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         viewListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 viewListBtnActionPerformed(evt);
@@ -372,6 +430,8 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel10.add(filler8);
 
         mainPane.add(jPanel10, java.awt.BorderLayout.WEST);
+
+        jPanel12.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -395,6 +455,7 @@ public class PassManUI extends javax.swing.JFrame {
         globalViewPane.setPreferredSize(new java.awt.Dimension(500, 425));
         globalViewPane.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBackground(new java.awt.Color(51, 163, 252));
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -418,17 +479,22 @@ public class PassManUI extends javax.swing.JFrame {
 
         globalViewPane.add(jPanel1, java.awt.BorderLayout.WEST);
 
+        jPanel2.setBackground(new java.awt.Color(51, 163, 252));
         jPanel2.setMaximumSize(new java.awt.Dimension(400, 2147483647));
         jPanel2.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel2.setPreferredSize(new java.awt.Dimension(0, 0));
         jPanel2.setLayout(new java.awt.BorderLayout());
         jPanel2.add(filler1, java.awt.BorderLayout.WEST);
 
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
         jPanel3.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
+        removeEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         removeEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
+        removeEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        removeEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeEntryBtnActionPerformed(evt);
@@ -436,9 +502,12 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel3.add(removeEntryBtn);
 
+        toggleShowPassword.setBackground(new java.awt.Color(172, 198, 219));
         toggleShowPassword.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.setToolTipText(bundle.getString("SHOW")); // NOI18N
+        toggleShowPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        toggleShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 togglePassVisibility(evt);
@@ -446,7 +515,10 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel3.add(toggleShowPassword);
 
+        addNewEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         addNewEntryBtn.setText(bundle.getString("ADD")); // NOI18N
+        addNewEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        addNewEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addNewEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addNewEntryBtnActionPerformed(evt);
@@ -454,7 +526,10 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel3.add(addNewEntryBtn);
 
+        copyToClip.setBackground(new java.awt.Color(172, 198, 219));
         copyToClip.setText(bundle.getString("COPY")); // NOI18N
+        copyToClip.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        copyToClip.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         copyToClip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 copyToClipActionPerformed(evt);
@@ -464,9 +539,11 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.NORTH);
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
         jPanel5.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
@@ -484,6 +561,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5);
 
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
         jPanel6.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
@@ -501,6 +579,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel4.add(jPanel6);
 
+        jPanel7.setBackground(new java.awt.Color(51, 163, 252));
         jPanel7.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -520,6 +599,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel4.add(jPanel7);
 
+        jPanel8.setBackground(new java.awt.Color(51, 163, 252));
         jPanel8.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
@@ -555,6 +635,7 @@ public class PassManUI extends javax.swing.JFrame {
         addEntryPane.setPreferredSize(new java.awt.Dimension(450, 300));
         addEntryPane.setLayout(new javax.swing.BoxLayout(addEntryPane, javax.swing.BoxLayout.LINE_AXIS));
 
+        jPanel17.setBackground(new java.awt.Color(51, 163, 252));
         jPanel17.setPreferredSize(new java.awt.Dimension(100, 204));
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -570,14 +651,17 @@ public class PassManUI extends javax.swing.JFrame {
 
         addEntryPane.add(jPanel17);
 
+        jPanel18.setBackground(new java.awt.Color(51, 163, 252));
         jPanel18.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel18.setPreferredSize(new java.awt.Dimension(200, 200));
         jPanel18.setLayout(new javax.swing.BoxLayout(jPanel18, javax.swing.BoxLayout.X_AXIS));
 
+        jPanel20.setBackground(new java.awt.Color(51, 163, 252));
         jPanel20.setAlignmentX(0.5F);
         jPanel20.setPreferredSize(new java.awt.Dimension(0, 0));
         jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel25.setBackground(new java.awt.Color(51, 163, 252));
         jPanel25.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -595,6 +679,7 @@ public class PassManUI extends javax.swing.JFrame {
         newLabel.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newLabel);
 
+        jPanel26.setBackground(new java.awt.Color(51, 163, 252));
         jPanel26.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -612,6 +697,7 @@ public class PassManUI extends javax.swing.JFrame {
         newUsername.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newUsername);
 
+        jPanel22.setBackground(new java.awt.Color(51, 163, 252));
         jPanel22.setMaximumSize(new java.awt.Dimension(98816, 40));
         jPanel22.setMinimumSize(new java.awt.Dimension(0, 20));
         jPanel22.setPreferredSize(new java.awt.Dimension(0, 20));
@@ -626,6 +712,7 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel7.setPreferredSize(new java.awt.Dimension(40, 45));
         jPanel22.add(jLabel7);
 
+        generateBtn.setBackground(new java.awt.Color(51, 163, 252));
         generateBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
         generateBtn.setMaximumSize(new java.awt.Dimension(100, 40));
@@ -644,6 +731,7 @@ public class PassManUI extends javax.swing.JFrame {
         newPassword.setPreferredSize(new java.awt.Dimension(100, 25));
         jPanel20.add(newPassword);
 
+        jPanel27.setBackground(new java.awt.Color(51, 163, 252));
         jPanel27.setLayout(new java.awt.BorderLayout());
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -666,6 +754,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel20.add(jScrollPane2);
 
+        confirmEntryBtn.setBackground(new java.awt.Color(51, 163, 252));
         confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
         confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -674,6 +763,7 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel20.add(confirmEntryBtn);
 
+        jPanel23.setBackground(new java.awt.Color(51, 163, 252));
         jPanel23.setPreferredSize(new java.awt.Dimension(229, 200));
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
@@ -706,23 +796,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         addEntryPane.add(jPanel18);
 
-        jPanel21.setMaximumSize(new java.awt.Dimension(100, 6456456));
-        jPanel21.setMinimumSize(new java.awt.Dimension(100, 204));
-        jPanel21.setPreferredSize(new java.awt.Dimension(70, 0));
-
-        javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
-        jPanel21.setLayout(jPanel21Layout);
-        jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
-        );
-
-        addEntryPane.add(jPanel21);
-
+        jPanel19.setBackground(new java.awt.Color(51, 163, 252));
         jPanel19.setPreferredSize(new java.awt.Dimension(100, 204));
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
@@ -824,6 +898,7 @@ public class PassManUI extends javax.swing.JFrame {
         createUserPane.setBackground(new java.awt.Color(51, 163, 252));
         createUserPane.setLayout(new javax.swing.BoxLayout(createUserPane, javax.swing.BoxLayout.X_AXIS));
 
+        jPanel28.setBackground(new java.awt.Color(51, 163, 252));
         jPanel28.setPreferredSize(new java.awt.Dimension(125, 404));
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
@@ -839,8 +914,10 @@ public class PassManUI extends javax.swing.JFrame {
 
         createUserPane.add(jPanel28);
 
+        jPanel29.setBackground(new java.awt.Color(51, 163, 252));
         jPanel29.setLayout(new javax.swing.BoxLayout(jPanel29, javax.swing.BoxLayout.Y_AXIS));
 
+        jPanel33.setBackground(new java.awt.Color(51, 163, 252));
         jPanel33.setLayout(new java.awt.BorderLayout());
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -855,6 +932,7 @@ public class PassManUI extends javax.swing.JFrame {
         newUserField.setPreferredSize(new java.awt.Dimension(110, 20));
         jPanel29.add(newUserField);
 
+        jPanel32.setBackground(new java.awt.Color(51, 163, 252));
         jPanel32.setPreferredSize(new java.awt.Dimension(0, 20));
         jPanel32.setLayout(new java.awt.BorderLayout());
 
@@ -873,6 +951,7 @@ public class PassManUI extends javax.swing.JFrame {
         newUserPasswordField.setPreferredSize(new java.awt.Dimension(110, 20));
         jPanel29.add(newUserPasswordField);
 
+        jPanel35.setBackground(new java.awt.Color(51, 163, 252));
         jPanel35.setLayout(new java.awt.BorderLayout());
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -887,8 +966,10 @@ public class PassManUI extends javax.swing.JFrame {
         newUserPasswordField2.setPreferredSize(new java.awt.Dimension(110, 20));
         jPanel29.add(newUserPasswordField2);
 
+        jPanel31.setBackground(new java.awt.Color(51, 163, 252));
         jPanel31.setLayout(new java.awt.BorderLayout());
 
+        createUserBtn.setBackground(new java.awt.Color(51, 163, 252));
         createUserBtn.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         createUserBtn.setText(bundle.getString("CONFIRMACC")); // NOI18N
         createUserBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -898,6 +979,7 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel31.add(createUserBtn, java.awt.BorderLayout.CENTER);
 
+        cancelCreateAcc.setBackground(new java.awt.Color(51, 163, 252));
         cancelCreateAcc.setFont(new java.awt.Font("Arial", 0, 8)); // NOI18N
         cancelCreateAcc.setText(bundle.getString("CANCEL")); // NOI18N
         cancelCreateAcc.setMargin(new java.awt.Insets(2, 2, 2, 2));
@@ -910,6 +992,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel29.add(jPanel31);
 
+        jPanel34.setBackground(new java.awt.Color(51, 163, 252));
         jPanel34.setPreferredSize(new java.awt.Dimension(0, 200));
 
         javax.swing.GroupLayout jPanel34Layout = new javax.swing.GroupLayout(jPanel34);
@@ -927,6 +1010,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         createUserPane.add(jPanel29);
 
+        jPanel30.setBackground(new java.awt.Color(51, 163, 252));
         jPanel30.setPreferredSize(new java.awt.Dimension(125, 404));
 
         javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
@@ -956,6 +1040,7 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu1.add(createAccMenuItem);
 
+        addEntry.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         addEntry.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         addEntry.setText(bundle.getString("ADD")); // NOI18N
         addEntry.setEnabled(false);
@@ -966,6 +1051,7 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu1.add(addEntry);
 
+        viewList.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         viewList.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         viewList.setText(bundle.getString("VIEW")); // NOI18N
         viewList.setEnabled(false);
@@ -1183,44 +1269,16 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void attemptLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attemptLoginActionPerformed
-        // Creates hash pass and user
-
-        // fetches the user from DB
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        User compareUser = sqlite.getUser(loginUsername.getText());
-        if(compareUser != null){
-            byte[] salt = compareUser.getSaltArray();
-            byte[] secPassword = compareUser.getSecurePassword();
-            byte[] result = Crypt.verifyPasswordValidity(new String(loginPassword.getPassword()), salt, secPassword);
-
-            if(result != null){
-                // Sets the current user
-                Utils.setCurrentUser(compareUser.getUsername());
-
-                // Goes to main screen
-                Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
-                
-                // Clears login fields
-                loginUsername.setText(""); //NOI18N
-                loginPassword.setText(""); //NOI18N
-                
-                // Enables Menu options
-                Component[] menuComps = jMenu1.getMenuComponents();
-                for(Component comp : menuComps){
-                    if(!comp.isEnabled()){
-                        comp.setEnabled(true);
-                    }
-                }
-                
-                // Disables create account menu option
-                createAccMenuItem.setEnabled(false);
-                
-                // Log action
-                Logger.getLogger("").log(Level.INFO, "User {0} successfully logged in.",Utils.getCurrentUser()); //NOI18N
-            } else{
-                // Log event
-                Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername()); //NOI18N
-            }
+        if(Utils.tryLogin(loginUsername.getText(), new String(loginPassword.getPassword()))){
+            // Goes to main screen
+            Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
+            // Clears login fields
+            loginUsername.setText(""); //NOI18N
+            loginPassword.setText(""); //NOI18N
+            
+            Utils.toggleMenus(jMenu1, true);
+        } else{
+            
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
 
@@ -1310,6 +1368,18 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.goToScreen(mainPanel, "GLOBAL");
         }        
     }//GEN-LAST:event_languageOKActionPerformed
+
+    private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
+        if(Utils.tryLogin(loginUsername.getText(), new String(loginPassword.getPassword()))){
+            // Goes to main screen
+            Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
+            // Clears login fields
+            loginUsername.setText(""); //NOI18N
+            loginPassword.setText(""); //NOI18N
+            
+            Utils.toggleMenus(jMenu1, true);
+        }
+    }//GEN-LAST:event_loginPasswordActionPerformed
     
     
     /**
@@ -1444,6 +1514,9 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel35;
+    private javax.swing.JPanel jPanel36;
+    private javax.swing.JPanel jPanel37;
+    private javax.swing.JPanel jPanel38;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

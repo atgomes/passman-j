@@ -6,6 +6,7 @@
 package passman;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JPanel;
 import passman.db.Crypt;
 import passman.db.SQLiteJDBC;
@@ -217,5 +219,50 @@ public class Utils {
     
     public static String getCurrentUser(){
         return(CURRENT_USER);
+    }
+    
+    public static boolean tryLogin(String username, String password){
+        // fetches the user from DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        User compareUser = sqlite.getUser(username);
+        if(compareUser != null){
+            byte[] salt = compareUser.getSaltArray();
+            byte[] secPassword = compareUser.getSecurePassword();
+            byte[] result = Crypt.verifyPasswordValidity(password, salt, secPassword);
+
+            if(result != null){
+                // Sets the current user
+                Utils.setCurrentUser(compareUser.getUsername());
+                
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "User {0} successfully logged in.",Utils.getCurrentUser()); //NOI18N
+                return true;
+            } else{
+                // Log event
+                Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername()); //NOI18N
+                return false;
+            }
+        } else{
+            return false;
+        }
+    }
+    
+    public static void toggleMenus(JMenu menu, boolean entering){
+        if(entering){ // user logged in successfully
+            Component[] menuComps = menu.getMenuComponents();
+                for(Component comp : menuComps){
+                    comp.setEnabled(!comp.isEnabled());
+                }
+        } /*else{ // user logged out
+            Component[] menuComps = jMenu1.getMenuComponents();
+                for(Component comp : menuComps){
+                    if(!comp.isEnabled()){
+                        comp.setEnabled(true);
+                    }
+                }
+                
+                // Disables create account menu option
+                createAccMenuItem.setEnabled(false);
+        }*/
     }
 }
