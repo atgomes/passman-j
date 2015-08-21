@@ -10,6 +10,12 @@
 <project name="PassMan" default="default" basedir=".">
     <description>Builds, tests, and runs the project PassMan.</description>
     <import file="nbproject/build-impl.xml"/>
+    
+    <target name="-post-jar" description="Sets the buildversion for the current build">
+        <propertyfile file="passman.properties">
+            <entry key="Application.buildnumber" value="20150820"/>
+        </propertyfile>
+    </target>
     <!--
 
     There exist several targets which are by default empty and which can be 

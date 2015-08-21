@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,6 +44,14 @@ public class Utils {
         SQLiteJDBC sqlite = new SQLiteJDBC();
         List<Model> list = new ArrayList<>(sqlite.getItems2());
 
+        DefaultListModel<Model> listModel = new DefaultListModel();
+        for(Model obj : list){
+            listModel.addElement(obj);
+        }
+        jList1.setModel(listModel);
+    }
+    
+    public void refreshView(JList jList1, JPanel mainPanel, List<Model> list){
         DefaultListModel<Model> listModel = new DefaultListModel();
         for(Model obj : list){
             listModel.addElement(obj);
@@ -264,5 +271,26 @@ public class Utils {
                 // Disables create account menu option
                 createAccMenuItem.setEnabled(false);
         }*/
+    }
+    
+    public static void goWithSearch(){
+        
+    }
+    
+    public static void changeUsername(String password, String username, String newUsername){
+        // fetches the user from DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        User compareUser = sqlite.getUser(username);
+        if(compareUser != null){
+            byte[] salt = compareUser.getSaltArray();
+            byte[] secPassword = compareUser.getSecurePassword();
+            byte[] result = Crypt.verifyPasswordValidity(password, salt, secPassword);
+
+            if(result != null){
+                // TRATAR DE VERIFICAR ENTRADAS, MUDAR NOME DO UTILIZADOR NA TABELA
+            } else{
+                // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
+            }
+        }
     }
 }

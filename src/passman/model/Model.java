@@ -101,4 +101,8 @@ public class Model {
         return this.label;
     }
     
+    public boolean equals(Model mdl){
+        return(this.getLabel().equalsIgnoreCase(mdl.getLabel()));
+    }
+    
 }

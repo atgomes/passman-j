@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -29,8 +31,13 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.ListModel;
+import passman.model.ChangeUsernameDialog;
 import passman.model.ErrorDialog;
 //import passman.Utils;
 
@@ -87,6 +94,14 @@ public class PassManUI extends javax.swing.JFrame {
         viewListBtn = new javax.swing.JButton();
         filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jPanel12 = new javax.swing.JPanel();
+        jPanel39 = new javax.swing.JPanel();
+        jPanel42 = new javax.swing.JPanel();
+        jPanel41 = new javax.swing.JPanel();
+        jPanel43 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel44 = new javax.swing.JPanel();
+        quickSearchField = new javax.swing.JTextField();
+        jPanel40 = new javax.swing.JPanel();
         globalViewPane = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -164,6 +179,13 @@ public class PassManUI extends javax.swing.JFrame {
         cancelCreateAcc = new javax.swing.JButton();
         jPanel34 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
+        accountOptionsPane = new javax.swing.JPanel();
+        jPanel45 = new javax.swing.JPanel();
+        jPanel47 = new javax.swing.JPanel();
+        changeUsernameButton = new javax.swing.JButton();
+        changePasswordButton = new javax.swing.JButton();
+        jPanel48 = new javax.swing.JPanel();
+        jPanel46 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         createAccMenuItem = new javax.swing.JMenuItem();
@@ -172,6 +194,7 @@ public class PassManUI extends javax.swing.JFrame {
         logoutMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         languageMenu = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         popupWindow.setMinimumSize(new java.awt.Dimension(300, 200));
 
@@ -332,7 +355,6 @@ public class PassManUI extends javax.swing.JFrame {
         attemptLogin.setBackground(new java.awt.Color(172, 198, 219));
         attemptLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         attemptLogin.setText(bundle.getString("LOGIN")); // NOI18N
-        attemptLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         attemptLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         attemptLogin.setMaximumSize(new java.awt.Dimension(70, 40));
         attemptLogin.setMinimumSize(new java.awt.Dimension(40, 20));
@@ -407,7 +429,6 @@ public class PassManUI extends javax.swing.JFrame {
         addEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         addEntryBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
-        addEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         addEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -419,7 +440,6 @@ public class PassManUI extends javax.swing.JFrame {
         viewListBtn.setBackground(new java.awt.Color(172, 198, 219));
         viewListBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         viewListBtn.setText(bundle.getString("VIEW")); // NOI18N
-        viewListBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         viewListBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         viewListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,17 +452,76 @@ public class PassManUI extends javax.swing.JFrame {
         mainPane.add(jPanel10, java.awt.BorderLayout.WEST);
 
         jPanel12.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.Y_AXIS));
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanel39.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel39.setLayout(new javax.swing.BoxLayout(jPanel39, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel42.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel42.setMaximumSize(new java.awt.Dimension(32767, 60));
+        jPanel42.setPreferredSize(new java.awt.Dimension(439, 40));
+
+        javax.swing.GroupLayout jPanel42Layout = new javax.swing.GroupLayout(jPanel42);
+        jPanel42.setLayout(jPanel42Layout);
+        jPanel42Layout.setHorizontalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 439, Short.MAX_VALUE)
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+        jPanel42Layout.setVerticalGroup(
+            jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
         );
+
+        jPanel39.add(jPanel42);
+
+        jPanel41.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel41.setLayout(new javax.swing.BoxLayout(jPanel41, javax.swing.BoxLayout.Y_AXIS));
+
+        jPanel43.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel43.setMaximumSize(new java.awt.Dimension(2147483647, 20));
+        jPanel43.setMinimumSize(new java.awt.Dimension(20, 20));
+        jPanel43.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel43.setLayout(new java.awt.BorderLayout());
+
+        jLabel17.setText(bundle.getString("QUICKSEARCH")); // NOI18N
+        jLabel17.setMinimumSize(new java.awt.Dimension(20, 20));
+        jLabel17.setPreferredSize(new java.awt.Dimension(60, 20));
+        jPanel43.add(jLabel17, java.awt.BorderLayout.CENTER);
+
+        jPanel41.add(jPanel43);
+
+        jPanel44.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel44.setMaximumSize(new java.awt.Dimension(2147483647, 40));
+        jPanel44.setPreferredSize(new java.awt.Dimension(439, 20));
+        jPanel44.setLayout(new java.awt.BorderLayout());
+
+        quickSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quickSearchFieldActionPerformed(evt);
+            }
+        });
+        jPanel44.add(quickSearchField, java.awt.BorderLayout.CENTER);
+
+        jPanel41.add(jPanel44);
+
+        jPanel39.add(jPanel41);
+
+        jPanel12.add(jPanel39);
+
+        jPanel40.setBackground(new java.awt.Color(51, 163, 252));
+
+        javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
+        jPanel40.setLayout(jPanel40Layout);
+        jPanel40Layout.setHorizontalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 439, Short.MAX_VALUE)
+        );
+        jPanel40Layout.setVerticalGroup(
+            jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 323, Short.MAX_VALUE)
+        );
+
+        jPanel12.add(jPanel40);
 
         mainPane.add(jPanel12, java.awt.BorderLayout.CENTER);
 
@@ -493,7 +572,6 @@ public class PassManUI extends javax.swing.JFrame {
         removeEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         removeEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
-        removeEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         removeEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -506,7 +584,6 @@ public class PassManUI extends javax.swing.JFrame {
         toggleShowPassword.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.setToolTipText(bundle.getString("SHOW")); // NOI18N
-        toggleShowPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         toggleShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,7 +594,6 @@ public class PassManUI extends javax.swing.JFrame {
 
         addNewEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         addNewEntryBtn.setText(bundle.getString("ADD")); // NOI18N
-        addNewEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         addNewEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addNewEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,7 +604,6 @@ public class PassManUI extends javax.swing.JFrame {
 
         copyToClip.setBackground(new java.awt.Color(172, 198, 219));
         copyToClip.setText(bundle.getString("COPY")); // NOI18N
-        copyToClip.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         copyToClip.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         copyToClip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -657,7 +732,6 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel18.setLayout(new javax.swing.BoxLayout(jPanel18, javax.swing.BoxLayout.X_AXIS));
 
         jPanel20.setBackground(new java.awt.Color(51, 163, 252));
-        jPanel20.setAlignmentX(0.5F);
         jPanel20.setPreferredSize(new java.awt.Dimension(0, 0));
         jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
 
@@ -712,9 +786,10 @@ public class PassManUI extends javax.swing.JFrame {
         jLabel7.setPreferredSize(new java.awt.Dimension(40, 45));
         jPanel22.add(jLabel7);
 
-        generateBtn.setBackground(new java.awt.Color(51, 163, 252));
+        generateBtn.setBackground(new java.awt.Color(172, 198, 219));
         generateBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
+        generateBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         generateBtn.setMaximumSize(new java.awt.Dimension(100, 40));
         generateBtn.setMinimumSize(new java.awt.Dimension(60, 20));
         generateBtn.setPreferredSize(new java.awt.Dimension(70, 20));
@@ -754,8 +829,9 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel20.add(jScrollPane2);
 
-        confirmEntryBtn.setBackground(new java.awt.Color(51, 163, 252));
+        confirmEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
+        confirmEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmEntryBtnActionPerformed(evt);
@@ -774,7 +850,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 139, Short.MAX_VALUE)
+            .addGap(0, 141, Short.MAX_VALUE)
         );
 
         jPanel20.add(jPanel23);
@@ -1028,6 +1104,65 @@ public class PassManUI extends javax.swing.JFrame {
 
         mainPanel.add(createUserPane, "CREATEUSER");
 
+        accountOptionsPane.setBackground(new java.awt.Color(51, 163, 252));
+        accountOptionsPane.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        accountOptionsPane.setMinimumSize(new java.awt.Dimension(450, 375));
+        accountOptionsPane.setPreferredSize(new java.awt.Dimension(450, 375));
+        accountOptionsPane.setLayout(new java.awt.BorderLayout());
+
+        jPanel45.setMaximumSize(new java.awt.Dimension(200, 32767));
+        jPanel45.setPreferredSize(new java.awt.Dimension(150, 0));
+        jPanel45.setLayout(new java.awt.BorderLayout());
+
+        jPanel47.setLayout(new java.awt.GridLayout(0, 1));
+
+        changeUsernameButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        changeUsernameButton.setText(bundle.getString("CHANGEUSER")); // NOI18N
+        changeUsernameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeUsernameButtonActionPerformed(evt);
+            }
+        });
+        jPanel47.add(changeUsernameButton);
+
+        changePasswordButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
+        jPanel47.add(changePasswordButton);
+
+        jPanel45.add(jPanel47, java.awt.BorderLayout.NORTH);
+
+        javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
+        jPanel48.setLayout(jPanel48Layout);
+        jPanel48Layout.setHorizontalGroup(
+            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        jPanel48Layout.setVerticalGroup(
+            jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 358, Short.MAX_VALUE)
+        );
+
+        jPanel45.add(jPanel48, java.awt.BorderLayout.CENTER);
+
+        accountOptionsPane.add(jPanel45, java.awt.BorderLayout.WEST);
+
+        jPanel46.setPreferredSize(new java.awt.Dimension(0, 0));
+
+        javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
+        jPanel46.setLayout(jPanel46Layout);
+        jPanel46Layout.setHorizontalGroup(
+            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 350, Short.MAX_VALUE)
+        );
+        jPanel46Layout.setVerticalGroup(
+            jPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 404, Short.MAX_VALUE)
+        );
+
+        accountOptionsPane.add(jPanel46, java.awt.BorderLayout.CENTER);
+
+        mainPanel.add(accountOptionsPane, "ACCOPTIONS");
+
         jMenu1.setText(bundle.getString("FILE")); // NOI18N
         jMenu1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
@@ -1074,7 +1209,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText(bundle.getString("EDIT")); // NOI18N
+        jMenu2.setText(bundle.getString("OPTIONS")); // NOI18N
         jMenu2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
 
         languageMenu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1085,6 +1220,15 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
         jMenu2.add(languageMenu);
+
+        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem1.setText(bundle.getString("ACCOUNT")); // NOI18N
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
 
         jMenuBar1.add(jMenu2);
 
@@ -1361,11 +1505,11 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelCreateAccActionPerformed
 
     private void languageOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageOKActionPerformed
-        if(Utils.getCurrentUser() == "" || Utils.getCurrentUser()==null){
-            Utils.goToScreen(mainPanel, "LOGIN");
+        if(Utils.getCurrentUser() == "" || Utils.getCurrentUser()==null){ //NOI18N
+            Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
         } else{
             utils.refreshView(jList1, mainPanel);
-            Utils.goToScreen(mainPanel, "GLOBAL");
+            Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
         }        
     }//GEN-LAST:event_languageOKActionPerformed
 
@@ -1380,6 +1524,45 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.toggleMenus(jMenu1, true);
         }
     }//GEN-LAST:event_loginPasswordActionPerformed
+
+    private void quickSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quickSearchFieldActionPerformed
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        List<Model> list = new ArrayList<>(sqlite.getItems2());
+        
+        Collections.sort(list, (Model m1, Model m2) -> {
+            return(m1.getLabel().compareToIgnoreCase(m2.getLabel()));
+        });        
+        utils.refreshView(jList1, mainPanel, list);
+        
+        String searchStr = quickSearchField.getText();
+        
+        Pattern pat = Pattern.compile("^"+searchStr); //NOI18N
+        Matcher matcher;
+        
+        int i,c;
+        ListModel<Model> dm = jList1.getModel();
+        c=dm.getSize();
+        for(i=0;i<c;i++){
+            matcher = pat.matcher(dm.getElementAt(i).toString());
+            if(matcher.find()){
+                jList1.setSelectedIndex(i);
+                jList1.ensureIndexIsVisible(i);
+                jList1.repaint();
+                break;
+            }
+        }
+        
+        Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
+    }//GEN-LAST:event_quickSearchFieldActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Utils.goToScreen(mainPanel, "ACCOPTIONS"); //NOI18N
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void changeUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameButtonActionPerformed
+        ChangeUsernameDialog jkkj = new ChangeUsernameDialog(this, true);
+        jkkj.setVisible(true);
+    }//GEN-LAST:event_changeUsernameButtonActionPerformed
     
     
     /**
@@ -1440,6 +1623,7 @@ public class PassManUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel accountOptionsPane;
     private javax.swing.JMenuItem addEntry;
     private javax.swing.JButton addEntryBtn;
     private javax.swing.JPanel addEntryPane;
@@ -1447,6 +1631,8 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JButton attemptLogin;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelCreateAcc;
+    private javax.swing.JButton changePasswordButton;
+    private javax.swing.JButton changeUsernameButton;
     private javax.swing.JTextArea commentShow;
     private javax.swing.JButton confirmEntryBtn;
     private javax.swing.JButton copyToClip;
@@ -1473,6 +1659,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1485,6 +1672,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1517,7 +1705,17 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel38;
+    private javax.swing.JPanel jPanel39;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel40;
+    private javax.swing.JPanel jPanel41;
+    private javax.swing.JPanel jPanel42;
+    private javax.swing.JPanel jPanel43;
+    private javax.swing.JPanel jPanel44;
+    private javax.swing.JPanel jPanel45;
+    private javax.swing.JPanel jPanel46;
+    private javax.swing.JPanel jPanel47;
+    private javax.swing.JPanel jPanel48;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1548,6 +1746,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JTextField passwordShow;
     private javax.swing.JDialog popupWindow;
     private javax.swing.JRadioButton portuguese;
+    private javax.swing.JTextField quickSearchField;
     private javax.swing.JButton removeEntryBtn;
     private javax.swing.JToggleButton toggleShowPassword;
     private javax.swing.JTextField usernameShow;
