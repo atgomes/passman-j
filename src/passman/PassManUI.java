@@ -16,14 +16,9 @@ import passman.db.Crypt;
 import passman.model.User;
 import java.awt.datatransfer.*;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -33,8 +28,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.DefaultListModel;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
 import passman.model.ChangePasswordDialog;
@@ -195,7 +188,7 @@ public class PassManUI extends javax.swing.JFrame {
         logoutMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         languageMenu = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        accountMenu = new javax.swing.JMenuItem();
 
         popupWindow.setMinimumSize(new java.awt.Dimension(300, 200));
 
@@ -236,11 +229,6 @@ public class PassManUI extends javax.swing.JFrame {
         setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         setMaximumSize(new java.awt.Dimension(111111, 111111));
         setMinimumSize(new java.awt.Dimension(450, 375));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                formComponentResized(evt);
-            }
-        });
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${maximumSize}"), mainPanel, org.jdesktop.beansbinding.BeanProperty.create("maximumSize"));
         bindingGroup.addBinding(binding);
@@ -1130,6 +1118,7 @@ public class PassManUI extends javax.swing.JFrame {
         changePasswordButton.setBackground(new java.awt.Color(51, 163, 252));
         changePasswordButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
+        changePasswordButton.setEnabled(false);
         changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changePasswordButtonActionPerformed(evt);
@@ -1225,6 +1214,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         languageMenu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         languageMenu.setText(bundle.getString("LANGUAGE")); // NOI18N
+        languageMenu.setName("languageMenuItem"); // NOI18N
         languageMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 languageMenuActionPerformed(evt);
@@ -1232,14 +1222,16 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu2.add(languageMenu);
 
-        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem1.setText(bundle.getString("ACCOUNT")); // NOI18N
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        accountMenu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        accountMenu.setText(bundle.getString("ACCOUNT")); // NOI18N
+        accountMenu.setEnabled(false);
+        accountMenu.setName(""); // NOI18N
+        accountMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                accountMenuActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(accountMenu);
 
         jMenuBar1.add(jMenu2);
 
@@ -1268,7 +1260,6 @@ public class PassManUI extends javax.swing.JFrame {
      */
     private void addEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEntryActionPerformed
         Utils.goToScreen(mainPanel, "ADD"); //NOI18N
-        //removeEntryBtn.setEnabled(false);
     }//GEN-LAST:event_addEntryActionPerformed
 
     /**
@@ -1276,22 +1267,14 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void confirmEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmEntryBtnActionPerformed
-        // Get values from text fields
-        String label = newLabel.getText();
-        String username = newUsername.getText();
-        String plainTextPassword = newPassword.getText();
-        String comment = newComment.getText();
         // Calls method that encrypts the password using the current user values and saves entry to DB
-        Utils.addToDBFromUI(label, username, plainTextPassword, comment);
-        
-        // clears fields
-        newLabel.setText(""); //NOI18N
-        newUsername.setText(""); //NOI18N
-        newPassword.setText(""); //NOI18N
-        newComment.setText(""); //NOI18N
-        
-        // moves to main screen
-        Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
+        if(Utils.addToDBFromUI(newLabel.getText(), newUsername.getText(), newPassword.getText(), newComment.getText())){        
+            // Clears fields
+            Utils.clearTextFields(new Component[]{newLabel, newUsername, newPassword, newComment});
+
+            // moves to main screen
+            Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
+        }
     }//GEN-LAST:event_confirmEntryBtnActionPerformed
 
     /**
@@ -1299,30 +1282,7 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        if(jList1.getSelectedIndex()>-1){
-            // convert jList1 item to a Model item
-            Model thisModel = (Model)jList1.getSelectedValue();
-            
-            // shows label, username and comments
-            labelShow.setText(thisModel.getLabel());
-            usernameShow.setText(thisModel.getUsername());
-            commentShow.setText(thisModel.getComment());
-            
-            // only shows password if toggle is selected
-            if(toggleShowPassword.isSelected()){
-                String plainTextPassword = Utils.getFromDBToUI(thisModel.getPassword(),thisModel.getSalt());
-                
-                passwordShow.setText(plainTextPassword);
-            } else{
-                passwordShow.setText("*********"); //NOI18N
-            }
-            // Enable remove button
-            removeEntryBtn.setEnabled(true);
-        }
-        else{
-            // Disable remove button
-            removeEntryBtn.setEnabled(false);
-        }
+        Utils.presentSelectedEntry(jList1, labelShow, usernameShow, passwordShow, commentShow, toggleShowPassword, removeEntryBtn);
     }//GEN-LAST:event_jList1ValueChanged
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
@@ -1394,24 +1354,20 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void createUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createUserBtnActionPerformed
+        // make sure both passwords are the same
         if(Arrays.equals(newUserPasswordField.getPassword(),newUserPasswordField2.getPassword())){
+            // Make sure new username is not an empty string
             if(!newUserField.getText().isEmpty()){
-                
-                // Creates hash pass and user                
-                ArrayList<byte[]> list = Crypt.getSecurePassword(new String(newUserPasswordField.getPassword()));
-                User user = new User(newUserField.getText(), list.get(0), list.get(1));
-                
-                // adds user to DB
-                SQLiteJDBC sqlite = new SQLiteJDBC();
-                sqlite.addUser(user);
-                
+                Utils.createNewUser(newUserField.getText(), new String(newUserPasswordField.getPassword()));
                 // Clears fields
-                newUserPasswordField.setText(""); //NOI18N
-                newUserPasswordField2.setText(""); //NOI18N
-                
+                Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});                
                 // Goes to login screen
                 Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+            } else{ // Username is empty
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Error", "New username can't be empty.");
             }
+        } else{ // Passwords are not the same
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Error", "Passwords in both fields must be equal.");
         }
     }//GEN-LAST:event_createUserBtnActionPerformed
 
@@ -1427,27 +1383,16 @@ public class PassManUI extends javax.swing.JFrame {
         if(Utils.tryLogin(loginUsername.getText(), new String(loginPassword.getPassword()))){
             // Goes to main screen
             Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
-            // Clears login fields
-            loginUsername.setText(""); //NOI18N
-            loginPassword.setText(""); //NOI18N
+            
+            // Clears fields
+            Utils.clearTextFields(new Component[]{loginUsername, loginPassword});
             
             Utils.toggleMenus(jMenu1, true);
-        } else{
-            
+            Utils.toggleMenus(jMenu2, true);
+        } else{ // Login failed
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Login failed", "Username and/or password are incorrect.");
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
-
-    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        
-        /*Dimension mainPanelDimension = mainPanel.getSize();
-        // *** GLOBAL VIEW PANE *** //
-        // Resize List
-        Dimension newDim = new Dimension();
-        newDim.height = (int)(mainPanelDimension.height*0.97);
-        newDim.width = (int)(mainPanelDimension.width*0.25);
-        jList1.setSize(newDim);
-        jScrollPane1.setSize(newDim);*/
-    }//GEN-LAST:event_formComponentResized
 
     private void removeEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeEntryBtnActionPerformed
         Model model = (Model)jList1.getSelectedValue();
@@ -1457,11 +1402,8 @@ public class PassManUI extends javax.swing.JFrame {
 
         utils.refreshView(jList1, mainPanel);
 
-        // Clears text fields
-        labelShow.setText(""); //NOI18N
-        usernameShow.setText(""); //NOI18N
-        passwordShow.setText(""); //NOI18N
-        commentShow.setText(""); //NOI18N
+        // Clears fields
+        Utils.clearTextFields(new Component[]{labelShow, usernameShow, passwordShow, commentShow});
 
         // Deselects items in list
         jList1.setSelectedIndex(-1);
@@ -1484,41 +1426,20 @@ public class PassManUI extends javax.swing.JFrame {
         // Log action
         Logger.getLogger("").log(Level.INFO, "User {0} logged out.",Utils.getCurrentUser()); //NOI18N
         
-        Utils.logout(jList1, jMenu1, mainPanel);
-        
-        // Clears current user
-        /*Utils.setCurrentUser(null);
-        
-        // Clears list items
-        DefaultListModel<Model> listModel = new DefaultListModel();
-        jList1.setModel(listModel);
-        
-        // Goes to login page
-        Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
-        
-        // Disables Menu options
-        Component[] menuComps = jMenu1.getMenuComponents();
-        for(Component comp : menuComps){
-            if(comp.isEnabled()){
-                comp.setEnabled(false);
-            }
-        }
-
-        // Enables create account menu option
-        createAccMenuItem.setEnabled(true);*/
+        Utils.logout(jList1, mainPanel);
+        Utils.toggleMenus(jMenu1, false);
+        Utils.toggleMenus(jMenu2, false);
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
     private void cancelCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelCreateAccActionPerformed
-        // Clears "create acc" fields
-        newUserField.setText(""); //NOI18N
-        newUserPasswordField.setText(""); //NOI18N
-        newUserPasswordField2.setText(""); //NOI18N
+        // Clears fields
+        Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});
         
         Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
     }//GEN-LAST:event_cancelCreateAccActionPerformed
 
     private void languageOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageOKActionPerformed
-        if(Utils.getCurrentUser() == "" || Utils.getCurrentUser()==null){ //NOI18N
+        if("".equals(Utils.getCurrentUser()) || Utils.getCurrentUser()==null){ //NOI18N
             Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
         } else{
             utils.refreshView(jList1, mainPanel);
@@ -1530,11 +1451,13 @@ public class PassManUI extends javax.swing.JFrame {
         if(Utils.tryLogin(loginUsername.getText(), new String(loginPassword.getPassword()))){
             // Goes to main screen
             Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
-            // Clears login fields
-            loginUsername.setText(""); //NOI18N
-            loginPassword.setText(""); //NOI18N
+            // Clears fields
+            Utils.clearTextFields(new Component[]{loginUsername, loginPassword});
             
             Utils.toggleMenus(jMenu1, true);
+            Utils.toggleMenus(jMenu2, true);
+        } else{ // Login failed
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Login failed", "Username and/or password are incorrect.");
         }
     }//GEN-LAST:event_loginPasswordActionPerformed
 
@@ -1568,9 +1491,9 @@ public class PassManUI extends javax.swing.JFrame {
         Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
     }//GEN-LAST:event_quickSearchFieldActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void accountMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accountMenuActionPerformed
         Utils.goToScreen(mainPanel, "ACCOPTIONS"); //NOI18N
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_accountMenuActionPerformed
 
     private void changeUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameButtonActionPerformed
         ChangeUsernameDialog changeUsernameDialog = new ChangeUsernameDialog(this, true);
@@ -1578,7 +1501,9 @@ public class PassManUI extends javax.swing.JFrame {
         
         // If name changing was successful logs out to allow user to relog
         if(result==0){
-            Utils.logout(jList1, jMenu1, mainPanel);
+            Utils.logout(jList1, mainPanel);
+            Utils.toggleMenus(jMenu1, false);
+            Utils.toggleMenus(jMenu2, false);
         }
     }//GEN-LAST:event_changeUsernameButtonActionPerformed
 
@@ -1587,7 +1512,9 @@ public class PassManUI extends javax.swing.JFrame {
         int result = changePasswordDialog.showDialog();
         
         if(result==0){
-            Utils.logout(jList1, jMenu1, mainPanel);
+            Utils.logout(jList1, mainPanel);
+            Utils.toggleMenus(jMenu1, false);
+            Utils.toggleMenus(jMenu2, false);
         }
     }//GEN-LAST:event_changePasswordButtonActionPerformed
     
@@ -1649,6 +1576,7 @@ public class PassManUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem accountMenu;
     private javax.swing.JPanel accountOptionsPane;
     private javax.swing.JMenuItem addEntry;
     private javax.swing.JButton addEntryBtn;
@@ -1698,7 +1626,6 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

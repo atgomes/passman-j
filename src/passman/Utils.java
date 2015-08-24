@@ -22,10 +22,15 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import passman.db.Crypt;
 import passman.db.SQLiteJDBC;
 import passman.model.CryptModel;
@@ -163,29 +168,40 @@ public class Utils {
         }
     }
     
-    public static void addToDBFromUI(String label, String username, String plainTextPassword, String comment){
-        // get utf-8 bytes from string
-        byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
-        
-        // gets the current user
-        SQLiteJDBC sqlite = new SQLiteJDBC();
-        User currentUser = sqlite.getUser(CURRENT_USER);
-        if(currentUser == null){
-            // Log event
-            Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
-        } else{
-            // Use user password to encrypt password bytes
-            CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
-            if(cpMdl.encryptedPassword == null){
+    public static boolean addToDBFromUI(String label, String username, String plainTextPassword, String comment){
+        boolean result = false;
+        // Ensure no mandatory fields are submitted empty
+        if(!label.isEmpty() && !username.isEmpty() && !plainTextPassword.isEmpty()){
+            // get utf-8 bytes from string
+            byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
+
+            // gets the current user
+            SQLiteJDBC sqlite = new SQLiteJDBC();
+            User currentUser = sqlite.getUser(CURRENT_USER);
+            if(currentUser == null){
                 // Log event
-                Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
+                Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "User not found", "User "+ CURRENT_USER +" was not found on the database.");
             } else{
-                // save data to DB
-                Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
-                //sqlite.addItem(newModel);
-                sqlite.addItem2(newModel);
+                // Use user password to encrypt password bytes
+                CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
+                if(cpMdl.encryptedPassword == null){
+                    // Log event
+                    Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Encryption error", "Encryption failed due to unknown error.");
+                } else{
+                    // save data to DB
+                    Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
+                    //sqlite.addItem(newModel);
+                    sqlite.addItem2(newModel);
+                    result = true;
+                }
             }
+        } else{
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), 
+                    "Mandatory fields", "Label, username and password are mandatory fields and cannot be empty.");
         }
+        return result;
     }
     
     public static String getFromDBToUI(byte[] encryptedMessage, byte[] salt){
@@ -255,29 +271,20 @@ public class Utils {
     }
     
     public static void toggleMenus(JMenu menu, boolean entering){
-        if(entering){ // user logged in successfully
-            Component[] menuComps = menu.getMenuComponents();
-                for(Component comp : menuComps){
+        //if(entering){ // user logged in successfully
+        Component[] menuComps = menu.getMenuComponents();
+            for(Component comp : menuComps){
+                if(!"languageMenuItem".equals(comp.getName())){
                     comp.setEnabled(!comp.isEnabled());
                 }
-        } /*else{ // user logged out
-            Component[] menuComps = jMenu1.getMenuComponents();
-                for(Component comp : menuComps){
-                    if(!comp.isEnabled()){
-                        comp.setEnabled(true);
-                    }
-                }
-                
-                // Disables create account menu option
-                createAccMenuItem.setEnabled(false);
-        }*/
+            }
     }
     
     public static void goWithSearch(){
         
     }
     
-    public static void logout(JList jList1, JMenu menu, JPanel mainPanel){
+    public static void logout(JList jList1, JPanel mainPanel){
         // Clears current user
         Utils.setCurrentUser(null);
         
@@ -287,9 +294,6 @@ public class Utils {
         
         // Goes to login page
         Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
-        
-        // Disables Menu options
-        Utils.toggleMenus(menu, true);
     }
     
     public static void changeUsername(String password, String username, String newUsername){
@@ -334,6 +338,59 @@ public class Utils {
             } else{
                 // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
             }
+        }
+    }
+    
+    public static void createNewUser(String username, String password){
+        // Creates hash pass and user
+        ArrayList<byte[]> list = Crypt.getSecurePassword(password);
+        User user = new User(username, list.get(0), list.get(1));
+
+        // adds user to DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        sqlite.addUser(user);
+    }
+    
+    public static void clearTextFields(Component[] componentList){
+        for(Component comp : componentList){
+            if(comp.getClass().getName().endsWith("JTextField")){//NOI18N
+                JTextField txt = (JTextField)comp;
+                txt.setText("");//NOI18N
+            }
+            if(comp.getClass().getName().endsWith("JPasswordField")){//NOI18N
+                JPasswordField pass = (JPasswordField)comp;
+                pass.setText("");//NOI18N
+            }
+        }
+    }
+    
+    public static void presentSelectedEntry(JList jList1, JTextField labelShow, 
+            JTextField usernameShow, JTextField passwordShow, 
+            JTextArea commentShow, JToggleButton toggleShowPassword, JButton removeEntryBtn){
+        
+        if(jList1.getSelectedIndex()>-1){
+            // convert jList1 item to a Model item
+            Model thisModel = (Model)jList1.getSelectedValue();
+            
+            // shows label, username and comments
+            labelShow.setText(thisModel.getLabel());
+            usernameShow.setText(thisModel.getUsername());
+            commentShow.setText(thisModel.getComment());
+            
+            // only shows password if toggle is selected
+            if(toggleShowPassword.isSelected()){
+                String plainTextPassword = Utils.getFromDBToUI(thisModel.getPassword(),thisModel.getSalt());
+                
+                passwordShow.setText(plainTextPassword);
+            } else{
+                passwordShow.setText("*********"); //NOI18N
+            }
+            // Enable remove button
+            removeEntryBtn.setEnabled(true);
+        }
+        else{
+            // Disable remove button
+            removeEntryBtn.setEnabled(false);
         }
     }
 }
