@@ -5,18 +5,21 @@
  */
 package passman.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import passman.Utils;
+import passman.db.Crypt;
 
 /**
  *
- * @author P057736
+ * @author Andre
  */
-public class ChangeUsernameDialog extends javax.swing.JDialog {
+public class ChangePasswordDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form ChangeUsernameDialog
+     * Creates new form ChangePasswordDialog
      */
-    public ChangeUsernameDialog(java.awt.Frame parent, boolean modal) {
+    public ChangePasswordDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -35,9 +38,11 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
+        oldPasswordField = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        newUsernameField = new javax.swing.JTextField();
+        newPasswordField = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        newPasswordField2 = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -48,7 +53,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel2.setLayout(new java.awt.GridLayout());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -58,7 +63,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 102, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel3);
@@ -68,20 +73,20 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
-        jLabel1.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel1.setText(bundle.getString("OLDPASSWORD")); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel4.add(jLabel1);
-
-        passwordField.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jPanel4.add(passwordField);
+        jPanel4.add(oldPasswordField);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText(bundle.getString("NEWUSERNAME")); // NOI18N
+        jLabel2.setText(bundle.getString("NEWPASSWORD")); // NOI18N
         jPanel4.add(jLabel2);
+        jPanel4.add(newPasswordField);
 
-        newUsernameField.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jPanel4.add(newUsernameField);
+        jLabel3.setText(bundle.getString("REPEATPASSNEW")); // NOI18N
+        jPanel4.add(jLabel3);
+        jPanel4.add(newPasswordField2);
 
         jPanel2.add(jPanel4);
 
@@ -93,7 +98,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 102, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel5);
@@ -108,12 +113,12 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 175, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel7.setLayout(new java.awt.GridLayout());
 
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
@@ -157,21 +162,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        result = -1;
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        Utils.changeUsername(new String(passwordField.getPassword()), Utils.getCurrentUser(), newUsernameField.getText());
-        result = 0;
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_confirmButtonActionPerformed
 
     private int result = -1;
     
@@ -179,6 +170,29 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         setVisible(true);
         return result;
     }
+    
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        result = -1;
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        if(Arrays.equals(newPasswordField.getPassword(),newPasswordField2.getPassword())){
+            
+            Utils.changePassword(new String(oldPasswordField.getPassword()), new String(newPasswordField.getPassword()));
+                
+            // Clears fields
+            newPasswordField.setText(""); //NOI18N
+            newPasswordField2.setText(""); //NOI18N
+        
+    
+            result = 0;
+            setVisible(false);
+            dispose();
+        }
+    }//GEN-LAST:event_confirmButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -196,20 +210,20 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangeUsernameDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangeUsernameDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangeUsernameDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangeUsernameDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ChangeUsernameDialog dialog = new ChangeUsernameDialog(new javax.swing.JFrame(), true);
+                ChangePasswordDialog dialog = new ChangePasswordDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -226,6 +240,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
     private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -233,11 +248,8 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField newUsernameField;
-    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JPasswordField newPasswordField;
+    private javax.swing.JPasswordField newPasswordField2;
+    private javax.swing.JPasswordField oldPasswordField;
     // End of variables declaration//GEN-END:variables
-
-    
-
-    
 }

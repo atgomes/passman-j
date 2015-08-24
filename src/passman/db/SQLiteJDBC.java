@@ -72,38 +72,6 @@ public class SQLiteJDBC {
         }
     }
     
-    /*public List<Model> getItems(){
-        try{
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
-            
-            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_passwords", null);
-            // 
-            if(rs.next()){
-                Statement stmt = c.createStatement();
-                String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM pmj_passwords;";
-
-                ResultSet entries = stmt.executeQuery(sql);
-
-                while(entries.next()){
-                    Model model = new Model(entries.getString("LABEL"),entries.getString("USERNAME"),
-                            entries.getBytes("PASSWORD"),
-                            entries.getBytes("SALT"),entries.getString("COMMENT"));
-                    
-                    list.add(model);
-                }
-                
-                stmt.close();
-                c.close();
-            }
-        } catch (ClassNotFoundException | SQLException e) {            
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }
-        
-        return list;
-    }*/
-    
     public List<Model> getItems2(){
         try{
             Class.forName("org.sqlite.JDBC");
@@ -548,5 +516,61 @@ public class SQLiteJDBC {
         }
         
         return userID;
+    }
+    
+    public void updateUsername(String oldUsername, String newUsername){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_users", null);
+            int oldUserID = this.getUserID(oldUsername);
+            if(rs.next()){
+                if(oldUserID > -1){
+                    PreparedStatement stmt = null;
+                    String sql = "UPDATE pmj_users SET USERNAME=\""+ newUsername +"\" WHERE ID="+oldUserID+";";
+                    stmt = c.prepareStatement(sql);
+
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
+            }
+            c.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    public void updatePassword(User user){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_users", null);
+            
+            if(rs.next()){
+                int userID = this.getUserID(user.getUsername());
+                if(userID >- 1){
+                    PreparedStatement stmt = null;
+                    String sql = "UPDATE pmj_users SET PASSHASH=?, SALT=? WHERE ID=\""+ userID +"\";";
+                    stmt = c.prepareStatement(sql);
+
+                    stmt.setBytes(1, user.getSecurePassword());
+                    stmt.setBytes(2, user.getSaltArray());
+
+                    stmt.executeUpdate();
+                    stmt.close();
+                }
+            }
+            c.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
     }
 }

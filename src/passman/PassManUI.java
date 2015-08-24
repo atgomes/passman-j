@@ -37,6 +37,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
+import passman.model.ChangePasswordDialog;
 import passman.model.ChangeUsernameDialog;
 import passman.model.ErrorDialog;
 //import passman.Utils;
@@ -1116,6 +1117,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel47.setLayout(new java.awt.GridLayout(0, 1));
 
+        changeUsernameButton.setBackground(new java.awt.Color(51, 163, 252));
         changeUsernameButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         changeUsernameButton.setText(bundle.getString("CHANGEUSER")); // NOI18N
         changeUsernameButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1125,11 +1127,19 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel47.add(changeUsernameButton);
 
+        changePasswordButton.setBackground(new java.awt.Color(51, 163, 252));
         changePasswordButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
+        changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changePasswordButtonActionPerformed(evt);
+            }
+        });
         jPanel47.add(changePasswordButton);
 
         jPanel45.add(jPanel47, java.awt.BorderLayout.NORTH);
+
+        jPanel48.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel48Layout = new javax.swing.GroupLayout(jPanel48);
         jPanel48.setLayout(jPanel48Layout);
@@ -1146,6 +1156,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         accountOptionsPane.add(jPanel45, java.awt.BorderLayout.WEST);
 
+        jPanel46.setBackground(new java.awt.Color(51, 163, 252));
         jPanel46.setPreferredSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout jPanel46Layout = new javax.swing.GroupLayout(jPanel46);
@@ -1473,8 +1484,10 @@ public class PassManUI extends javax.swing.JFrame {
         // Log action
         Logger.getLogger("").log(Level.INFO, "User {0} logged out.",Utils.getCurrentUser()); //NOI18N
         
+        Utils.logout(jList1, jMenu1, mainPanel);
+        
         // Clears current user
-        Utils.setCurrentUser(null);
+        /*Utils.setCurrentUser(null);
         
         // Clears list items
         DefaultListModel<Model> listModel = new DefaultListModel();
@@ -1492,7 +1505,7 @@ public class PassManUI extends javax.swing.JFrame {
         }
 
         // Enables create account menu option
-        createAccMenuItem.setEnabled(true);
+        createAccMenuItem.setEnabled(true);*/
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
     private void cancelCreateAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelCreateAccActionPerformed
@@ -1560,9 +1573,23 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void changeUsernameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeUsernameButtonActionPerformed
-        ChangeUsernameDialog jkkj = new ChangeUsernameDialog(this, true);
-        jkkj.setVisible(true);
+        ChangeUsernameDialog changeUsernameDialog = new ChangeUsernameDialog(this, true);
+        int result = changeUsernameDialog.showDialog();
+        
+        // If name changing was successful logs out to allow user to relog
+        if(result==0){
+            Utils.logout(jList1, jMenu1, mainPanel);
+        }
     }//GEN-LAST:event_changeUsernameButtonActionPerformed
+
+    private void changePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePasswordButtonActionPerformed
+        ChangePasswordDialog changePasswordDialog = new ChangePasswordDialog(this, true);
+        int result = changePasswordDialog.showDialog();
+        
+        if(result==0){
+            Utils.logout(jList1, jMenu1, mainPanel);
+        }
+    }//GEN-LAST:event_changePasswordButtonActionPerformed
     
     
     /**
@@ -1599,11 +1626,10 @@ public class PassManUI extends javax.swing.JFrame {
             Handler handler = new FileHandler(logName, 10000, 1, true);
             handler.setFormatter(new SimpleFormatter());
             Logger.getLogger("").addHandler(handler); //NOI18N
-        } catch(IOException | SecurityException e){
+        } catch(IOException | SecurityException e){            
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
-                
         // Set location (language) according to user preferences
         List<String> list = Utils.loadParams();
         Locale.setDefault(new Locale(list.get(1),list.get(0)));

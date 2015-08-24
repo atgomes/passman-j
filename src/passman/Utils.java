@@ -277,6 +277,21 @@ public class Utils {
         
     }
     
+    public static void logout(JList jList1, JMenu menu, JPanel mainPanel){
+        // Clears current user
+        Utils.setCurrentUser(null);
+        
+        // Clears list items
+        DefaultListModel<Model> listModel = new DefaultListModel();
+        jList1.setModel(listModel);
+        
+        // Goes to login page
+        Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+        
+        // Disables Menu options
+        Utils.toggleMenus(menu, true);
+    }
+    
     public static void changeUsername(String password, String username, String newUsername){
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
@@ -287,7 +302,35 @@ public class Utils {
             byte[] result = Crypt.verifyPasswordValidity(password, salt, secPassword);
 
             if(result != null){
-                // TRATAR DE VERIFICAR ENTRADAS, MUDAR NOME DO UTILIZADOR NA TABELA
+                // TRATAR DE VERIFICAR ENTRADAS
+                
+                // Change username
+                sqlite.updateUsername(username, newUsername);
+                
+            } else{
+                // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
+            }
+        }
+    }
+    
+    public static void changePassword(String oldPassword, String newPassword){
+        // fetches the user from DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        User compareUser = sqlite.getUser(getCurrentUser());
+        if(compareUser != null){
+            byte[] salt = compareUser.getSaltArray();
+            byte[] secPassword = compareUser.getSecurePassword();
+            byte[] result = Crypt.verifyPasswordValidity(oldPassword, salt, secPassword);
+
+            if(result != null){
+                // Creates new secure password and salt
+                ArrayList<byte[]> list = Crypt.getSecurePassword(newPassword);
+                User user = new User(getCurrentUser(), list.get(0), list.get(1));
+                
+                // Change password
+                sqlite.updatePassword(user);
+                
+                
             } else{
                 // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
             }

@@ -4,3 +4,4 @@
 *.properties
 *.s3db
 *.db
+/nbproject/private/
