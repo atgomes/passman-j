@@ -109,29 +109,6 @@ public class Crypt {
         }
     }
     
-    /**
-     * Encrypts byte array using AES encryption.
-     * @param input byte array to encrypt
-     * @return Crypt model object that contains the fields encoded and encrypted
-     */
-    public static CryptModel encrypt(byte[] input){
-        byte[] encrypted = null;
-        byte[] encoded = null;
-        try{
-            SecretKey key = KeyGenerator.getInstance("AES").generateKey();
-            encoded = key.getEncoded();
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            encrypted = cipher.doFinal(input);
-            
-        } catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e){
-            System.out.println(e.getClass().getName()+e.getMessage());
-        }
-        
-        return new CryptModel(encoded, encrypted);
-    }
-    
     public static CryptModel encrypt(byte[] password, byte[] salt, byte[] input){
         byte[] encrypted = null;
         salt = generateSalt(16);
@@ -160,31 +137,6 @@ public class Crypt {
         }
         
         return new CryptModel(salt, encrypted);
-    }
-        
-    /**
-     * Decrypts byte array using an encoded key and AES encryption.
-     * @param keyBytes encoded key created during encryption
-     * @param encrypted encrypted byte array to decrypt
-     * @return decrypted byte array as String
-     */
-    public static byte[] decrypt(byte[] keyBytes, byte[] encrypted){
-        byte[] decrypted = null;
-        try{
-            SecretKey key = new SecretKeySpec(keyBytes, "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-
-            cipher.init(Cipher.DECRYPT_MODE, key);
-            decrypted = new byte[cipher.getOutputSize(encrypted.length)];
-            decrypted = cipher.doFinal(encrypted);
-            
-        }catch(NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e){
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
-            System.exit(0);
-        }
-        
-        //return Base64.getEncoder().encodeToString(decrypted);
-        return decrypted;
     }
     
     public static byte[] decrypt(byte[] password, byte[] salt, byte[] encrypted){

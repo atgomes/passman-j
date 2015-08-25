@@ -132,7 +132,9 @@ public class SQLiteJDBC {
                 
             }
             c.close();
-        } catch (ClassNotFoundException | SQLException e) {            
+        } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -186,21 +188,23 @@ public class SQLiteJDBC {
             ResultSet rs = c.getMetaData().getTables(null, null, "pmj_passwords", null);
             // 
             if(rs.next()){
-                Statement stmt = c.createStatement();
-                String sql = "SELECT ID FROM pmj_passwords WHERE LABEL=\""+label+"\";";
-                /*String sql = "SELECT ID FROM pmj_passwords WHERE "+
-                        "ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE USER_ID "+
-                        "IN (SELECT ID FROM pmj_users WHERE USERNAME=\""+Utils.getCurrentUser()+"\"))"+
-                        " AND LABEL=\""+label+"\"";*/
+                PreparedStatement stmt = null;
+                String sql = "SELECT ID FROM pmj_passwords WHERE "+
+                        "ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE "+
+                        "USER_ID IN (SELECT ID FROM pmj_users WHERE "+
+                        "USERNAME=?)) AND LABEL=?;";
 
-                ResultSet entries = stmt.executeQuery(sql);
+                stmt = c.prepareStatement(sql);
+
+                stmt.setString(1, Utils.getCurrentUser());
+                stmt.setString(2, label);
+                
+                ResultSet entries = stmt.executeQuery();
 
                 if(entries.next()){
                     itemID = entries.getInt("ID");                    
-                }
-                
+                }                
                 stmt.close();
-                
             }
             c.close();
         } catch (ClassNotFoundException | SQLException e) {  
@@ -258,6 +262,8 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -364,6 +370,8 @@ public class SQLiteJDBC {
                 c.close();
             }
         } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -481,6 +489,11 @@ public class SQLiteJDBC {
         return user;
     }
     
+    /**
+     * Searches the database using an username and returns the associated ID
+     * @param username the string used to search the database
+     * @return -1 if user not found, user ID otherwise
+     */
     public int getUserID(String username){
         int userID = -1;
         try{
@@ -535,6 +548,8 @@ public class SQLiteJDBC {
                     stmt.close();
                 }
             }
+            // Log event
+            Logger.getLogger("").log(Level.INFO, "Username {0} changed to {1}",new Object[]{oldUsername,newUsername});
             c.close();
         } catch (ClassNotFoundException | SQLException e) {
             // Log exception

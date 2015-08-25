@@ -5,6 +5,7 @@
  */
 package passman.model;
 
+import javax.swing.JFrame;
 import passman.Utils;
 
 /**
@@ -50,6 +51,8 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
 
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -63,6 +66,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
 
         jPanel2.add(jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -85,6 +89,8 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
 
         jPanel2.add(jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -99,6 +105,8 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         jPanel2.add(jPanel5);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -115,6 +123,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
 
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
+        cancelButton.setBackground(new java.awt.Color(51, 163, 252));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +133,7 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         });
         jPanel7.add(cancelButton);
 
+        confirmButton.setBackground(new java.awt.Color(51, 163, 252));
         confirmButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmButton.setText(bundle.getString("CONFIRMACC")); // NOI18N
         confirmButton.addActionListener(new java.awt.event.ActionListener() {
@@ -167,10 +177,22 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        Utils.changeUsername(new String(passwordField.getPassword()), Utils.getCurrentUser(), newUsernameField.getText());
-        result = 0;
-        setVisible(false);
-        dispose();
+        result = Utils.changeUsername(new String(passwordField.getPassword()), Utils.getCurrentUser(), newUsernameField.getText());
+        //result = 0;
+        if(result == 0){
+            setVisible(false);
+            dispose();
+        } else{
+            if(result==1){
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Authentication failed", "Wrong password was provided.");
+            } else if(result == 2){
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "New username can't be the same as the previous.");
+            } else if(result == 3){
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "The username provided already exists in the database.");
+            } else{
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Unknown error", "It was impossible to complete the action you request. Please try again.");
+            }
+        }
     }//GEN-LAST:event_confirmButtonActionPerformed
 
     private int result = -1;

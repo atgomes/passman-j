@@ -28,11 +28,14 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
 import passman.model.ChangePasswordDialog;
 import passman.model.ChangeUsernameDialog;
 import passman.model.ErrorDialog;
+import passman.model.PasswordOptions;
+import passman.model.PasswordOptionsDialog;
 //import passman.Utils;
 
 /**
@@ -140,6 +143,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel22 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         generateBtn = new javax.swing.JButton();
+        pGenerationOptionsBtn = new javax.swing.JButton();
         newPassword = new javax.swing.JTextField();
         jPanel27 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -178,6 +182,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel47 = new javax.swing.JPanel();
         changeUsernameButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
+        backFromAccOptsBtn = new javax.swing.JButton();
         jPanel48 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -189,6 +194,7 @@ public class PassManUI extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         languageMenu = new javax.swing.JMenuItem();
         accountMenu = new javax.swing.JMenuItem();
+        pGenerationMenuItem = new javax.swing.JMenuItem();
 
         popupWindow.setMinimumSize(new java.awt.Dimension(300, 200));
 
@@ -240,6 +246,7 @@ public class PassManUI extends javax.swing.JFrame {
         mainPanel.setLayout(new java.awt.CardLayout());
 
         loginPane.setBackground(new java.awt.Color(51, 163, 252));
+        loginPane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         loginPane.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         loginPane.setMaximumSize(new java.awt.Dimension(111111, 11111));
         loginPane.setMinimumSize(new java.awt.Dimension(450, 375));
@@ -344,6 +351,7 @@ public class PassManUI extends javax.swing.JFrame {
         attemptLogin.setBackground(new java.awt.Color(172, 198, 219));
         attemptLogin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         attemptLogin.setText(bundle.getString("LOGIN")); // NOI18N
+        attemptLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         attemptLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         attemptLogin.setMaximumSize(new java.awt.Dimension(70, 40));
         attemptLogin.setMinimumSize(new java.awt.Dimension(40, 20));
@@ -418,6 +426,7 @@ public class PassManUI extends javax.swing.JFrame {
         addEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         addEntryBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         addEntryBtn.setText(bundle.getString("ADD")); // NOI18N
+        addEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         addEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -429,6 +438,7 @@ public class PassManUI extends javax.swing.JFrame {
         viewListBtn.setBackground(new java.awt.Color(172, 198, 219));
         viewListBtn.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         viewListBtn.setText(bundle.getString("VIEW")); // NOI18N
+        viewListBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         viewListBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         viewListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,7 +464,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel42.setLayout(jPanel42Layout);
         jPanel42Layout.setHorizontalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
         jPanel42Layout.setVerticalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,7 +513,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel40.setLayout(jPanel40Layout);
         jPanel40Layout.setHorizontalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGap(0, 467, Short.MAX_VALUE)
         );
         jPanel40Layout.setVerticalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,6 +571,7 @@ public class PassManUI extends javax.swing.JFrame {
         removeEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         removeEntryBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         removeEntryBtn.setText(bundle.getString("REMOVE")); // NOI18N
+        removeEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         removeEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -573,6 +584,7 @@ public class PassManUI extends javax.swing.JFrame {
         toggleShowPassword.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         toggleShowPassword.setText(bundle.getString("SHOW")); // NOI18N
         toggleShowPassword.setToolTipText(bundle.getString("SHOW")); // NOI18N
+        toggleShowPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         toggleShowPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         toggleShowPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -583,6 +595,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         addNewEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         addNewEntryBtn.setText(bundle.getString("ADD")); // NOI18N
+        addNewEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         addNewEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         addNewEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -593,6 +606,7 @@ public class PassManUI extends javax.swing.JFrame {
 
         copyToClip.setBackground(new java.awt.Color(172, 198, 219));
         copyToClip.setText(bundle.getString("COPY")); // NOI18N
+        copyToClip.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         copyToClip.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         copyToClip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -779,6 +793,7 @@ public class PassManUI extends javax.swing.JFrame {
         generateBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         generateBtn.setText(bundle.getString("GENERATE")); // NOI18N
         generateBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        generateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         generateBtn.setMaximumSize(new java.awt.Dimension(100, 40));
         generateBtn.setMinimumSize(new java.awt.Dimension(60, 20));
         generateBtn.setPreferredSize(new java.awt.Dimension(70, 20));
@@ -788,6 +803,14 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
         jPanel22.add(generateBtn);
+
+        pGenerationOptionsBtn.setText(bundle.getString("OPTIONS")); // NOI18N
+        pGenerationOptionsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pGenerationOptionsBtnActionPerformed(evt);
+            }
+        });
+        jPanel22.add(pGenerationOptionsBtn);
 
         jPanel20.add(jPanel22);
 
@@ -821,6 +844,7 @@ public class PassManUI extends javax.swing.JFrame {
         confirmEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
         confirmEntryBtn.setText(bundle.getString("CREATE")); // NOI18N
         confirmEntryBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        confirmEntryBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirmEntryBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmEntryBtnActionPerformed(evt);
@@ -908,14 +932,20 @@ public class PassManUI extends javax.swing.JFrame {
 
         jLabel8.setText(bundle.getString("CHANGES WILL ONLY BE VISIBLE AFTER RESTARTING THE APPLICATION.")); // NOI18N
 
+        homeBtn.setBackground(new java.awt.Color(172, 198, 219));
         homeBtn.setText(bundle.getString("BACK")); // NOI18N
+        homeBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        homeBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         homeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 homeBtnActionPerformed(evt);
             }
         });
 
+        languageOK.setBackground(new java.awt.Color(172, 198, 219));
         languageOK.setText(bundle.getString("OK")); // NOI18N
+        languageOK.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        languageOK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         languageOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 languageOKActionPerformed(evt);
@@ -953,7 +983,7 @@ public class PassManUI extends javax.swing.JFrame {
                 .addComponent(english)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(languageOK)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
                 .addComponent(homeBtn)
                 .addContainerGap())
         );
@@ -1034,9 +1064,11 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel31.setBackground(new java.awt.Color(51, 163, 252));
         jPanel31.setLayout(new java.awt.BorderLayout());
 
-        createUserBtn.setBackground(new java.awt.Color(51, 163, 252));
+        createUserBtn.setBackground(new java.awt.Color(172, 198, 219));
         createUserBtn.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         createUserBtn.setText(bundle.getString("CONFIRMACC")); // NOI18N
+        createUserBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        createUserBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         createUserBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createUserBtnActionPerformed(evt);
@@ -1044,9 +1076,11 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel31.add(createUserBtn, java.awt.BorderLayout.CENTER);
 
-        cancelCreateAcc.setBackground(new java.awt.Color(51, 163, 252));
+        cancelCreateAcc.setBackground(new java.awt.Color(172, 198, 219));
         cancelCreateAcc.setFont(new java.awt.Font("Arial", 0, 8)); // NOI18N
         cancelCreateAcc.setText(bundle.getString("CANCEL")); // NOI18N
+        cancelCreateAcc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        cancelCreateAcc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelCreateAcc.setMargin(new java.awt.Insets(2, 2, 2, 2));
         cancelCreateAcc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1105,9 +1139,11 @@ public class PassManUI extends javax.swing.JFrame {
 
         jPanel47.setLayout(new java.awt.GridLayout(0, 1));
 
-        changeUsernameButton.setBackground(new java.awt.Color(51, 163, 252));
+        changeUsernameButton.setBackground(new java.awt.Color(172, 198, 219));
         changeUsernameButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         changeUsernameButton.setText(bundle.getString("CHANGEUSER")); // NOI18N
+        changeUsernameButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        changeUsernameButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changeUsernameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeUsernameButtonActionPerformed(evt);
@@ -1115,9 +1151,11 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel47.add(changeUsernameButton);
 
-        changePasswordButton.setBackground(new java.awt.Color(51, 163, 252));
+        changePasswordButton.setBackground(new java.awt.Color(172, 198, 219));
         changePasswordButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
+        changePasswordButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         changePasswordButton.setEnabled(false);
         changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1125,6 +1163,18 @@ public class PassManUI extends javax.swing.JFrame {
             }
         });
         jPanel47.add(changePasswordButton);
+
+        backFromAccOptsBtn.setBackground(new java.awt.Color(172, 198, 219));
+        backFromAccOptsBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        backFromAccOptsBtn.setText(bundle.getString("BACK")); // NOI18N
+        backFromAccOptsBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        backFromAccOptsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backFromAccOptsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backFromAccOptsBtnActionPerformed(evt);
+            }
+        });
+        jPanel47.add(backFromAccOptsBtn);
 
         jPanel45.add(jPanel47, java.awt.BorderLayout.NORTH);
 
@@ -1138,7 +1188,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel48Layout.setVerticalGroup(
             jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 358, Short.MAX_VALUE)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
 
         jPanel45.add(jPanel48, java.awt.BorderLayout.CENTER);
@@ -1233,6 +1283,16 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jMenu2.add(accountMenu);
 
+        pGenerationMenuItem.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        pGenerationMenuItem.setText(bundle.getString("PGENERATION")); // NOI18N
+        pGenerationMenuItem.setEnabled(false);
+        pGenerationMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pGenerationMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(pGenerationMenuItem);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -1282,7 +1342,7 @@ public class PassManUI extends javax.swing.JFrame {
      * @param evt 
      */
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        Utils.presentSelectedEntry(jList1, labelShow, usernameShow, passwordShow, commentShow, toggleShowPassword, removeEntryBtn);
+        Utils.presentSelectedEntry(jList1, labelShow, usernameShow, passwordShow, commentShow, toggleShowPassword, removeEntryBtn, copyToClip);
     }//GEN-LAST:event_jList1ValueChanged
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
@@ -1290,7 +1350,11 @@ public class PassManUI extends javax.swing.JFrame {
         utils.refreshView(jList1, mainPanel);
         Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
         
-        removeEntryBtn.setEnabled(false);
+        // Disables buttons
+        Utils.toggleEnabledButtons(false, new Component[]{removeEntryBtn, toggleShowPassword, copyToClip});
+        //removeEntryBtn.setEnabled(false);
+        //toggleShowPassword.setEnabled(false);
+        //copyToClip.setEnabled(false);
         
     }//GEN-LAST:event_viewListBtnActionPerformed
 
@@ -1326,7 +1390,7 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_homeBtnActionPerformed
 
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
-        newPassword.setText(PassGenerator.generate());        
+        newPassword.setText(Utils.generateNewRandomPassword());
     }//GEN-LAST:event_generateBtnActionPerformed
 
     private void okPopupWinBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okPopupWinBtnActionPerformed
@@ -1358,16 +1422,19 @@ public class PassManUI extends javax.swing.JFrame {
         if(Arrays.equals(newUserPasswordField.getPassword(),newUserPasswordField2.getPassword())){
             // Make sure new username is not an empty string
             if(!newUserField.getText().isEmpty()){
-                Utils.createNewUser(newUserField.getText(), new String(newUserPasswordField.getPassword()));
-                // Clears fields
-                Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});                
-                // Goes to login screen
-                Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+                if(Utils.createNewUser(newUserField.getText(), new String(newUserPasswordField.getPassword())) == 0){
+                    // Clears fields
+                    Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});                
+                    // Goes to login screen
+                    Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
+                } else{
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "Username provided already exists.");
+                }
             } else{ // Username is empty
-                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Error", "New username can't be empty.");
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "New username can't be empty.");
             }
         } else{ // Passwords are not the same
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Error", "Passwords in both fields must be equal.");
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid passwords", "Passwords in both fields must be equal.");
         }
     }//GEN-LAST:event_createUserBtnActionPerformed
 
@@ -1504,6 +1571,8 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.logout(jList1, mainPanel);
             Utils.toggleMenus(jMenu1, false);
             Utils.toggleMenus(jMenu2, false);
+        } else{
+            // Action canceled
         }
     }//GEN-LAST:event_changeUsernameButtonActionPerformed
 
@@ -1517,6 +1586,28 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.toggleMenus(jMenu2, false);
         }
     }//GEN-LAST:event_changePasswordButtonActionPerformed
+
+    private void backFromAccOptsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backFromAccOptsBtnActionPerformed
+        Utils.goToScreen(mainPanel, "MAIN"); //NOI18N
+    }//GEN-LAST:event_backFromAccOptsBtnActionPerformed
+
+    private void pGenerationOptionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pGenerationOptionsBtnActionPerformed
+        PasswordOptionsDialog passOptDialog = new PasswordOptionsDialog(this, true);
+        PasswordOptions pOpts = Utils.loadPasswordOptions();
+        pOpts = passOptDialog.showDialog(pOpts);
+        if(pOpts != null){
+           Utils.savePasswordOptions(pOpts);
+        }
+    }//GEN-LAST:event_pGenerationOptionsBtnActionPerformed
+
+    private void pGenerationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pGenerationMenuItemActionPerformed
+        PasswordOptionsDialog passOptDialog = new PasswordOptionsDialog(this, true);
+        PasswordOptions pOpts = Utils.loadPasswordOptions();
+        pOpts = passOptDialog.showDialog(pOpts);
+        if(pOpts != null){
+           Utils.savePasswordOptions(pOpts);
+        }
+    }//GEN-LAST:event_pGenerationMenuItemActionPerformed
     
     
     /**
@@ -1583,6 +1674,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPanel addEntryPane;
     private javax.swing.JButton addNewEntryBtn;
     private javax.swing.JButton attemptLogin;
+    private javax.swing.JButton backFromAccOptsBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancelCreateAcc;
     private javax.swing.JButton changePasswordButton;
@@ -1696,6 +1788,8 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField newUserPasswordField2;
     private javax.swing.JTextField newUsername;
     private javax.swing.JButton okPopupWinBtn;
+    private javax.swing.JMenuItem pGenerationMenuItem;
+    private javax.swing.JButton pGenerationOptionsBtn;
     private javax.swing.JTextField passwordShow;
     private javax.swing.JDialog popupWindow;
     private javax.swing.JRadioButton portuguese;

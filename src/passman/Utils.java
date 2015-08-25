@@ -36,6 +36,8 @@ import passman.db.SQLiteJDBC;
 import passman.model.CryptModel;
 import passman.model.ErrorDialog;
 import passman.model.Model;
+import passman.model.PassGenerator;
+import passman.model.PasswordOptions;
 import passman.model.User;
 
 /**
@@ -62,6 +64,61 @@ public class Utils {
             listModel.addElement(obj);
         }
         jList1.setModel(listModel);
+    }
+    
+    public static void savePasswordOptions(PasswordOptions pOpts){
+        try{
+            // Load current parameters
+            Properties props = openOrCreatePropertiesFile();
+            // Set desired parameters
+            props.setProperty("Password.length", String.valueOf(pOpts.getpLength()));
+            props.setProperty("Password.symbols", String.valueOf(pOpts.isSymbols()));
+            props.setProperty("Password.safesymbols", String.valueOf(pOpts.isSymbolsSafe()));
+            props.setProperty("Password.digits", String.valueOf(pOpts.isDigits()));
+            props.setProperty("Password.uppercase", String.valueOf(pOpts.isUpperCase()));
+            
+            // Save properties to file
+            File f = new File("passman.properties");
+            OutputStream out = new FileOutputStream(f);
+            props.store(out,"Language properties");
+            out.close();
+            
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "Password properties saved.");
+        } catch (Exception e){
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    public static PasswordOptions loadPasswordOptions(){
+        PasswordOptions pOpts = null;
+        Properties props = openOrCreatePropertiesFile();
+        InputStream is = null;
+
+        // First try loading from the current directory
+        if(props.size()<=0){
+            // Log event
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error");
+            String title = "Properties operation error";
+            String message = "It was not possible to create a properties file, please try again later. "+
+                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues";
+            ErrorDialog errorDlg = new ErrorDialog(new JFrame(), title, message);
+            System.exit(0);
+        } else{        
+            pOpts = new PasswordOptions(Integer.valueOf(props.getProperty("Password.length")),
+                    Boolean.valueOf(props.getProperty("Password.symbols")), 
+                    Boolean.valueOf(props.getProperty("Password.safesymbols")), 
+                    Boolean.valueOf(props.getProperty("Password.digits")), 
+                    Boolean.valueOf(props.getProperty("Password.uppercase")));
+            
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "Password properties loaded.");
+        }
+        
+        return pOpts;
     }
     
     public void saveParamChanges(String language, String country){
@@ -133,7 +190,12 @@ public class Utils {
                 props.setProperty("Application.version", "1.0.0.${Application.buildnumber}");
                 props.setProperty("Application.title", "PassManJ ${Application.version}");
                 props.setProperty("Language", "pt");
-                props.setProperty("Country", "PT");     
+                props.setProperty("Country", "PT");
+                props.setProperty("Password.length", "12");
+                props.setProperty("Password.symbols", "true");
+                props.setProperty("Password.safesymbols", "true");
+                props.setProperty("Password.digits", "true");
+                props.setProperty("Password.uppercase", "true");
                 
                 props.store(out, "File created at runtime!");
                 out.close();
@@ -141,6 +203,8 @@ public class Utils {
         }
         catch ( IOException e ) {
             is = null;
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
             ErrorDialog errorDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -172,30 +236,36 @@ public class Utils {
         boolean result = false;
         // Ensure no mandatory fields are submitted empty
         if(!label.isEmpty() && !username.isEmpty() && !plainTextPassword.isEmpty()){
-            // get utf-8 bytes from string
-            byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
-
-            // gets the current user
             SQLiteJDBC sqlite = new SQLiteJDBC();
-            User currentUser = sqlite.getUser(CURRENT_USER);
-            if(currentUser == null){
-                // Log event
-                Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
-                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "User not found", "User "+ CURRENT_USER +" was not found on the database.");
-            } else{
-                // Use user password to encrypt password bytes
-                CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
-                if(cpMdl.encryptedPassword == null){
+            if(sqlite.getItemID(label)<0){
+                // get utf-8 bytes from string
+                byte[] passUTF8 = plainTextPassword.getBytes(StandardCharsets.UTF_8);
+
+                // gets the current user
+
+                User currentUser = sqlite.getUser(CURRENT_USER);
+                if(currentUser == null){
                     // Log event
-                    Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
-                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Encryption error", "Encryption failed due to unknown error.");
+                    Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "User not found", "User "+ CURRENT_USER +" was not found on the database.");
                 } else{
-                    // save data to DB
-                    Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
-                    //sqlite.addItem(newModel);
-                    sqlite.addItem2(newModel);
-                    result = true;
+                    // Use user password to encrypt password bytes
+                    CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
+                    if(cpMdl.encryptedPassword == null){
+                        // Log event
+                        Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
+                        ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Encryption error", "Encryption failed due to unknown error.");
+                    } else{
+                        // save data to DB
+                        Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
+                        //sqlite.addItem(newModel);
+                        sqlite.addItem2(newModel);
+                        result = true;
+                    }
                 }
+            } else{
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), 
+                    "Invalid label", "The label provided already exists.");
             }
         } else{
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), 
@@ -218,7 +288,6 @@ public class Utils {
 
             // convert decrypted byte array to String using UTF-8 encoding
             String plainTextPassword = new String(decryptedPass,StandardCharsets.UTF_8);
-            System.out.println(plainTextPassword);
             
             return(plainTextPassword);
         }
@@ -296,7 +365,8 @@ public class Utils {
         Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
     }
     
-    public static void changeUsername(String password, String username, String newUsername){
+    public static int changeUsername(String password, String username, String newUsername){
+        int returnValue = -1;
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
         User compareUser = sqlite.getUser(username);
@@ -306,15 +376,23 @@ public class Utils {
             byte[] result = Crypt.verifyPasswordValidity(password, salt, secPassword);
 
             if(result != null){
-                // TRATAR DE VERIFICAR ENTRADAS
-                
-                // Change username
-                sqlite.updateUsername(username, newUsername);
-                
+                // Check if new username is different from old one and doesn't yet exist on the DB
+                if(username.equalsIgnoreCase(newUsername)){
+                    returnValue = 2;
+                } else{
+                    if(sqlite.getUserID(newUsername) > -1){
+                        returnValue = 3;
+                    } else{
+                        // Change username
+                        sqlite.updateUsername(username, newUsername);
+                        returnValue = 0;
+                    }
+                }   
             } else{
-                // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
+                returnValue = 1;
             }
         }
+        return returnValue;
     }
     
     public static void changePassword(String oldPassword, String newPassword){
@@ -341,14 +419,22 @@ public class Utils {
         }
     }
     
-    public static void createNewUser(String username, String password){
-        // Creates hash pass and user
-        ArrayList<byte[]> list = Crypt.getSecurePassword(password);
-        User user = new User(username, list.get(0), list.get(1));
-
-        // adds user to DB
+    public static int createNewUser(String username, String password){
+        int result = -1;
         SQLiteJDBC sqlite = new SQLiteJDBC();
-        sqlite.addUser(user);
+        // Checks if username already exists
+        if(sqlite.getUserID(username) > -1){
+            result = 1;
+        } else{
+            // Creates hash pass and user
+            ArrayList<byte[]> list = Crypt.getSecurePassword(password);
+            User user = new User(username, list.get(0), list.get(1));
+
+            // adds user to DB
+            sqlite.addUser(user);
+            result = 0;
+        }
+        return(result);
     }
     
     public static void clearTextFields(Component[] componentList){
@@ -361,12 +447,16 @@ public class Utils {
                 JPasswordField pass = (JPasswordField)comp;
                 pass.setText("");//NOI18N
             }
+            if(comp.getClass().getName().endsWith("JTextArea")){ //NOI18N
+                JTextArea txt = (JTextArea)comp;
+                txt.setText("");//NOI18N
+            }
         }
     }
     
     public static void presentSelectedEntry(JList jList1, JTextField labelShow, 
             JTextField usernameShow, JTextField passwordShow, 
-            JTextArea commentShow, JToggleButton toggleShowPassword, JButton removeEntryBtn){
+            JTextArea commentShow, JToggleButton toggleShowPassword, JButton removeEntryBtn, JButton copyToClip){
         
         if(jList1.getSelectedIndex()>-1){
             // convert jList1 item to a Model item
@@ -385,12 +475,30 @@ public class Utils {
             } else{
                 passwordShow.setText("*********"); //NOI18N
             }
-            // Enable remove button
-            removeEntryBtn.setEnabled(true);
+            // Enable buttons
+            toggleEnabledButtons(true, new Component[]{removeEntryBtn, toggleShowPassword, copyToClip});
         }
         else{
-            // Disable remove button
-            removeEntryBtn.setEnabled(false);
+            // Disable buttons
+            toggleEnabledButtons(false, new Component[]{removeEntryBtn, toggleShowPassword, copyToClip});
         }
+    }
+    
+    public static void toggleEnabledButtons(boolean value, Component[] buttons){
+        for(Component button : buttons){
+            if(button.getClass().getName().endsWith("JToggleButton")){//NOI18N
+                JToggleButton btn = (JToggleButton)button;
+                btn.setEnabled(value);
+            } else{
+                JButton btn = (JButton)button;
+                btn.setEnabled(value);
+            }
+        }
+    }
+    
+    public static String generateNewRandomPassword(){
+        PasswordOptions pOpts = loadPasswordOptions();
+        return PassGenerator.generate(pOpts.getpLength(), pOpts.isSymbols(), 
+                pOpts.isSymbolsSafe(), pOpts.isDigits(), pOpts.isUpperCase());
     }
 }
