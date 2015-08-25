@@ -160,6 +160,7 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         bindingGroup.bind();
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmPassOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPassOptionsActionPerformed

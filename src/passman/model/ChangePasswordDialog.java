@@ -53,7 +53,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -105,20 +105,10 @@ public class ChangePasswordDialog extends javax.swing.JDialog {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 175, Short.MAX_VALUE)
-        );
-
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
@@ -180,7 +170,10 @@ public class ChangePasswordDialog extends javax.swing.JDialog {
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         if(Arrays.equals(newPasswordField.getPassword(),newPasswordField2.getPassword())){
             
-            Utils.changePassword(new String(oldPasswordField.getPassword()), new String(newPasswordField.getPassword()));
+            javax.swing.JProgressBar jProgressBar1 = new javax.swing.JProgressBar();
+            jPanel6.add(jProgressBar1);
+            
+            Utils.changePassword(jProgressBar1, new String(oldPasswordField.getPassword()), new String(newPasswordField.getPassword()));
                 
             // Clears fields
             newPasswordField.setText(""); //NOI18N

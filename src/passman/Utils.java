@@ -28,6 +28,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -45,16 +46,16 @@ import passman.model.User;
  * @author Andre Gomes
  */
 public class Utils {
-    private static String CURRENT_USER = "";
+    private static String CURRENT_USER = ""; //NOI18N
             
     public void refreshView(JList jList1, JPanel mainPanel){
         SQLiteJDBC sqlite = new SQLiteJDBC();
         List<Model> list = new ArrayList<>(sqlite.getItems2());
 
         DefaultListModel<Model> listModel = new DefaultListModel();
-        for(Model obj : list){
+        list.stream().filter((obj) -> (!obj.getLabel().isEmpty() && !obj.getUsername().isEmpty() && obj.getPassword().length > 0)).forEach((obj) -> {
             listModel.addElement(obj);
-        }
+        });
         jList1.setModel(listModel);
     }
     
@@ -71,23 +72,23 @@ public class Utils {
             // Load current parameters
             Properties props = openOrCreatePropertiesFile();
             // Set desired parameters
-            props.setProperty("Password.length", String.valueOf(pOpts.getpLength()));
-            props.setProperty("Password.symbols", String.valueOf(pOpts.isSymbols()));
-            props.setProperty("Password.safesymbols", String.valueOf(pOpts.isSymbolsSafe()));
-            props.setProperty("Password.digits", String.valueOf(pOpts.isDigits()));
-            props.setProperty("Password.uppercase", String.valueOf(pOpts.isUpperCase()));
+            props.setProperty("Password.length", String.valueOf(pOpts.getpLength())); //NOI18N
+            props.setProperty("Password.symbols", String.valueOf(pOpts.isSymbols())); //NOI18N
+            props.setProperty("Password.safesymbols", String.valueOf(pOpts.isSymbolsSafe())); //NOI18N
+            props.setProperty("Password.digits", String.valueOf(pOpts.isDigits())); //NOI18N
+            props.setProperty("Password.uppercase", String.valueOf(pOpts.isUpperCase())); //NOI18N
             
             // Save properties to file
-            File f = new File("passman.properties");
+            File f = new File("passman.properties"); //NOI18N
             OutputStream out = new FileOutputStream(f);
-            props.store(out,"Language properties");
+            props.store(out,"Language properties"); //NOI18N
             out.close();
             
             // Log action
-            Logger.getLogger("").log(Level.INFO, "Password properties saved.");
+            Logger.getLogger("").log(Level.INFO, "Password properties saved."); //NOI18N
         } catch (Exception e){
             // Log exception
-            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -101,21 +102,28 @@ public class Utils {
         // First try loading from the current directory
         if(props.size()<=0){
             // Log event
-            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error");
-            String title = "Properties operation error";
-            String message = "It was not possible to create a properties file, please try again later. "+
-                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues";
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error"); //NOI18N
+            String title = "Properties operation error"; //NOI18N
+            String message = "It was not possible to create a properties file, please try again later. "+ //NOI18N
+                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues"; //NOI18N
             ErrorDialog errorDlg = new ErrorDialog(new JFrame(), title, message);
             System.exit(0);
-        } else{        
-            pOpts = new PasswordOptions(Integer.valueOf(props.getProperty("Password.length")),
-                    Boolean.valueOf(props.getProperty("Password.symbols")), 
-                    Boolean.valueOf(props.getProperty("Password.safesymbols")), 
-                    Boolean.valueOf(props.getProperty("Password.digits")), 
-                    Boolean.valueOf(props.getProperty("Password.uppercase")));
-            
-            // Log action
-            Logger.getLogger("").log(Level.INFO, "Password properties loaded.");
+        } else{
+            try{
+                pOpts = new PasswordOptions(Integer.valueOf(props.getProperty("Password.length","12")), //NOI18N
+                        Boolean.valueOf(props.getProperty("Password.symbols","true")),  //NOI18N
+                        Boolean.valueOf(props.getProperty("Password.safesymbols","true")),  //NOI18N
+                        Boolean.valueOf(props.getProperty("Password.digits","true")),  //NOI18N
+                        Boolean.valueOf(props.getProperty("Password.uppercase","true"))); //NOI18N
+
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "Password properties loaded."); //NOI18N
+            } catch(Exception e){
+                // Log exception
+                Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
+                ErrorDialog errorDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+                System.exit(0);
+            }
         }
         
         return pOpts;
@@ -126,21 +134,21 @@ public class Utils {
             // Load current parameters
             Properties props = openOrCreatePropertiesFile();
             // Set desired parameters
-            props.setProperty("Country", country);
-            props.setProperty("Language", language);
+            props.setProperty("Country", country); //NOI18N
+            props.setProperty("Language", language); //NOI18N
             
             // Save properties to file
-            File f = new File("passman.properties");
+            File f = new File("passman.properties"); //NOI18N
             OutputStream out = new FileOutputStream(f);
-            props.store(out,"Language properties");
+            props.store(out,"Language properties"); //NOI18N
             out.close();
             
             // Log action
-            Logger.getLogger("").log(Level.INFO, "Language properties saved. Language: {0}",language);
+            Logger.getLogger("").log(Level.INFO, "Language properties saved. Language: {0}",language); //NOI18N
             
         } catch (Exception e){
             // Log exception
-            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -153,20 +161,20 @@ public class Utils {
         // First try loading from the current directory
         if(props.size()<=0){
             // Log event
-            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error");
-            String title = "Properties operation error";
-            String message = "It was not possible to create a properties file, please try again later. "+
-                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues";
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to internal error: properties operation error"); //NOI18N
+            String title = "Properties operation error"; //NOI18N
+            String message = "It was not possible to create a properties file, please try again later. "+ //NOI18N
+                    "If this problem persists please report this error at https://bitbucket.org/atgomes/publicfiles/issues"; //NOI18N
             ErrorDialog errorDlg = new ErrorDialog(new JFrame(), title, message);
             System.exit(0);
         }   
         
         ArrayList<String> list = new ArrayList<>();
-        list.add(props.getProperty("Country","UK"));
-        list.add(props.getProperty("Language","en"));
+        list.add(props.getProperty("Country","UK")); //NOI18N
+        list.add(props.getProperty("Language","en")); //NOI18N
         
         // Log action
-        Logger.getLogger("").log(Level.INFO, "Language properties loaded.");
+        Logger.getLogger("").log(Level.INFO, "Language properties loaded."); //NOI18N
         
         return list;
 
@@ -176,35 +184,35 @@ public class Utils {
         InputStream is = null;
         Properties props = new Properties();
         try {
-            File f = new File("passman.properties");
+            File f = new File("passman.properties"); //NOI18N
             if(!f.createNewFile()){
                 is = new FileInputStream( f );
                 props.load(is);
             } else{
                 OutputStream out = new FileOutputStream(f);
-                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd"); //NOI18N
                 Date now = new Date();
                 String strDate = sdfDate.format(now);
                 
-                props.setProperty("Application.buildnumber", strDate);
-                props.setProperty("Application.version", "1.0.0.${Application.buildnumber}");
-                props.setProperty("Application.title", "PassManJ ${Application.version}");
-                props.setProperty("Language", "pt");
-                props.setProperty("Country", "PT");
-                props.setProperty("Password.length", "12");
-                props.setProperty("Password.symbols", "true");
-                props.setProperty("Password.safesymbols", "true");
-                props.setProperty("Password.digits", "true");
-                props.setProperty("Password.uppercase", "true");
+                props.setProperty("Application.buildnumber", strDate); //NOI18N
+                props.setProperty("Application.version", "1.0.0.${Application.buildnumber}"); //NOI18N
+                props.setProperty("Application.title", "PassManJ ${Application.version}"); //NOI18N
+                props.setProperty("Language", "pt"); //NOI18N
+                props.setProperty("Country", "PT"); //NOI18N
+                props.setProperty("Password.length", "12"); //NOI18N
+                props.setProperty("Password.symbols", "true"); //NOI18N
+                props.setProperty("Password.safesymbols", "true"); //NOI18N
+                props.setProperty("Password.digits", "true"); //NOI18N
+                props.setProperty("Password.uppercase", "true"); //NOI18N
                 
-                props.store(out, "File created at runtime!");
+                props.store(out, "File created at runtime!"); //NOI18N
                 out.close();
             }
         }
         catch ( IOException e ) {
             is = null;
             // Log exception
-            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
             ErrorDialog errorDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
             System.exit(0);
         }
@@ -215,17 +223,17 @@ public class Utils {
     public static String getTitleFromProps(){
         Properties props = openOrCreatePropertiesFile();
         
-        String title1 = props.getProperty("Application.title");
-        String title2 = props.getProperty("Application.version");
-        String title3 = props.getProperty("Application.buildnumber");
+        String title1 = props.getProperty("Application.title"); //NOI18N
+        String title2 = props.getProperty("Application.version"); //NOI18N
+        String title3 = props.getProperty("Application.buildnumber"); //NOI18N
         
-        String finalTitle = title1.replace("${Application.version}", title2.replace("${Application.buildnumber}", title3));
+        String finalTitle = title1.replace("${Application.version}", title2.replace("${Application.buildnumber}", title3)); //NOI18N
         
         return finalTitle;
     }
     
     public static void verifyDB(){
-        File f = new File("./passman.s3db");
+        File f = new File("./passman.s3db"); //NOI18N
         if(!f.exists()){
             SQLiteJDBC sqlite = new SQLiteJDBC();
             sqlite.createConnection();
@@ -246,15 +254,15 @@ public class Utils {
                 User currentUser = sqlite.getUser(CURRENT_USER);
                 if(currentUser == null){
                     // Log event
-                    Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
-                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "User not found", "User "+ CURRENT_USER +" was not found on the database.");
+                    Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER); //NOI18N
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "User not found", "User "+ CURRENT_USER +" was not found on the database."); //NOI18N
                 } else{
                     // Use user password to encrypt password bytes
                     CryptModel cpMdl = Crypt.encrypt(currentUser.getSecurePassword(), null, passUTF8);
                     if(cpMdl.encryptedPassword == null){
                         // Log event
-                        Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error.");
-                        ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Encryption error", "Encryption failed due to unknown error.");
+                        Logger.getLogger("").log(Level.SEVERE, "Encryption failed due to unknown error."); //NOI18N
+                        ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Encryption error", "Encryption failed due to unknown error."); //NOI18N
                     } else{
                         // save data to DB
                         Model newModel = new Model(label, username, cpMdl.encryptedPassword, cpMdl.salt, comment);
@@ -265,11 +273,11 @@ public class Utils {
                 }
             } else{
                 ErrorDialog errDlg = new ErrorDialog(new JFrame(), 
-                    "Invalid label", "The label provided already exists.");
+                    java.util.ResourceBundle.getBundle("passman/Bundle").getString("INVALIDLABEL"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("INVALIDLABELMSG"));
             }
         } else{
             ErrorDialog errDlg = new ErrorDialog(new JFrame(), 
-                    "Mandatory fields", "Label, username and password are mandatory fields and cannot be empty.");
+                    java.util.ResourceBundle.getBundle("passman/Bundle").getString("MANDATORYFIELDS"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("MANDATORYFIELDSMSG"));
         }
         return result;
     }
@@ -280,7 +288,7 @@ public class Utils {
         User currentUser = sqlite.getUser(CURRENT_USER);
         if(currentUser == null){
             // Log event
-            Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER);
+            Logger.getLogger("").log(Level.SEVERE, "It was not possible to retrieve user \"{0}\" from database.",CURRENT_USER); //NOI18N
             return(null);
         } else{
             byte[] decryptedPass = Crypt.decrypt(currentUser.getSecurePassword(), 
@@ -294,11 +302,11 @@ public class Utils {
     }
     
     public static void goToScreen(JPanel mainPanel, String location){
-        if(location.equals("CREATEUSER") || location.equals("LOGIN") || location.equals("LANGUAGE")){
+        if(location.equals("CREATEUSER") || location.equals("LOGIN") || location.equals("LANGUAGE")){ //NOI18N
             CardLayout card = (CardLayout)mainPanel.getLayout();
             card.show(mainPanel, location);
         } else{
-            if(CURRENT_USER != ""){
+            if(CURRENT_USER != ""){ //NOI18N
                 CardLayout card = (CardLayout)mainPanel.getLayout();
                 card.show(mainPanel, location);
             }
@@ -343,7 +351,7 @@ public class Utils {
         //if(entering){ // user logged in successfully
         Component[] menuComps = menu.getMenuComponents();
             for(Component comp : menuComps){
-                if(!"languageMenuItem".equals(comp.getName())){
+                if(!"languageMenuItem".equals(comp.getName())){ //NOI18N
                     comp.setEnabled(!comp.isEnabled());
                 }
             }
@@ -395,7 +403,10 @@ public class Utils {
         return returnValue;
     }
     
-    public static void changePassword(String oldPassword, String newPassword){
+    public static void changePassword(JProgressBar jBar, String oldPassword, String newPassword){
+        jBar.setVisible(true);
+        jBar.setMinimum(1);
+        
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
         User compareUser = sqlite.getUser(getCurrentUser());
@@ -408,6 +419,29 @@ public class Utils {
                 // Creates new secure password and salt
                 ArrayList<byte[]> list = Crypt.getSecurePassword(newPassword);
                 User user = new User(getCurrentUser(), list.get(0), list.get(1));
+                
+                // Retrieves all saved entries
+                List<Model> allItems = sqlite.getItems2();
+                
+                jBar.setMaximum(allItems.size());
+                int i = 1;
+                jBar.setValue(i);
+                
+                for(Model item : allItems){
+                    // decrypt password
+                    byte[] pass = Crypt.decrypt(compareUser.getSecurePassword(), 
+                            item.getSalt(), item.getPassword());
+                    
+                    // encrypt password with new password/salt
+                    CryptModel cpMdl = Crypt.encrypt(user.getSecurePassword(), null, pass);
+                    
+                    // update item in DB
+                    Model newModel = new Model(item.getLabel(), item.getUsername(), cpMdl.encryptedPassword, cpMdl.salt, item.getComment());
+                    
+                    sqlite.updateItemPassword(newModel);
+                    jBar.setValue(i);
+                    ++i;
+                }              
                 
                 // Change password
                 sqlite.updatePassword(user);

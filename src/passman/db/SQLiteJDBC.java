@@ -559,6 +559,86 @@ public class SQLiteJDBC {
         }
     }
     
+    public void updateItemPassword(Model model){
+        try{
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+            
+            ResultSet rs = c.getMetaData().getTables(null, null, "pmj_%", null);
+            
+           // Checks number os results
+            int count = 0;
+            while(rs.next()){
+                ++count;
+            }
+            if(count>=3){
+                // Updates passwords table
+                PreparedStatement stmt = null;
+                String sql = "UPDATE pmj_passwords SET PASSWORD=?, SALT=? WHERE ID=?;";
+
+                stmt = c.prepareStatement(sql);
+
+                stmt.setBytes(1, model.getPassword());
+                stmt.setBytes(2, model.getSalt());
+                stmt.setInt(3, this.getItemID(model.getLabel()));
+
+                stmt.executeUpdate();
+
+                // Get last entry ID
+                //int itemID = stmt.getGeneratedKeys().getInt(1);
+                // Get current date
+                //SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                //Date now = new Date();
+                //String strDate = sdfDate.format(now);                 
+
+                // Get current user ID
+                //int userID = this.getUserID(Utils.getCurrentUser());
+
+                // Update entries table
+                //sql = "INSERT INTO pmj_entries (USER_ID, PASSWORD_ID, ENTRY_DATE)"+
+                //        "VALUES (" + userID +
+                //                ", " + itemID +
+                //                ", \"" + strDate + "\");";
+
+                //stmt = c.prepareStatement(sql);
+
+                //stmt.executeUpdate();
+
+                stmt.close();
+                c.close();
+                // Log action
+                Logger.getLogger("").log(Level.INFO, "Entry with label {0} added to database.", model.getLabel());
+            }
+            else{/*
+                try (Statement stmt = c.createStatement()) {
+                    String sql = "CREATE TABLE pmj_passwords " +
+                            "(ID INTEGER PRIMARY KEY," +
+                            "LABEL TEXT NOT NULL, " +
+                            "USERNAME CHAR(50) NOT NULL, " +
+                            "PASSWORD CHAR(50) NOT NULL, " +
+                            "COMMENT CHAR(250))";
+                    
+                    stmt.executeUpdate(sql);
+                }
+                PreparedStatement stmt = null;
+                String sql = "INSERT INTO pmj_passwords (LABEL, USERNAME, PASSWORD, SALT, COMMENT)"+
+                         " VALUES (\""+model.getLabel()+"\", \""+model.getUsername()+"\", ?, ?, \""+model.getComment()+"\")"; 
+                stmt = c.prepareStatement(sql);
+                
+                stmt.setBytes(1, model.getPassword());
+                stmt.setBytes(2, model.getSalt());
+
+                stmt.executeUpdate();
+                c.close();*/
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
+    }
+    
     public void updatePassword(User user){
         try{
             Class.forName("org.sqlite.JDBC");

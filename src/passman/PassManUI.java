@@ -1156,7 +1156,6 @@ public class PassManUI extends javax.swing.JFrame {
         changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
         changePasswordButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        changePasswordButton.setEnabled(false);
         changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changePasswordButtonActionPerformed(evt);
@@ -1428,13 +1427,13 @@ public class PassManUI extends javax.swing.JFrame {
                     // Goes to login screen
                     Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
                 } else{
-                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "Username provided already exists.");
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("INVALIDUSERNAME"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("USERNAMEEXISTS"));
                 }
             } else{ // Username is empty
-                ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid username", "New username can't be empty.");
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("INVALIDUSERNAME"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("USERNAMEEMPTY"));
             }
         } else{ // Passwords are not the same
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Invalid passwords", "Passwords in both fields must be equal.");
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("PASSWORDSDIFFER"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("PASSWORDSDIFFERMSG"));
         }
     }//GEN-LAST:event_createUserBtnActionPerformed
 
@@ -1457,7 +1456,7 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.toggleMenus(jMenu1, true);
             Utils.toggleMenus(jMenu2, true);
         } else{ // Login failed
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Login failed", "Username and/or password are incorrect.");
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILED"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILEDMSG"));
         }
     }//GEN-LAST:event_attemptLoginActionPerformed
 
@@ -1524,7 +1523,7 @@ public class PassManUI extends javax.swing.JFrame {
             Utils.toggleMenus(jMenu1, true);
             Utils.toggleMenus(jMenu2, true);
         } else{ // Login failed
-            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Login failed", "Username and/or password are incorrect.");
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILED"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILEDMSG"));
         }
     }//GEN-LAST:event_loginPasswordActionPerformed
 
