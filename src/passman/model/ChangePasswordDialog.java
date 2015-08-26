@@ -29,6 +29,8 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
     /**
      * Creates new form ChangePasswordDialog
+     * @param parent
+     * @param modal
      */
     public ChangePasswordDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -180,11 +182,10 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         setVisible(false);
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
-    //Utils.changePassword(jProgressBar1, new String(oldPasswordField.getPassword()), new String(newPasswordField.getPassword()));
-                
-            
+       
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Password changing is not done yet so it starts the updates
         if(!completed){
             jProgressBar1.setVisible(true);
             cancelButton.setEnabled(false);
@@ -193,7 +194,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
             task = new Task();
             task.addPropertyChangeListener(this);
             task.execute();
-        } else{
+        } else{ // Password was changed, clear fields and exit dialog
             // Clears fields
             newPasswordField.setText(""); //NOI18N
             newPasswordField2.setText(""); //NOI18N        
@@ -206,10 +207,10 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("progress" == evt.getPropertyName()) {
+        if ("progress".equals(evt.getPropertyName())) {
             int progress = (Integer) evt.getNewValue();
+            // Updates progress bar
             jProgressBar1.setValue(progress);
-            
         }
     }
 
@@ -235,7 +236,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
             jProgressBar1.setMaximum(allItems.size());
             
             for(Model item : allItems){
-                Utils.changeSinglePassword(currentUser, newUser, item, oldPassword, newPassword);
+                Utils.changeSinglePassword(currentUser, newUser, item, oldPassword);
                 try {
                     Thread.sleep(random.nextInt(100));
                 } catch (InterruptedException ignore) {}

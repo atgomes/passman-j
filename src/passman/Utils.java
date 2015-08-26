@@ -446,7 +446,7 @@ public class Utils {
         }
     }
     
-    public static void changeSinglePassword(User currentUser, User newUser, Model item, String oldPassword, String newPassword){
+    public static void changeSinglePassword(User currentUser, User newUser, Model item, String oldPassword){
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
         if(currentUser != null){
