@@ -32,6 +32,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
 import passman.db.Crypt;
 import passman.db.SQLiteJDBC;
 import passman.model.CryptModel;
@@ -404,8 +405,6 @@ public class Utils {
     }
     
     public static void changePassword(JProgressBar jBar, String oldPassword, String newPassword){
-        jBar.setVisible(true);
-        jBar.setMinimum(1);
         
         // fetches the user from DB
         SQLiteJDBC sqlite = new SQLiteJDBC();
@@ -423,10 +422,6 @@ public class Utils {
                 // Retrieves all saved entries
                 List<Model> allItems = sqlite.getItems2();
                 
-                jBar.setMaximum(allItems.size());
-                int i = 1;
-                jBar.setValue(i);
-                
                 for(Model item : allItems){
                     // decrypt password
                     byte[] pass = Crypt.decrypt(compareUser.getSecurePassword(), 
@@ -439,14 +434,38 @@ public class Utils {
                     Model newModel = new Model(item.getLabel(), item.getUsername(), cpMdl.encryptedPassword, cpMdl.salt, item.getComment());
                     
                     sqlite.updateItemPassword(newModel);
-                    jBar.setValue(i);
-                    ++i;
                 }              
                 
                 // Change password
                 sqlite.updatePassword(user);
                 
                 
+            } else{
+                // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
+            }
+        }
+    }
+    
+    public static void changeSinglePassword(User currentUser, User newUser, Model item, String oldPassword, String newPassword){
+        // fetches the user from DB
+        SQLiteJDBC sqlite = new SQLiteJDBC();
+        if(currentUser != null){
+            byte[] salt = currentUser.getSaltArray();
+            byte[] secPassword = currentUser.getSecurePassword();
+            byte[] result = Crypt.verifyPasswordValidity(oldPassword, salt, secPassword);
+
+            if(result != null){
+                // decrypt password
+                byte[] pass = Crypt.decrypt(currentUser.getSecurePassword(), 
+                        item.getSalt(), item.getPassword());
+
+                // encrypt password with new password/salt
+                CryptModel cpMdl = Crypt.encrypt(newUser.getSecurePassword(), null, pass);
+
+                // update item in DB
+                Model newModel = new Model(item.getLabel(), item.getUsername(), cpMdl.encryptedPassword, cpMdl.salt, item.getComment());
+
+                sqlite.updateItemPassword(newModel);             
             } else{
                 // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
             }
