@@ -1628,6 +1628,8 @@ public class PassManUI extends javax.swing.JFrame {
         pOpts = passOptDialog.showDialog(pOpts);
         if(pOpts != null){
            Utils.savePasswordOptions(pOpts);
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "Password properties saved."); //NOI18N
         }
     }//GEN-LAST:event_pGenerationOptionsBtnActionPerformed
 
@@ -1637,6 +1639,8 @@ public class PassManUI extends javax.swing.JFrame {
         pOpts = passOptDialog.showDialog(pOpts);
         if(pOpts != null){
            Utils.savePasswordOptions(pOpts);
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "Password properties saved."); //NOI18N
         }
     }//GEN-LAST:event_pGenerationMenuItemActionPerformed
 

@@ -85,8 +85,6 @@ public class Utils {
             props.store(out,"Language properties"); //NOI18N
             out.close();
             
-            // Log action
-            Logger.getLogger("").log(Level.INFO, "Password properties saved."); //NOI18N
         } catch (Exception e){
             // Log exception
             Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
@@ -117,8 +115,6 @@ public class Utils {
                         Boolean.valueOf(props.getProperty("Password.digits","true")),  //NOI18N
                         Boolean.valueOf(props.getProperty("Password.uppercase","true"))); //NOI18N
 
-                // Log action
-                Logger.getLogger("").log(Level.INFO, "Password properties loaded."); //NOI18N
             } catch(Exception e){
                 // Log exception
                 Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N

@@ -11,11 +11,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 import passman.Utils;
 import passman.db.Crypt;
@@ -144,6 +144,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
         cancelButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -155,6 +156,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         confirmButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmButton.setText(bundle.getString("CONFIRMACC")); // NOI18N
         confirmButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        confirmButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel7.add(confirmButton);
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.SOUTH);
@@ -277,7 +279,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
             setCursor(null);
             // Log action
             Logger.getLogger("").log(Level.INFO, "User's {0} password updated.", Utils.getCurrentUser());
-            // SHOW POP-UP WINDOW
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), "Success", "Password updated successfully.");
             // Enables exit button
             confirmButton.setEnabled(true);
             confirmButton.setText(java.util.ResourceBundle.getBundle("passman/Bundle").getString("EXIT"));

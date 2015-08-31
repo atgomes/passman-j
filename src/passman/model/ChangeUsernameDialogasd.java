@@ -125,12 +125,14 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jButton1.setText(bundle.getString("CANCEL")); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.add(jButton1);
 
         jButton2.setBackground(new java.awt.Color(172, 198, 219));
         jButton2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jButton2.setText(bundle.getString("CONFIRMACC")); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.add(jButton2);
 
         add(jPanel6, java.awt.BorderLayout.SOUTH);

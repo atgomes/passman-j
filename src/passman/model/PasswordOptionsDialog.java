@@ -52,10 +52,13 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
         setTitle(bundle.getString("PGENERATION")); // NOI18N
 
+        jPanel1.setBackground(new java.awt.Color(51, 163, 252));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBackground(new java.awt.Color(51, 163, 252));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setLayout(new java.awt.GridLayout(0, 2));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -70,6 +73,7 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         jLabel2.setText(bundle.getString("SYMBOLS")); // NOI18N
         jPanel4.add(jLabel2);
 
+        symbolsCheckBx.setBackground(new java.awt.Color(51, 163, 252));
         symbolsCheckBx.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         symbolsCheckBx.setSelected(true);
         jPanel4.add(symbolsCheckBx);
@@ -78,6 +82,7 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         jLabel3.setText(bundle.getString("SYMBOLSSAFE")); // NOI18N
         jPanel4.add(jLabel3);
 
+        safeSymbolsCheckBx.setBackground(new java.awt.Color(51, 163, 252));
         safeSymbolsCheckBx.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         safeSymbolsCheckBx.setSelected(true);
 
@@ -90,6 +95,7 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         jLabel4.setText(bundle.getString("DIGITS")); // NOI18N
         jPanel4.add(jLabel4);
 
+        digitsCheckBx.setBackground(new java.awt.Color(51, 163, 252));
         digitsCheckBx.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         digitsCheckBx.setSelected(true);
         jPanel4.add(digitsCheckBx);
@@ -98,11 +104,14 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         jLabel5.setText(bundle.getString("UPPERCASE")); // NOI18N
         jPanel4.add(jLabel5);
 
+        upCaseCheckBx.setBackground(new java.awt.Color(51, 163, 252));
         upCaseCheckBx.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         upCaseCheckBx.setSelected(true);
         jPanel4.add(upCaseCheckBx);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.NORTH);
+
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -119,6 +128,8 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.WEST);
 
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -132,11 +143,16 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.EAST);
 
-        jPanel6.setPreferredSize(new java.awt.Dimension(0, 30));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel6.setMinimumSize(new java.awt.Dimension(82, 40));
+        jPanel6.setPreferredSize(new java.awt.Dimension(0, 40));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
+        cancelPassOptions.setBackground(new java.awt.Color(172, 198, 219));
         cancelPassOptions.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelPassOptions.setText(bundle.getString("CANCEL")); // NOI18N
+        cancelPassOptions.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        cancelPassOptions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelPassOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelPassOptionsActionPerformed(evt);
@@ -144,8 +160,11 @@ public class PasswordOptionsDialog extends javax.swing.JDialog {
         });
         jPanel6.add(cancelPassOptions);
 
+        confirmPassOptions.setBackground(new java.awt.Color(172, 198, 219));
         confirmPassOptions.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmPassOptions.setText(bundle.getString("CONFIRMACC")); // NOI18N
+        confirmPassOptions.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        confirmPassOptions.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirmPassOptions.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmPassOptionsActionPerformed(evt);

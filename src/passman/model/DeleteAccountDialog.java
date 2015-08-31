@@ -131,6 +131,7 @@ public class DeleteAccountDialog extends javax.swing.JDialog {
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
         cancelButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        cancelButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -142,6 +143,7 @@ public class DeleteAccountDialog extends javax.swing.JDialog {
         confirmButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmButton.setText(bundle.getString("CONFIRMACC")); // NOI18N
         confirmButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        confirmButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         confirmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmButtonActionPerformed(evt);
