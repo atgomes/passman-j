@@ -1448,8 +1448,10 @@ public class PassManUI extends javax.swing.JFrame {
             // Make sure new username is not an empty string
             if(!newUserField.getText().isEmpty()){
                 if(Utils.createNewUser(newUserField.getText(), new String(newUserPasswordField.getPassword())) == 0){
+                    // Log action
+                    Logger.getLogger("").log(Level.INFO, "User {0} added to database.", newUserField.getText());
                     // Clears fields
-                    Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});                
+                    Utils.clearTextFields(new Component[]{newUserField, newUserPasswordField, newUserPasswordField2});
                     // Goes to login screen
                     Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
                 } else{
@@ -1491,6 +1493,8 @@ public class PassManUI extends javax.swing.JFrame {
 
         SQLiteJDBC sqlite = new SQLiteJDBC();
         sqlite.removeItem2(model);
+        // Log action
+        Logger.getLogger("").log(Level.INFO, "Entry with label {0} removed from database.", model.getLabel());
 
         utils.refreshView(jList1, mainPanel);
 

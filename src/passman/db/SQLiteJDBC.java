@@ -24,6 +24,7 @@ import passman.model.User;
  */
 public class SQLiteJDBC {
     private final List<Model> list = new ArrayList<>();
+    private final String prefix = "jdbc:sqlite:";
     private final String databaseName = "passman.s3db";
     
     /**
@@ -103,7 +104,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 
                 // Updates passwords table
                 PreparedStatement stmt = null;
@@ -144,8 +145,6 @@ public class SQLiteJDBC {
 
                 stmt.close();
                 c.close();
-                // Log action
-                Logger.getLogger("").log(Level.INFO, "Entry with label {0} added to database.", model.getLabel());
             } catch (ClassNotFoundException | SQLException e) {
                 // Log exception
                 Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
@@ -164,7 +163,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 if(this.getUser(user.getUsername()) == null){
                     PreparedStatement stmt = null;
                     String sql = "INSERT INTO pmj_users (USERNAME, PASSHASH, SALT)"+
@@ -257,7 +256,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
 
                 Statement stmt = c.createStatement();
                 String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM pmj_passwords"+
@@ -296,7 +295,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 Statement stmt = c.createStatement();
                 String sql = "SELECT LABEL, USERNAME, PASSWORD, SALT, COMMENT FROM pmj_passwords WHERE "+
                         "ID IN (SELECT PASSWORD_ID FROM pmj_entries WHERE USER_ID "+
@@ -334,7 +333,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 
                 PreparedStatement stmt = null;
                 String sql = "SELECT ID FROM pmj_passwords WHERE "+
@@ -375,7 +374,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 Statement stmt = c.createStatement();
                 String sql = "SELECT USERNAME, PASSHASH, SALT FROM pmj_users WHERE USERNAME=\""+username+"\";";
 
@@ -408,7 +407,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 Statement stmt = c.createStatement();
                 String sql = "SELECT ID FROM pmj_users WHERE USERNAME=\""+username+"\";";
 
@@ -419,7 +418,7 @@ public class SQLiteJDBC {
                 }
                 else{
                     // Log event
-                    Logger.getLogger("").log(Level.SEVERE, "Failed to retrieve USER ID from database");
+                    //Logger.getLogger("").log(Level.SEVERE, "Failed to retrieve USER ID from database");
                 }
                 stmt.close();
                 // Log action
@@ -490,7 +489,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 int oldUserID = this.getUserID(oldUsername);
                 if(oldUserID > -1){
                     PreparedStatement stmt = null;
@@ -500,8 +499,6 @@ public class SQLiteJDBC {
                     stmt.executeUpdate();
                     stmt.close();
                 }
-                // Log event
-                Logger.getLogger("").log(Level.INFO, "Username {0} changed to {1}",new Object[]{oldUsername,newUsername});
                 c.close();
             } catch (ClassNotFoundException | SQLException e) {
                 // Log exception
@@ -521,7 +518,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 // Updates passwords table
                 PreparedStatement stmt = null;
                 String sql = "UPDATE pmj_passwords SET PASSWORD=?, SALT=? WHERE ID=?;";
@@ -535,11 +532,7 @@ public class SQLiteJDBC {
                 stmt.executeUpdate();
 
                 stmt.close();
-                c.close();
-
-                // Log action
-                Logger.getLogger("").log(Level.INFO, "Entry with label {0} updated.", model.getLabel());
-                
+                c.close();                
             } catch (ClassNotFoundException | SQLException e) {
                 // Log exception
                 Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
@@ -558,7 +551,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 int userID = this.getUserID(user.getUsername());
                 if(userID >- 1){
                     PreparedStatement stmt = null;
@@ -593,7 +586,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 try (Statement stmt = c.createStatement()) {
                     String sql = "DELETE FROM pmj_entries WHERE PASSWORD_ID IN ("+
                             "SELECT ID FROM pmj_passwords WHERE LABEL=\""+model.getLabel()+"\");";
@@ -601,8 +594,6 @@ public class SQLiteJDBC {
                     stmt.executeUpdate(sql);
                 }
                 c.close();
-                // Log action
-                Logger.getLogger("").log(Level.INFO, "Entry with label {0} removed from database.", model.getLabel());
             } catch (ClassNotFoundException | SQLException e) {
                 // Log exception
                 Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName());
@@ -621,7 +612,7 @@ public class SQLiteJDBC {
         if(this.createConnection() == 1){
             try{
                 Class.forName("org.sqlite.JDBC");
-                Connection c = DriverManager.getConnection("jdbc:sqlite:passman.s3db");
+                Connection c = DriverManager.getConnection(prefix.concat(databaseName));
                 if(this.getUser(user.getUsername()) != null){
                     PreparedStatement stmt = null;
                     String sql = "DELETE FROM pmj_users WHERE USERNAME=?";
@@ -631,9 +622,6 @@ public class SQLiteJDBC {
 
                     stmt.executeUpdate();
                     stmt.close();
-
-                    // Log action
-                    Logger.getLogger("").log(Level.INFO, "User {0} removed from the database.", user.getUsername());
                 }
                 c.close();
             } catch (ClassNotFoundException | SQLException e) {

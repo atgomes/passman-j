@@ -270,6 +270,8 @@ public class Utils {
                         //sqlite.addItem(newModel);
                         sqlite.addItem2(newModel);
                         result = true;
+                        // Log action
+                        Logger.getLogger("").log(Level.INFO, "Entry with label {0} added to database.", newModel.getLabel());
                     }
                 }
             } else{
@@ -394,6 +396,8 @@ public class Utils {
                     } else{
                         // Change username
                         sqlite.updateUsername(username, newUsername);
+                        // Log event
+                        Logger.getLogger("").log(Level.INFO, "Username {0} changed to {1}",new Object[]{username,newUsername});
                         returnValue = 0;
                     }
                 }   
@@ -465,7 +469,7 @@ public class Utils {
                 // update item in DB
                 Model newModel = new Model(item.getLabel(), item.getUsername(), cpMdl.encryptedPassword, cpMdl.salt, item.getComment());
 
-                sqlite.updateItemPassword(newModel);             
+                sqlite.updateItemPassword(newModel);
             } else{
                 // TRATAR DE DIZER QUE A PASSWORD ESTÁ ERRADA
             }

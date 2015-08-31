@@ -5,6 +5,8 @@
  */
 package passman.model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import passman.Utils;
 
 /**
@@ -180,6 +182,8 @@ public class DeleteAccountDialog extends javax.swing.JDialog {
         String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
         if(Utils.deleteAccount(username, password)){
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "User {0} removed from the database.", username);
             result = 0;
             setVisible(false);
             dispose();

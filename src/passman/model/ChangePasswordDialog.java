@@ -260,6 +260,9 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
             // Sets the completed flag as true indicating password was changed
             completed = true;
             setCursor(null);
+            // Log action
+            Logger.getLogger("").log(Level.INFO, "User's {0} password updated.", Utils.getCurrentUser());
+            // SHOW POP-UP WINDOW
             // Enables exit button
             confirmButton.setEnabled(true);
             confirmButton.setText(java.util.ResourceBundle.getBundle("passman/Bundle").getString("EXIT"));
