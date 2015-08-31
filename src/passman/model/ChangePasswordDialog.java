@@ -68,9 +68,13 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(51, 163, 252));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBackground(new java.awt.Color(51, 163, 252));
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -85,6 +89,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
         jPanel2.add(jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -107,6 +112,8 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
         jPanel2.add(jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -122,15 +129,19 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
         jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
         jPanel6.add(jProgressBar1);
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
+        jPanel7.setBackground(new java.awt.Color(51, 163, 252));
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
+        cancelButton.setBackground(new java.awt.Color(172, 198, 219));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
+        cancelButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -138,8 +149,10 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         });
         jPanel7.add(cancelButton);
 
+        confirmButton.setBackground(new java.awt.Color(172, 198, 219));
         confirmButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmButton.setText(bundle.getString("CONFIRMACC")); // NOI18N
+        confirmButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         jPanel7.add(confirmButton);
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.SOUTH);

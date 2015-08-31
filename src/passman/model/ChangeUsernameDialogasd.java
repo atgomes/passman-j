@@ -40,9 +40,13 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(51, 163, 252));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -57,6 +61,7 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
 
         jPanel2.add(jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -79,6 +84,8 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
 
         jPanel2.add(jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -94,6 +101,8 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
 
         add(jPanel2, java.awt.BorderLayout.NORTH);
 
+        jPanel1.setBackground(new java.awt.Color(51, 163, 252));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -102,19 +111,24 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 177, Short.MAX_VALUE)
+            .addGap(0, 181, Short.MAX_VALUE)
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
+        jButton1.setBackground(new java.awt.Color(172, 198, 219));
         jButton1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jButton1.setText(bundle.getString("CANCEL")); // NOI18N
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         jPanel6.add(jButton1);
 
+        jButton2.setBackground(new java.awt.Color(172, 198, 219));
         jButton2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jButton2.setText(bundle.getString("CONFIRMACC")); // NOI18N
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         jPanel6.add(jButton2);
 
         add(jPanel6, java.awt.BorderLayout.SOUTH);
