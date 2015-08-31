@@ -13,7 +13,7 @@
     
     <target name="-post-jar" description="Sets the buildversion for the current build">
         <propertyfile file="passman.properties">
-            <entry key="Application.buildnumber" value="20150820"/>
+            <entry key="Application.buildnumber" value="20150831"/>
         </propertyfile>
     </target>
     <!--

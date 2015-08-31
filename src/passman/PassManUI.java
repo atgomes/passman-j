@@ -1374,7 +1374,7 @@ public class PassManUI extends javax.swing.JFrame {
 
     private void viewListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListBtnActionPerformed
         
-        utils.refreshView(jList1, mainPanel);
+        utils.refreshView(jList1);
         Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
         
         // Disables buttons
@@ -1390,7 +1390,7 @@ public class PassManUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addEntryBtnActionPerformed
 
     private void viewListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewListActionPerformed
-        utils.refreshView(jList1, mainPanel);
+        utils.refreshView(jList1);
         Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
     }//GEN-LAST:event_viewListActionPerformed
 
@@ -1498,7 +1498,7 @@ public class PassManUI extends javax.swing.JFrame {
         // Log action
         Logger.getLogger("").log(Level.INFO, "Entry with label {0} removed from database.", model.getLabel());
 
-        utils.refreshView(jList1, mainPanel);
+        utils.refreshView(jList1);
 
         // Clears fields
         Utils.clearTextFields(new Component[]{labelShow, usernameShow, passwordShow, commentShow});
@@ -1540,7 +1540,7 @@ public class PassManUI extends javax.swing.JFrame {
         if("".equals(Utils.getCurrentUser()) || Utils.getCurrentUser()==null){ //NOI18N
             Utils.goToScreen(mainPanel, "LOGIN"); //NOI18N
         } else{
-            utils.refreshView(jList1, mainPanel);
+            utils.refreshView(jList1);
             Utils.goToScreen(mainPanel, "GLOBAL"); //NOI18N
         }        
     }//GEN-LAST:event_languageOKActionPerformed
@@ -1566,7 +1566,7 @@ public class PassManUI extends javax.swing.JFrame {
         Collections.sort(list, (Model m1, Model m2) -> {
             return(m1.getLabel().compareToIgnoreCase(m2.getLabel()));
         });        
-        utils.refreshView(jList1, mainPanel, list);
+        utils.refreshView(jList1, list);
         
         String searchStr = quickSearchField.getText();
         
