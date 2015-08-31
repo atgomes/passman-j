@@ -33,6 +33,7 @@ import javax.swing.JFrame;
 import javax.swing.ListModel;
 import passman.model.ChangePasswordDialog;
 import passman.model.ChangeUsernameDialog;
+import passman.model.DeleteAccountDialog;
 import passman.model.ErrorDialog;
 import passman.model.PasswordOptions;
 import passman.model.PasswordOptionsDialog;
@@ -182,6 +183,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel47 = new javax.swing.JPanel();
         changeUsernameButton = new javax.swing.JButton();
         changePasswordButton = new javax.swing.JButton();
+        deleteAccBtn = new javax.swing.JButton();
         backFromAccOptsBtn = new javax.swing.JButton();
         jPanel48 = new javax.swing.JPanel();
         jPanel46 = new javax.swing.JPanel();
@@ -1144,6 +1146,9 @@ public class PassManUI extends javax.swing.JFrame {
         changeUsernameButton.setText(bundle.getString("CHANGEUSER")); // NOI18N
         changeUsernameButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         changeUsernameButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        changeUsernameButton.setMaximumSize(new java.awt.Dimension(37000, 37000));
+        changeUsernameButton.setMinimumSize(new java.awt.Dimension(50, 40));
+        changeUsernameButton.setPreferredSize(new java.awt.Dimension(100, 50));
         changeUsernameButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changeUsernameButtonActionPerformed(evt);
@@ -1156,6 +1161,9 @@ public class PassManUI extends javax.swing.JFrame {
         changePasswordButton.setText(bundle.getString("CHANGEPASS")); // NOI18N
         changePasswordButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         changePasswordButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        changePasswordButton.setMaximumSize(new java.awt.Dimension(37000, 37000));
+        changePasswordButton.setMinimumSize(new java.awt.Dimension(50, 40));
+        changePasswordButton.setPreferredSize(new java.awt.Dimension(100, 50));
         changePasswordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 changePasswordButtonActionPerformed(evt);
@@ -1163,11 +1171,29 @@ public class PassManUI extends javax.swing.JFrame {
         });
         jPanel47.add(changePasswordButton);
 
+        deleteAccBtn.setBackground(new java.awt.Color(172, 198, 219));
+        deleteAccBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        deleteAccBtn.setText(bundle.getString("DELETEACC")); // NOI18N
+        deleteAccBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
+        deleteAccBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteAccBtn.setMaximumSize(new java.awt.Dimension(37000, 37000));
+        deleteAccBtn.setMinimumSize(new java.awt.Dimension(50, 40));
+        deleteAccBtn.setPreferredSize(new java.awt.Dimension(100, 50));
+        deleteAccBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAccBtnActionPerformed(evt);
+            }
+        });
+        jPanel47.add(deleteAccBtn);
+
         backFromAccOptsBtn.setBackground(new java.awt.Color(172, 198, 219));
         backFromAccOptsBtn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         backFromAccOptsBtn.setText(bundle.getString("BACK")); // NOI18N
         backFromAccOptsBtn.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(89, 89, 89), 2));
         backFromAccOptsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backFromAccOptsBtn.setMaximumSize(new java.awt.Dimension(37000, 37000));
+        backFromAccOptsBtn.setMinimumSize(new java.awt.Dimension(50, 40));
+        backFromAccOptsBtn.setPreferredSize(new java.awt.Dimension(100, 50));
         backFromAccOptsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backFromAccOptsBtnActionPerformed(evt);
@@ -1187,7 +1213,7 @@ public class PassManUI extends javax.swing.JFrame {
         );
         jPanel48Layout.setVerticalGroup(
             jPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 347, Short.MAX_VALUE)
+            .addGap(0, 204, Short.MAX_VALUE)
         );
 
         jPanel45.add(jPanel48, java.awt.BorderLayout.CENTER);
@@ -1607,6 +1633,17 @@ public class PassManUI extends javax.swing.JFrame {
            Utils.savePasswordOptions(pOpts);
         }
     }//GEN-LAST:event_pGenerationMenuItemActionPerformed
+
+    private void deleteAccBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAccBtnActionPerformed
+        DeleteAccountDialog delAccDialog = new DeleteAccountDialog(this, true);
+        int result = delAccDialog.showDialog();
+        
+        if(result==0){
+            Utils.logout(jList1, mainPanel);
+            Utils.toggleMenus(jMenu1, false);
+            Utils.toggleMenus(jMenu2, false);
+        }
+    }//GEN-LAST:event_deleteAccBtnActionPerformed
     
     
     /**
@@ -1684,6 +1721,7 @@ public class PassManUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem createAccMenuItem;
     private javax.swing.JButton createUserBtn;
     private javax.swing.JPanel createUserPane;
+    private javax.swing.JButton deleteAccBtn;
     private javax.swing.JRadioButton english;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;

@@ -554,4 +554,49 @@ public class Utils {
         return PassGenerator.generate(pOpts.getpLength(), pOpts.isSymbols(), 
                 pOpts.isSymbolsSafe(), pOpts.isDigits(), pOpts.isUpperCase());
     }
+    
+    /**
+     * Deletes an account by removing all entries associated with the user and then removing the user.
+     * Only deletes an account if it is the current account user has logged in as.
+     * @param username
+     * @param password 
+     * @return  
+     */
+    public static boolean deleteAccount(String username, String password){
+        if(username.equals(Utils.getCurrentUser())){
+            // fetches the user from DB
+            SQLiteJDBC sqlite = new SQLiteJDBC();
+            User compareUser = sqlite.getUser(username);
+            if(compareUser != null){
+                byte[] salt = compareUser.getSaltArray();
+                byte[] secPassword = compareUser.getSecurePassword();
+                byte[] result = Crypt.verifyPasswordValidity(password, salt, secPassword);
+
+                if(result != null){
+                    // Delete all entries from pmj_entries datatable
+                    List<Model> allItems = sqlite.getItems2();
+
+                    for(Model item : allItems){
+                        sqlite.removeItem2(item);
+                    }
+
+                    // Deletes user from pmj_users
+                    sqlite.removeUser(compareUser);
+                    return true;
+                } else{
+                    ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("AUTHFAILED"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILEDMSG"));
+                    return false;
+                    // Log event
+                    //Logger.getLogger("").log(Level.INFO, "User tried to login as {0} with a wrong password.", compareUser.getUsername()); //NOI18N
+
+                }
+            } else{
+                ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("AUTHFAILED"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("LOGINFAILEDMSG"));
+                return false;
+            }
+        } else{
+            ErrorDialog errDlg = new ErrorDialog(new JFrame(), java.util.ResourceBundle.getBundle("passman/Bundle").getString("ACCESSDENIED"), java.util.ResourceBundle.getBundle("passman/Bundle").getString("ACCESSDENIEDMSG"));
+            return false;
+        }
+    }
 }

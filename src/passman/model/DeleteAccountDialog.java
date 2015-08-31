@@ -5,39 +5,20 @@
  */
 package passman.model;
 
-import java.awt.Cursor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.SwingWorker;
 import passman.Utils;
-import passman.db.Crypt;
-import passman.db.SQLiteJDBC;
 
 /**
  *
- * @author Andre
+ * @author P057736
  */
-public class ChangePasswordDialog extends javax.swing.JDialog implements ActionListener, PropertyChangeListener {
+public class DeleteAccountDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form ChangePasswordDialog
-     * @param parent
-     * @param modal
+     * Creates new form DeleteAccountDialog
      */
-    public ChangePasswordDialog(java.awt.Frame parent, boolean modal) {
+    public DeleteAccountDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        confirmButton.addActionListener(this);
-        jProgressBar1.setVisible(false);
-        jProgressBar1.setStringPainted(true);
     }
 
     /**
@@ -53,24 +34,25 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        oldPasswordField = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
-        newPasswordField = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
-        newPasswordField2 = new javax.swing.JPasswordField();
+        usernameField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel7 = new javax.swing.JPanel();
         cancelButton = new javax.swing.JButton();
         confirmButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
+        setTitle(bundle.getString("DELETEACC")); // NOI18N
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel2.setLayout(new java.awt.GridLayout());
+
+        jPanel3.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -80,32 +62,34 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(51, 163, 252));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.Y_AXIS));
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("passman/Bundle"); // NOI18N
-        jLabel1.setText(bundle.getString("OLDPASSWORD")); // NOI18N
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel4.add(jLabel1);
-        jPanel4.add(oldPasswordField);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText(bundle.getString("NEWPASSWORD")); // NOI18N
+        jLabel2.setText(bundle.getString("USERNAME")); // NOI18N
         jPanel4.add(jLabel2);
-        jPanel4.add(newPasswordField);
 
-        jLabel3.setText(bundle.getString("REPEATPASSNEW")); // NOI18N
-        jPanel4.add(jLabel3);
-        jPanel4.add(newPasswordField2);
+        usernameField.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jPanel4.add(usernameField);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText(bundle.getString("PASSWORD")); // NOI18N
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jPanel4.add(jLabel1);
+
+        passwordField.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jPanel4.add(passwordField);
 
         jPanel2.add(jPanel4);
+
+        jPanel5.setBackground(new java.awt.Color(51, 163, 252));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -115,20 +99,31 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel5);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
-        jPanel6.add(jProgressBar1);
+        jPanel6.setBackground(new java.awt.Color(51, 163, 252));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 177, Short.MAX_VALUE)
+        );
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel7.setLayout(new java.awt.GridLayout());
 
+        cancelButton.setBackground(new java.awt.Color(51, 163, 252));
         cancelButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         cancelButton.setText(bundle.getString("CANCEL")); // NOI18N
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -138,8 +133,14 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         });
         jPanel7.add(cancelButton);
 
+        confirmButton.setBackground(new java.awt.Color(51, 163, 252));
         confirmButton.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         confirmButton.setText(bundle.getString("CONFIRMACC")); // NOI18N
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
         jPanel7.add(confirmButton);
 
         jPanel1.add(jPanel7, java.awt.BorderLayout.SOUTH);
@@ -169,104 +170,28 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private int result = -1;
-    private Task task;
-    private boolean completed = false;
-    
-    public int showDialog(){
-        setVisible(true);
-        return result;
-    }
-    
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         result = -1;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
-       
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Password changing is not done yet so it starts the updates
-        if(!completed){
-            jProgressBar1.setVisible(true);
-            cancelButton.setEnabled(false);
-            confirmButton.setEnabled(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            task = new Task();
-            task.addPropertyChangeListener(this);
-            task.execute();
-        } else{ // Password was changed, clear fields and exit dialog
-            // Clears fields
-            newPasswordField.setText(""); //NOI18N
-            newPasswordField2.setText(""); //NOI18N        
-    
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+        if(Utils.deleteAccount(username, password)){
             result = 0;
             setVisible(false);
             dispose();
-        }
-    }
+        }        
+    }//GEN-LAST:event_confirmButtonActionPerformed
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if ("progress".equals(evt.getPropertyName())) { //NOI18N
-            int progress = (Integer) evt.getNewValue();
-            // Updates progress bar
-            jProgressBar1.setValue(progress);
-        }
-    }
-
-    class Task extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() throws Exception {
-            Random random = new Random();
-            int progress = 0;
-            setProgress(0);
-            
-            SQLiteJDBC sqlite = new SQLiteJDBC();
-            User currentUser = sqlite.getUser(Utils.getCurrentUser());
-            
-            // Gets passwords from fields
-            String newPassword = new String(newPasswordField.getPassword());
-            String oldPassword = new String(oldPasswordField.getPassword());
-            // Creates new secure password and salt
-            ArrayList<byte[]> list = Crypt.getSecurePassword(newPassword);
-            // Creates new user object
-            User newUser = new User(Utils.getCurrentUser(), list.get(0), list.get(1));
-            // Gets all items from database
-            List<Model> allItems = sqlite.getItems2();
-            // Sets the progress bar maximum as the number of items retrieved
-            jProgressBar1.setMaximum(allItems.size());
-            
-            // For each item decrypt its password, encrypt with new hash and update entry at database
-            for(Model item : allItems){
-                Utils.changeSinglePassword(currentUser, newUser, item, oldPassword);
-                try {
-                    Thread.sleep(random.nextInt(100));
-                } catch (InterruptedException ignore) {}
-                progress += 1;
-                // Updates progress bar by creating a property change event
-                setProgress(progress);
-            }
-            
-            // Change user password safely since all entries are encrypted with the new password
-            sqlite.updatePassword(newUser);
-            
-            return null;
-        }
-        
-        @Override
-        public void done(){
-            // Sets the completed flag as true indicating password was changed
-            completed = true;
-            setCursor(null);
-            // Enables exit button
-            confirmButton.setEnabled(true);
-            confirmButton.setText(java.util.ResourceBundle.getBundle("passman/Bundle").getString("EXIT"));
-        }
-        
-    }
+    private int result = -1;
     
+    public int showDialog(){
+        setVisible(true);
+        return result;
+    }
     
     /**
      * @param args the command line arguments
@@ -279,26 +204,26 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) { //NOI18N
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteAccountDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteAccountDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteAccountDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChangePasswordDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeleteAccountDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ChangePasswordDialog dialog = new ChangePasswordDialog(new javax.swing.JFrame(), true);
+                DeleteAccountDialog dialog = new DeleteAccountDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -315,7 +240,6 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
     private javax.swing.JButton confirmButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -323,9 +247,7 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JPasswordField newPasswordField;
-    private javax.swing.JPasswordField newPasswordField2;
-    private javax.swing.JPasswordField oldPasswordField;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }
