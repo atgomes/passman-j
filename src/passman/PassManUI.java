@@ -423,6 +423,8 @@ public class PassManUI extends javax.swing.JFrame {
         mainPane.setLayout(new java.awt.BorderLayout());
 
         jPanel10.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel10.setMinimumSize(new java.awt.Dimension(50, 90));
+        jPanel10.setPreferredSize(new java.awt.Dimension(100, 90));
         jPanel10.setLayout(new java.awt.GridLayout(0, 1));
 
         addEntryBtn.setBackground(new java.awt.Color(172, 198, 219));
@@ -466,7 +468,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel42.setLayout(jPanel42Layout);
         jPanel42Layout.setHorizontalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         jPanel42Layout.setVerticalGroup(
             jPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,7 +517,7 @@ public class PassManUI extends javax.swing.JFrame {
         jPanel40.setLayout(jPanel40Layout);
         jPanel40Layout.setHorizontalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         jPanel40Layout.setVerticalGroup(
             jPanel40Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

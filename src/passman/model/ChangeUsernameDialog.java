@@ -116,11 +116,13 @@ public class ChangeUsernameDialog extends javax.swing.JDialog {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 181, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
+        jPanel7.setMinimumSize(new java.awt.Dimension(82, 40));
+        jPanel7.setPreferredSize(new java.awt.Dimension(82, 40));
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         cancelButton.setBackground(new java.awt.Color(172, 198, 219));

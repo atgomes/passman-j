@@ -136,6 +136,8 @@ public class ChangePasswordDialog extends javax.swing.JDialog implements ActionL
         jPanel1.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         jPanel7.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel7.setMinimumSize(new java.awt.Dimension(82, 40));
+        jPanel7.setPreferredSize(new java.awt.Dimension(82, 40));
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         cancelButton.setBackground(new java.awt.Color(172, 198, 219));

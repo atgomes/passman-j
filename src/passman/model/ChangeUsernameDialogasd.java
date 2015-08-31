@@ -111,12 +111,14 @@ public class ChangeUsernameDialogasd extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 181, Short.MAX_VALUE)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBackground(new java.awt.Color(51, 163, 252));
+        jPanel6.setMinimumSize(new java.awt.Dimension(82, 40));
+        jPanel6.setPreferredSize(new java.awt.Dimension(82, 40));
         jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton1.setBackground(new java.awt.Color(172, 198, 219));
