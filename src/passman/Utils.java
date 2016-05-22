@@ -288,12 +288,21 @@ public class Utils {
      */
     public static String getTitleFromProps(){
         Properties props = openOrCreatePropertiesFile();
+        String finalTitle = "";
         
-        String title1 = props.getProperty("Application.title"); //NOI18N
-        String title2 = props.getProperty("Application.version"); //NOI18N
-        String title3 = props.getProperty("Application.buildnumber"); //NOI18N
+        try {        
+            String title1 = props.getProperty("Application.title"); //NOI18N
+            String title2 = props.getProperty("Application.version"); //NOI18N
+            String title3 = props.getProperty("Application.buildnumber"); //NOI18N
         
-        String finalTitle = title1.replace("${Application.version}", title2.replace("${Application.buildnumber}", title3)); //NOI18N
+            finalTitle = title1.replace("${Application.version}", title2.replace("${Application.buildnumber}", title3)); //NOI18N
+        
+        } catch (Exception e) {
+            // Log exception
+            Logger.getLogger("").log(Level.SEVERE, "Application stopped due to exception: {0}",e.getClass().getName()); //NOI18N
+            ErrorDialog errorDlg = new ErrorDialog(new JFrame(), e.getClass().getName(), e.getMessage());
+            System.exit(0);
+        }
         
         return finalTitle;
     }
