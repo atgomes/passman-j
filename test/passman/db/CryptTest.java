@@ -16,12 +16,14 @@
  */
 package passman.db;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.mockito.Mockito;
 import passman.model.CryptModel;
 
 /**
@@ -69,5 +71,47 @@ public class CryptTest {
         assertNotNull(result);
         byte[] result2 =  Crypt.verifyPasswordValidity(password2, testList.get(1), testList.get(0));
         assertNull(result2);
+    }
+    
+    /**
+     * Test of encrypt method, of class Crypt.
+     */
+    @Test
+    public void testEncrypt() {
+        System.out.println("encrypt");
+        //CryptModel test = Mockito.mock(CryptModel.class);
+        
+        String password1 = "passwordtotest";
+        byte[] passUTF8 = password1.getBytes(StandardCharsets.UTF_8);
+        
+        ArrayList<byte[]> list = Crypt.getSecurePassword(password1);
+        
+        CryptModel cpMdl = Crypt.encrypt(list.get(0), null, passUTF8);
+        
+        assertNotNull(cpMdl);
+    }
+    
+        /**
+     * Test of decrypt method, of class Crypt.
+     */
+    @Test
+    public void testDecrypt() {
+        System.out.println("decrypt");
+        //CryptModel test = Mockito.mock(CryptModel.class);
+        
+        String password1 = "passwordtotest";
+        String dataToEncrypt = "datatoencrypt";
+        
+        byte[] dataUTF8 = dataToEncrypt.getBytes(StandardCharsets.UTF_8);
+        
+        ArrayList<byte[]> list = Crypt.getSecurePassword(password1);
+        
+        CryptModel cpMdl = Crypt.encrypt(list.get(0), null, dataUTF8);
+        
+        byte[] result = Crypt.decrypt(list.get(0), cpMdl.salt, cpMdl.encryptedPassword);
+        
+        assertNotNull(result);
+        
+        assertEquals(dataToEncrypt, new String(result,StandardCharsets.UTF_8));
     }  
 }
