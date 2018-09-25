@@ -1,7 +1,4 @@
-/build/
-/dist/
 *.log
-*.properties
 *.s3db
 *.db
-/nbproject/private/
+passman.properties

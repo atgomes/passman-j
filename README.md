@@ -4,7 +4,7 @@ PassManJ is an application to help you manage your accounts. It allows you to sa
 
 ## How it works ## 
 
-It works by encrypting your passwords and securily storing them locally in a database file. You can then save this file in your computer, favourite cloud service or a usb drive.
+It works by encrypting your passwords and securely storing them locally in a database file. You can then save this file in your computer, favourite cloud service or a usb drive.
 
 ## Version ##
 
@@ -27,7 +27,7 @@ You can download the latest release, extract the contents of the _PassManJx.y.zi
     
 #### From source code ####
 
-You can always download the source code and build it yourself. Further instructions for this will be available soon.
+You can always download the source code and build it yourself.
 
 ## Contribution ##
 
