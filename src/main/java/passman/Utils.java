@@ -253,8 +253,9 @@ public class Utils {
                 String strDate = sdfDate.format(now);
                 
                 props.setProperty("Application.buildnumber", strDate); //NOI18N
-                props.setProperty("Application.version", "1.0.0.${Application.buildnumber}"); //NOI18N
-                props.setProperty("Application.title", "PassManJ ${Application.version}"); //NOI18N
+                props.setProperty("Application.version", "1.0.0"); //NOI18N
+                props.setProperty("Application.version", "1.0.0"); //NOI18N
+                props.setProperty("Application.title", "PassManJ"); //NOI18N
                 props.setProperty("Language", "pt"); //NOI18N
                 props.setProperty("Country", "PT"); //NOI18N
                 props.setProperty("Password.length", "12"); //NOI18N
