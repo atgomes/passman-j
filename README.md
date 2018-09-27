@@ -8,7 +8,7 @@ It works by encrypting your passwords and securely storing them locally in a dat
 
 ## Version ##
 
-This software is currently on version 1.0
+This software is currently on version 1.1
 
 # Using PassManJ #
 
